@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# External tools & temp artifacts
+.kilo
+.tempmediaStorage
+scratch
+coverage
+.turbo
