@@ -1,11 +1,16 @@
 <div align="center">
-  <a href="https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP">
-    <img src="https://raw.githubusercontent.com/luisrodriguez-rgb/AXIS-TOOLMAP/main/public/brand/axis-logo.png" width="130" alt="AXIS Logo" />
-  </a>
-  <br />
-  <strong style="font-size: 1.5rem; letter-spacing: -0.02em;">AXIS [MCDA ENGINE]</strong>
-  <br />
-  <code style="color: #FF4B22; font-weight: 700;">001 / 002 / 003 · DECISION LAYER</code>
+
+[![AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas](public/brand/axis-logo.png)](https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP)
+
+### `001 / 002 / 003 · DECISION LAYER`
+**De directorios genéricos de IA a un motor de decisión multicriterio (MCDA) centrado en personas, entregables, soberanía de datos y restricciones operativas reales.**
+
+[![GitHub stars](https://img.shields.io/github/stars/luisrodriguez-rgb/AXIS-TOOLMAP?style=flat-square&color=FF4B22)](https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP)
+[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg?style=flat-square)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?style=flat-square)](https://vitejs.dev/)
+[![FOSS Intelligence](https://img.shields.io/badge/FOSS-Intelligence_Enabled-2ea44f.svg?style=flat-square)](#7-modulo-de-inteligencia-open-source-foss-y-alternativas-a-software-privativo)
+
 </div>
 
 # AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas
