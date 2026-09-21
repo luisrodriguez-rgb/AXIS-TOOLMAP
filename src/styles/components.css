@@ -39,6 +39,50 @@
   background: var(--bg-subtle);
 }
 
+.brand-telemetry {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.telemetry-pill {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  background: var(--bg-canvas);
+  color: var(--ink-muted);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.telemetry-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--signal);
+  display: inline-block;
+  box-shadow: 0 0 6px var(--signal);
+  animation: pulse-dot 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.telemetry-badge {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--ink-faint);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding-left: 2px;
+}
+
 /* Primary Navigation Index */
 .nav-index-menu {
   display: flex;
@@ -62,6 +106,7 @@
   color: var(--ink-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
+  position: relative;
 }
 
 .nav-index-item .nav-main-label {
@@ -72,6 +117,30 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.nav-kbd-hint {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  padding: 1px 4px;
+  border: 1px solid var(--line);
+  background: var(--bg-canvas);
+  color: var(--ink-faint);
+  border-radius: 2px;
+  font-weight: 600;
+  margin-left: 4px;
+  transition: all var(--transition-fast);
+}
+
+.nav-index-item:hover .nav-kbd-hint {
+  border-color: var(--ink-muted);
+  color: var(--ink);
+}
+
+.nav-index-item.active .nav-kbd-hint {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--ink-inverse);
 }
 
 .nav-index-item .nav-sub-label {
@@ -107,13 +176,41 @@
   font-weight: 700;
 }
 
-/* Secondary Utilities (Theme & Language) - Subordinated Hierarchy */
+/* Secondary Utilities (Theme, Language & Repository) */
 .header-utilities {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   padding: 0 16px;
   background: var(--bg-surface);
+}
+
+.utility-github-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  background: var(--bg-canvas);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: all var(--transition-fast);
+}
+
+.utility-github-link:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+
+.utility-github-link .github-arrow {
+  color: var(--signal);
+  font-size: 0.72rem;
+  line-height: 1;
 }
 
 .utility-control {

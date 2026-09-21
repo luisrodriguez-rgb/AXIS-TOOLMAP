@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
 import { AxisBrandLogo } from './AxisBrandLogo';
@@ -26,51 +26,60 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const t = TRANSLATIONS[lang].header;
 
+  // Keyboard navigation: [1] -> discover, [2] -> workflow, [3] -> archive
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger when user is typing in input or textarea
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        return;
+      }
+      if (e.key === '1') {
+        onSelectTab('discover');
+      } else if (e.key === '2') {
+        onSelectTab('workflow');
+      } else if (e.key === '3') {
+        onSelectTab('archive');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onSelectTab]);
+
   return (
     <header className="app-header">
+      {/* Brand & Telemetry */}
       <div
         className="brand-wrapper"
         onClick={() => onSelectTab('discover')}
-        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '14px' }}
+        style={{ cursor: 'pointer' }}
+        title={lang === 'es' ? 'Ir al inicio / Descubrir' : 'Go to Home / Discover'}
       >
         <AxisBrandLogo variant="horizontal" size={28} lang={lang} />
-        <span
-          className="mono-text"
-          style={{
-            fontSize: '0.62rem',
-            padding: '2px 8px',
-            border: '1px solid var(--line)',
-            background: 'var(--bg-canvas)',
-            color: 'var(--ink-muted)',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-          }}
-          title={t.brandSub.replace('{count}', String(toolCount))}
-        >
+        <div className="brand-telemetry">
           <span
-            style={{
-              width: '5px',
-              height: '5px',
-              borderRadius: '50%',
-              background: 'var(--signal)',
-              display: 'inline-block',
-            }}
-          />
-          [{toolCount} TOOLS]
-        </span>
+            className="telemetry-pill"
+            title={t.brandSub.replace('{count}', String(toolCount))}
+          >
+            <span className="telemetry-dot" />
+            [{toolCount} TOOLS]
+          </span>
+          <span className="telemetry-badge">MCDA v1.2</span>
+        </div>
       </div>
 
-      {/* Navegación Primaria (Jerarquía Principal de Precisión Suiza) */}
-      <nav className="nav-index-menu">
+      {/* Primary Navigation Index (Swiss Precision Hierarchy) */}
+      <nav className="nav-index-menu" aria-label="Main Navigation">
         <button
           className={`nav-index-item ${activeTab === 'discover' ? 'active' : ''}`}
           onClick={() => onSelectTab('discover')}
+          title={lang === 'es' ? 'Atajo de teclado: Tecla 1' : 'Keyboard shortcut: Key 1'}
         >
           <div className="nav-main-label">
             <span className="nav-num">01</span>
             <span>{t.discover}</span>
+            <kbd className="nav-kbd-hint">1</kbd>
           </div>
           <span className="nav-sub-label">
             {lang === 'es' ? 'ENTRADA · CONTEXTO' : 'INPUT · CONTEXT'}
@@ -80,10 +89,12 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           className={`nav-index-item ${activeTab === 'workflow' ? 'active' : ''}`}
           onClick={() => onSelectTab('workflow')}
+          title={lang === 'es' ? 'Atajo de teclado: Tecla 2' : 'Keyboard shortcut: Key 2'}
         >
           <div className="nav-main-label">
             <span className="nav-num">02</span>
             <span>{t.workflowMap}</span>
+            <kbd className="nav-kbd-hint">2</kbd>
           </div>
           <span className="nav-sub-label">
             {lang === 'es' ? 'GRAFO & PIPELINE' : 'GRAPH & PIPELINE'}
@@ -93,10 +104,12 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           className={`nav-index-item ${activeTab === 'archive' ? 'active' : ''}`}
           onClick={() => onSelectTab('archive')}
+          title={lang === 'es' ? 'Atajo de teclado: Tecla 3' : 'Keyboard shortcut: Key 3'}
         >
           <div className="nav-main-label">
             <span className="nav-num">03</span>
             <span>{t.archive}</span>
+            <kbd className="nav-kbd-hint">3</kbd>
           </div>
           <span className="nav-sub-label">
             {lang === 'es' ? 'MATRIZ & FOSS' : 'MATRIX & FOSS'}
@@ -104,9 +117,24 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </nav>
 
-      {/* Utilidades Secundarias: Tema e Idioma (Subordinadas, compactas, sin emojis) */}
+      {/* Secondary Utilities & External Repositories */}
       <div className="header-utilities">
-        {/* Selector de Tema */}
+        {/* GitHub Source Link */}
+        <a
+          href="https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="utility-github-link"
+          title={lang === 'es' ? 'Ver código fuente y repositorio en GitHub' : 'View source code on GitHub'}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span className="github-text">REPO</span>
+          <span className="github-arrow">↗</span>
+        </a>
+
+        {/* Theme Selector */}
         <div className="utility-control">
           <span className="utility-label">THEME:</span>
           <div className="utility-toggle-group">
@@ -127,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Selector de Idioma */}
+        {/* Language Selector */}
         <div className="utility-control">
           <span className="utility-label">LANG:</span>
           <div className="utility-toggle-group">
