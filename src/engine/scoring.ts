@@ -71,6 +71,24 @@ export function calculateToolScore(
     fitPoints += 20;
   }
 
+  // --- AFINIDAD DE DOMINIO PROFESIONAL DIRECTA ---
+  const roleLower = (persona.primaryRole || '').toLowerCase();
+  if (roleLower.includes('civil') && (tool.category === 'drafting_3d' || tool.category === 'calculation')) {
+    fitPoints += 35; // Prioridad a Civil 3D, AutoCAD, Revit, OpenFOAM, Ansys
+  } else if (roleLower.includes('arquitect') && (tool.category === 'drafting_3d' || tool.capabilities.cad3DModeling)) {
+    fitPoints += 30; // Prioridad alta a Revit, ArchiCAD, Rhino, SketchUp, LookX, Twinmotion
+  } else if ((roleLower.includes('software') || roleLower.includes('desarroll') || roleLower.includes('programad')) && (tool.capabilities.generatesCode || tool.id === 'docker' || tool.id === 'postman' || tool.id === 'jetbrains-idea' || tool.id === 'supabase' || tool.id === 'vercel')) {
+    fitPoints += 35; // Prioridad a VS Code, Cursor, IntelliJ, Docker, Postman, Supabase, Vercel, Linear
+  } else if (roleLower.includes('ingenier') && (tool.category === 'calculation' || tool.category === 'drafting_3d')) {
+    fitPoints += 30; // Prioridad alta a MATLAB, SolidWorks, Ansys, GeoGebra, KiCad, Inventor
+  } else if (roleLower.includes('dato') && tool.category === 'data_analysis') {
+    fitPoints += 30; // Prioridad alta a Power BI, Tableau, Snowflake, Databricks, dbt, Superset, Metabase, RStudio
+  } else if (roleLower.includes('diseñ') && tool.category === 'design_visual') {
+    fitPoints += 30; // Prioridad alta a Figma, Adobe Photoshop/Illustrator/Premiere, Midjourney, Blender, Cinema 4D
+  } else if (roleLower.includes('investig') && tool.category === 'research') {
+    fitPoints += 30; // Prioridad alta a Zotero, Overleaf, Elicit, Perplexity, Mendeley, Connected Papers, Rayyan, ATLAS.ti
+  }
+
   const taskFit = Math.min(100, Math.max(10, fitPoints));
 
   // --- 2. FRICTION FACTOR (Facilidad de Adopción y Curva de Aprendizaje) ---
