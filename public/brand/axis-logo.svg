@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 120" width="280" height="120" fill="none">
+  <!-- Dark background container with subtle border -->
+  <rect width="280" height="120" rx="4" fill="#0C0D0E" stroke="#25272B" stroke-width="1"/>
+
+  <!-- Left Icon Mark -->
+  <g transform="translate(18, 10)">
+    <!-- Technical Grid -->
+    <g stroke="#ffffff" stroke-width="0.8" opacity="0.45">
+      <line x1="18" y1="15" x2="48" y2="15" />
+      <line x1="18" y1="24" x2="48" y2="24" />
+      <line x1="18" y1="33" x2="48" y2="33" />
+      <line x1="18" y1="42" x2="48" y2="42" />
+
+      <line x1="25.5" y1="15" x2="25.5" y2="48" />
+      <line x1="33" y1="15" x2="33" y2="48" />
+      <line x1="40.5" y1="15" x2="40.5" y2="48" />
+    </g>
+
+    <!-- Coordinates [A] and [B] -->
+    <text x="12" y="26" fill="#A1A4AE" font-family="'IBM Plex Mono', monospace" font-size="7" font-weight="700" text-anchor="end">[A]</text>
+    <text x="12" y="44" fill="#A1A4AE" font-family="'IBM Plex Mono', monospace" font-size="7" font-weight="700" text-anchor="end">[B]</text>
+
+    <!-- Main Outer Box -->
+    <rect x="18" y="15" width="60" height="60" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
+    <line x1="26" y1="67" x2="78" y2="15" stroke="#FFFFFF" stroke-width="1" opacity="0.6"/>
+
+    <!-- Bar Chart -->
+    <rect x="23" y="56" width="9" height="19" fill="#0C0D0E" stroke="#FFFFFF" stroke-width="1.8" />
+    <rect x="36" y="44" width="9" height="31" fill="#0C0D0E" stroke="#FFFFFF" stroke-width="1.8" />
+
+    <!-- Signal Arrow in International Orange -->
+    <g id="signal-arrow">
+      <path d="M 44 48 L 44 22 L 52 22 L 52 48 Z" fill="#FF4B22" stroke="#FFFFFF" stroke-width="1.8" />
+      <polygon points="48,7 37,22 59,22" fill="#FF4B22" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round" />
+    </g>
+
+    <rect x="49" y="38" width="9" height="37" fill="#0C0D0E" stroke="#FFFFFF" stroke-width="1.8" />
+    <rect x="62" y="49" width="9" height="26" fill="#0C0D0E" stroke="#FFFFFF" stroke-width="1.8" />
+
+    <!-- Serial Code -->
+    <text x="48" y="87" fill="#888B94" font-family="'IBM Plex Mono', monospace" font-size="6.5" font-weight="600" letter-spacing="1" text-anchor="middle">
+      001 / 002 / 003
+    </text>
+  </g>
+
+  <!-- Right Wordmark & Metadata -->
+  <g transform="translate(122, 28)">
+    <text x="0" y="28" fill="#FFFFFF" font-family="'Space Grotesk', -apple-system, sans-serif" font-size="32" font-weight="900" letter-spacing="-0.04em">AXIS</text>
+    <text x="78" y="16" fill="#FF4B22" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="700" letter-spacing="0.06em">[MCDA ENGINE]</text>
+    <text x="78" y="28" fill="#A1A4AE" font-family="'IBM Plex Mono', monospace" font-size="8" font-weight="600" letter-spacing="0.04em">DECISION LAYER</text>
+
+    <!-- Subtitle -->
+    <text x="0" y="52" fill="#888B94" font-family="'IBM Plex Mono', monospace" font-size="7.5" font-weight="500" letter-spacing="0.02em">
+      WORKFLOWS · TOOLS · DATA SOVEREIGNTY
+    </text>
+    <text x="0" y="66" fill="#585B64" font-family="'IBM Plex Mono', monospace" font-size="7" font-weight="500">
+      DETERMINISTIC MULTI-CRITERIA DECISION ANALYSIS
+    </text>
+  </g>
+</svg>
