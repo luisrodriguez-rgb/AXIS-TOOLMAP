@@ -117,6 +117,31 @@ export interface ToolEvidence {
 export type DataFrictionState = 'automatic' | 'one_click' | 'manual' | 'unsupported';
 export type DataFidelityLoss = 'full' | 'partial' | 'lossy';
 
+export type StageFitLevel = 'incompatible' | 'capable' | 'strongly_fit';
+
+export type ProvenanceKind = 'explicit' | 'inferred' | 'unknown';
+
+export interface FieldProvenance<T> {
+  value: T;
+  provenance: ProvenanceKind;
+  evidenceText?: string;
+  explanation?: string;
+}
+
+export interface DataFidelityProfile {
+  overall: 'full' | 'partial' | 'lossy';
+  dimensions: {
+    geometry?: 'preserved' | 'degraded' | 'flattened' | 'not_applicable';
+    semantic_data?: 'preserved' | 'partially_retained' | 'stripped' | 'not_applicable';
+    parameters?: 'preserved' | 'frozen_baked' | 'lost' | 'not_applicable';
+    metadata?: 'preserved' | 'partially_mapped' | 'stripped' | 'not_applicable';
+    structure?: 'preserved' | 'flattened' | 'not_applicable';
+    formatting?: 'preserved' | 'approximate' | 'broken' | 'not_applicable';
+    editability?: 'fully_editable' | 'reconstruction_required' | 'read_only_baked' | 'not_applicable';
+  };
+  lossExplanation?: string;
+}
+
 export interface HardConstraints {
   os?: OperatingSystem | 'any';
   maxBudgetUSD?: number;
@@ -194,6 +219,8 @@ export interface StageRecommendation {
     frictionFactor: number;
     constraintCompliance: number;
     ecosystemSynergy: number;
+    stageFitLevel?: StageFitLevel;
+    stageFitReason?: string;
   };
   whyThisTool: string[];
   tradeOffs: string[];

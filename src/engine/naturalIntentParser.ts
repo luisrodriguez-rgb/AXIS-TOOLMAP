@@ -1,8 +1,14 @@
-import type { OperatingSystem, DeliverableType, TechnicalLevel } from '../types';
+import type {
+  OperatingSystem,
+  DeliverableType,
+  TechnicalLevel,
+  FieldProvenance,
+} from '../types';
 
 export interface ParsedIntent {
   rawQuery: string;
   detectedProfessionId?: string;
+  detectedProfession?: string;
   detectedDeliverable?: DeliverableType;
   detectedBudgetUSD?: number;
   detectedOS?: OperatingSystem;
@@ -10,6 +16,14 @@ export interface ParsedIntent {
   detectedTechnicalLevel?: TechnicalLevel;
   confidence: 'high' | 'medium' | 'low';
   extractedKeywords: string[];
+  provenance: {
+    profession: FieldProvenance<string | undefined>;
+    deliverable: FieldProvenance<DeliverableType | undefined>;
+    budget: FieldProvenance<number | undefined>;
+    os: FieldProvenance<OperatingSystem | undefined>;
+    privacy: FieldProvenance<boolean | undefined>;
+    technicalLevel: FieldProvenance<TechnicalLevel | undefined>;
+  };
 }
 
 interface KeywordRule<T> {
@@ -49,96 +63,225 @@ const PROFESSION_RULES: KeywordRule<string>[] = [
 ];
 
 /**
- * Parsea una intención humana en lenguaje natural a variables estructuradas de decisión (Layer B -> Layer A).
+ * Parsea una intención humana en lenguaje natural a variables estructuradas con procedencia y evidencia textual (Layer B -> Layer A).
  */
 export function parseNaturalIntent(text: string): ParsedIntent {
   const extractedKeywords: string[] = [];
-  let detectedOS: OperatingSystem | undefined;
-  let detectedDeliverable: DeliverableType | undefined;
-  let detectedProfessionId: string | undefined;
-  let detectedBudgetUSD: number | undefined;
-  let detectedStrictPrivacy: boolean | undefined;
-  let detectedTechnicalLevel: TechnicalLevel | undefined;
 
-  // 1. Detectar SO
+  // 1. Detectar SO con procedencia
+  let osProv: FieldProvenance<OperatingSystem | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
   for (const rule of OS_RULES) {
-    if (rule.patterns.some((p) => p.test(text))) {
-      detectedOS = rule.value;
-      extractedKeywords.push(`OS: ${rule.value}`);
-      break;
+    for (const pattern of rule.patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        osProv = {
+          value: rule.value,
+          provenance: 'explicit',
+          evidenceText: match[0],
+          explanation: `Detectado explícitamente en el texto: "${match[0]}"`,
+        };
+        extractedKeywords.push(`OS: ${rule.value}`);
+        break;
+      }
     }
+    if (osProv.value) break;
   }
 
-  // 2. Detectar Entregable
+  // 2. Detectar Entregable con procedencia y patrones semánticos indirectos
+  let delivProv: FieldProvenance<DeliverableType | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
   for (const rule of DELIVERABLE_RULES) {
-    if (rule.patterns.some((p) => p.test(text))) {
-      detectedDeliverable = rule.value;
-      extractedKeywords.push(`Entregable: ${rule.value}`);
-      break;
+    for (const pattern of rule.patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        delivProv = {
+          value: rule.value,
+          provenance: 'explicit',
+          evidenceText: match[0],
+          explanation: `Entregable explícito: "${match[0]}"`,
+        };
+        extractedKeywords.push(`Entregable: ${rule.value}`);
+        break;
+      }
+    }
+    if (delivProv.value) break;
+  }
+
+  // Patrón semántico inferido de MVP / Producto funcional
+  if (!delivProv.value) {
+    const mvpInferMatch = text.match(/(validar (una )?idea|tener algo funcional|mostrar a (mis )?primeros usuarios|lanzar un producto)/i);
+    if (mvpInferMatch) {
+      delivProv = {
+        value: 'code',
+        provenance: 'inferred',
+        evidenceText: mvpInferMatch[0],
+        explanation: `Inferido MVP / Web App desde la expresión de validación: "${mvpInferMatch[0]}"`,
+      };
+      extractedKeywords.push('Entregable (inferido): Web MVP / Code');
     }
   }
 
-  // 3. Detectar Profesión
+  // 3. Detectar Profesión con procedencia
+  let profProv: FieldProvenance<string | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
   for (const rule of PROFESSION_RULES) {
-    if (rule.patterns.some((p) => p.test(text))) {
-      detectedProfessionId = rule.value;
-      extractedKeywords.push(`Profesión: ${rule.value}`);
-      break;
+    for (const pattern of rule.patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        profProv = {
+          value: rule.value,
+          provenance: 'explicit',
+          evidenceText: match[0],
+          explanation: `Rol profesional explícito: "${match[0]}"`,
+        };
+        extractedKeywords.push(`Profesión: ${rule.value}`);
+        break;
+      }
+    }
+    if (profProv.value) break;
+  }
+
+  // Inferencia indirecta de rol fundador
+  if (!profProv.value) {
+    const founderInferMatch = text.match(/(primeros usuarios|validar (una )?idea|lanzar startup|mi negocio)/i);
+    if (founderInferMatch) {
+      profProv = {
+        value: 'fundador',
+        provenance: 'inferred',
+        evidenceText: founderInferMatch[0],
+        explanation: `Rol de Fundador inferido desde contexto de negocio: "${founderInferMatch[0]}"`,
+      };
+      extractedKeywords.push('Profesión (inferida): Fundador');
     }
   }
 
-  // 4. Detectar Presupuesto ($0, $20, etc.)
+  // 4. Detectar Presupuesto con procedencia
+  let budgetProv: FieldProvenance<number | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
   const budgetZeroMatch = text.match(/\b(\$0|gratis|cero|sin costo|free)\b/i);
   const budgetNumberMatch = text.match(/\$(\d+)|(\d+)\s*(dolares|dólares|usd|\/mes|al mes)/i);
+  const budgetLowMatch = text.match(/\b(presupuesto bajo|poco presupuesto|econ[oó]mico|sin gastar mucho)\b/i);
 
   if (budgetZeroMatch) {
-    detectedBudgetUSD = 0;
+    budgetProv = {
+      value: 0,
+      provenance: 'explicit',
+      evidenceText: budgetZeroMatch[0],
+      explanation: `Presupuesto cero explícito: "${budgetZeroMatch[0]}"`,
+    };
     extractedKeywords.push('Presupuesto: $0/mes');
   } else if (budgetNumberMatch) {
     const amount = parseInt(budgetNumberMatch[1] || budgetNumberMatch[2], 10);
     if (!isNaN(amount)) {
-      detectedBudgetUSD = amount;
+      budgetProv = {
+        value: amount,
+        provenance: 'explicit',
+        evidenceText: budgetNumberMatch[0],
+        explanation: `Presupuesto numérico explícito: "${budgetNumberMatch[0]}"`,
+      };
       extractedKeywords.push(`Presupuesto: $${amount}/mes`);
     }
+  } else if (budgetLowMatch) {
+    budgetProv = {
+      value: 35,
+      provenance: 'inferred',
+      evidenceText: budgetLowMatch[0],
+      explanation: `Presupuesto estimado de entrada inferido: "${budgetLowMatch[0]}" (~$35/mes)`,
+    };
+    extractedKeywords.push('Presupuesto (inferido): $35/mes');
   }
 
-  // 5. Detectar Privacidad Estricta / Local
-  if (/\b(privacidad|local|confidencial|sensible|soberania|soberanía|offline|on-premise)\b/i.test(text)) {
-    detectedStrictPrivacy = true;
+  // 5. Detectar Privacidad Estricta con procedencia
+  let privProv: FieldProvenance<boolean | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
+  const privMatch = text.match(/\b(privacidad|local|confidencial|sensible|soberania|soberanía|offline|on-premise|sin subir (a la nube|datos))\b/i);
+  if (privMatch) {
+    privProv = {
+      value: true,
+      provenance: 'explicit',
+      evidenceText: privMatch[0],
+      explanation: `Requisito de soberanía local explícito: "${privMatch[0]}"`,
+    };
     extractedKeywords.push('Privacidad: Estricta / Local');
   }
 
-  // 6. Detectar Nivel Técnico / Tolerancia de Curva
-  if (/\b(sin programar|sin codigo|sin código|no-code|no quiero aprender programacion|f[aá]cil)\b/i.test(text)) {
-    detectedTechnicalLevel = 'low';
+  // 6. Detectar Nivel Técnico con procedencia
+  let techProv: FieldProvenance<TechnicalLevel | undefined> = {
+    value: undefined,
+    provenance: 'unknown',
+  };
+  const techLowMatch = text.match(/\b(sin programar|sin codigo|sin código|no-code|no s[eé] programar|no quiero aprender programaci[oó]n|f[aá]cil|no t[eé]cnico)\b/i);
+  const techHighMatch = text.match(/\b(avanzado|programador|experto|codigo|código|desarrollo|fullstack|backend|ingeniero)\b/i);
+
+  if (techLowMatch) {
+    techProv = {
+      value: 'low',
+      provenance: 'explicit',
+      evidenceText: techLowMatch[0],
+      explanation: `Preferencia no-code explícita: "${techLowMatch[0]}"`,
+    };
     extractedKeywords.push('Nivel Técnico: Low / No-Code');
-  } else if (/\b(avanzado|programador|experto|codigo|código|desarrollo)\b/i.test(text)) {
-    detectedTechnicalLevel = 'high';
+  } else if (techHighMatch) {
+    techProv = {
+      value: 'high',
+      provenance: 'explicit',
+      evidenceText: techHighMatch[0],
+      explanation: `Perfil técnico avanzado explícito: "${techHighMatch[0]}"`,
+    };
     extractedKeywords.push('Nivel Técnico: High');
   }
 
-  const matchesCount = [
-    detectedOS,
-    detectedDeliverable,
-    detectedProfessionId,
-    detectedBudgetUSD !== undefined,
-    detectedStrictPrivacy,
-    detectedTechnicalLevel,
+  const explicitCount = [
+    osProv.provenance === 'explicit',
+    delivProv.provenance === 'explicit',
+    profProv.provenance === 'explicit',
+    budgetProv.provenance === 'explicit',
+    privProv.provenance === 'explicit',
+    techProv.provenance === 'explicit',
+  ].filter(Boolean).length;
+
+  const totalDetected = [
+    osProv.value !== undefined,
+    delivProv.value !== undefined,
+    profProv.value !== undefined,
+    budgetProv.value !== undefined,
+    privProv.value !== undefined,
+    techProv.value !== undefined,
   ].filter(Boolean).length;
 
   let confidence: 'high' | 'medium' | 'low' = 'low';
-  if (matchesCount >= 3) confidence = 'high';
-  else if (matchesCount >= 1) confidence = 'medium';
+  if (explicitCount >= 3) confidence = 'high';
+  else if (totalDetected >= 2) confidence = 'medium';
 
   return {
     rawQuery: text,
-    detectedProfessionId,
-    detectedDeliverable,
-    detectedBudgetUSD,
-    detectedOS,
-    detectedStrictPrivacy,
-    detectedTechnicalLevel,
+    detectedProfessionId: profProv.value,
+    detectedProfession: profProv.value,
+    detectedDeliverable: delivProv.value,
+    detectedBudgetUSD: budgetProv.value,
+    detectedOS: osProv.value,
+    detectedStrictPrivacy: privProv.value,
+    detectedTechnicalLevel: techProv.value,
     confidence,
     extractedKeywords,
+    provenance: {
+      profession: profProv,
+      deliverable: delivProv,
+      budget: budgetProv,
+      os: osProv,
+      privacy: privProv,
+      technicalLevel: techProv,
+    },
   };
 }

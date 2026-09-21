@@ -46,12 +46,102 @@ export const DELIVERABLE_COMPATIBLE_CATEGORIES: Record<DeliverableType, ToolCate
   journey_map: ['design_visual', 'productivity'],
 };
 
+export type { StageFitLevel } from '../types';
+import type { StageFitLevel } from '../types';
+
+export interface StageFitEvaluation {
+  level: StageFitLevel;
+  points: number;
+  reason: string;
+}
+
+export function evaluateStageFit(
+  tool: Tool,
+  deliverableType: DeliverableType,
+  stageId: WorkflowStageId
+): StageFitEvaluation {
+  const allowedCategories = DELIVERABLE_COMPATIBLE_CATEGORIES[deliverableType];
+
+  // 1. INCOMPATIBLE: categoría prohibida o etapa no admitida
+  if (allowedCategories && !allowedCategories.includes(tool.category)) {
+    return {
+      level: 'incompatible',
+      points: -150,
+      reason: `Categoría "${tool.category}" incompatible con el entregable "${deliverableType}"`,
+    };
+  }
+
+  if (!tool.supportedStages.includes(stageId)) {
+    return {
+      level: 'incompatible',
+      points: -100,
+      reason: `La herramienta no opera en la etapa "${stageId}"`,
+    };
+  }
+
+  // 2. STRONGLY_FIT: Especialización nativa y directa para la etapa y entregable
+  // Casos académicos y publicaciones
+  if (deliverableType === 'latex_manuscript' || deliverableType === 'bib_matrix' || deliverableType === 'report') {
+    if (stageId === 'ingest_research' && tool.category === 'research' && tool.capabilities.citationsEnabled) {
+      return { level: 'strongly_fit', points: 50, reason: 'Gestión nativa de bibliografía y citas DOI en literatura académica' };
+    }
+    if (stageId === 'model_process' && (tool.id === 'obsidian' || tool.id === 'scrivener' || tool.id === 'atlas-ti' || tool.capabilities.dataAnalysis)) {
+      return { level: 'strongly_fit', points: 50, reason: 'Entorno especializado en síntesis de literatura, notas vinculadas y análisis' };
+    }
+    if ((stageId === 'refine_format' || stageId === 'present_deliver') && (tool.id === 'overleaf' || tool.id === 'marp' || tool.id === 'scribus')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Compilación y tipografía matemática de alta precisión para publicación' };
+    }
+  }
+
+  // Casos BIM / CAD / 3D
+  if (deliverableType === 'bim_model' || deliverableType === 'cad_plan') {
+    if (stageId === 'model_process' && tool.capabilities.cad3DModeling && (tool.id === 'revit' || tool.id === 'archicad' || tool.id === 'bonsai-bim' || tool.id === 'freecad' || tool.id === 'autocad' || tool.id === 'rhino')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Modelador paramétrico/BIM nativo con soporte de clases IFC y estándares' };
+    }
+    if (stageId === 'refine_format' && tool.capabilities.vectorExport) {
+      return { level: 'strongly_fit', points: 45, reason: 'Generación de documentación técnica y planos ejecutivos vectoriales' };
+    }
+  }
+
+  // Casos Software / MVP / Web
+  if (deliverableType === 'code' || deliverableType === 'interactive_prototype') {
+    if (stageId === 'ingest_research' && (tool.id === 'notion' || tool.id === 'linear' || tool.id === 'appflowy')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Especificación de producto, backlog y seguimiento de requerimientos' };
+    }
+    if (stageId === 'model_process' && (tool.id === 'v0' || tool.id === 'cursor' || tool.id === 'vs-code' || tool.id === 'penpot' || tool.id === 'figma')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Generación acelerada de UI frontend / código modular' };
+    }
+    if ((stageId === 'refine_format' || stageId === 'present_deliver') && (tool.id === 'supabase' || tool.id === 'vercel' || tool.id === 'docker')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Backend relacional sin servidor y despliegue continuo a producción' };
+    }
+  }
+
+  // Casos Datos / Dashboard / Cálculo
+  if (deliverableType === 'dashboard' || deliverableType === 'financial_model') {
+    if (stageId === 'model_process' && tool.capabilities.dataAnalysis) {
+      return { level: 'strongly_fit', points: 50, reason: 'Motor analítico para transformación y agregación de métricas' };
+    }
+    if (stageId === 'present_deliver' && (tool.id === 'power-bi' || tool.id === 'tableau' || tool.id === 'looker-studio' || tool.id === 'metabase' || tool.id === 'apache-superset')) {
+      return { level: 'strongly_fit', points: 50, reason: 'Plataforma líder de visualización de tableros y KPIs interactivos' };
+    }
+  }
+
+  // 3. CAPABLE: La herramienta opera en la etapa y pertenece a una categoría válida, pero sin hiperespecialización
+  return {
+    level: 'capable',
+    points: 20,
+    reason: `Capacidad general en categoría "${tool.category}" para la etapa "${stageId}"`,
+  };
+}
+
 export interface ScoreBreakdown {
   taskFit: number;
   frictionFactor: number;
   constraintCompliance: number;
   ecosystemSynergy: number;
   finalScore: number;
+  stageFitLevel: StageFitLevel;
+  stageFitReason: string;
 }
 
 export function calculateToolScore(
@@ -62,19 +152,13 @@ export function calculateToolScore(
   const { persona, needText, deliverableType, constraints } = query;
   const lowerNeed = needText.toLowerCase();
 
-  // --- 1. TASK FIT (Ajuste Funcional a la Tarea y Entregable) ---
-  let fitPoints = 50; // base
-
-  // Validación estricta de compatibilidad de categoría
-  const allowedCategories = DELIVERABLE_COMPATIBLE_CATEGORIES[deliverableType];
-  if (allowedCategories && !allowedCategories.includes(tool.category)) {
-    // Penalización estricta por incompatibilidad categórica (evita que SketchUp aparezca en papers o Zotero en BIM)
-    fitPoints -= 150;
-  }
+  // --- 1. TASK FIT (Ajuste Funcional Evaluado con Matriz de 3 Niveles) ---
+  const stageFit = evaluateStageFit(tool, deliverableType, stageId);
+  let fitPoints = 50 + stageFit.points;
 
   // Relevancia en la etapa específica
   if (tool.supportedStages.includes(stageId)) {
-    fitPoints += 25;
+    fitPoints += 15;
   }
 
   // Capacidades según el tipo de entregable
@@ -306,5 +390,7 @@ export function calculateToolScore(
     constraintCompliance,
     ecosystemSynergy,
     finalScore: Math.min(99, Math.max(15, finalScore)),
+    stageFitLevel: stageFit.level,
+    stageFitReason: stageFit.reason,
   };
 }
