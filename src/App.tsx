@@ -20,6 +20,8 @@ import { ToolArchiveTable } from './components/ToolArchiveTable';
 import { TradeOffInspector } from './components/TradeOffInspector';
 import { InteractiveWorkflowCanvas } from './components/InteractiveWorkflowCanvas';
 import { synthesizeTriadRoutes, type RouteId } from './engine/routeSynthesizer';
+import { DecisionQualityLab } from './components/DecisionQualityLab';
+import type { DecisionTestCase } from './data/decisionTestCases';
 
 export const App: React.FC = () => {
   // 1. Estado de Tema (Dark Mode / Light Mode)
@@ -44,14 +46,17 @@ export const App: React.FC = () => {
   // 4. Navegación activa (01 DISCOVER / 02 WORKFLOW MAP / 03 ARCHIVE)
   const [activeTab, setActiveTab] = useState<ActiveTab>('discover');
 
-  // 5. Estado de Perfil Inicial (Arquitecto Residencial por defecto)
+  // 5. Estado del Laboratorio de Calidad de Decisión
+  const [isLabOpen, setIsLabOpen] = useState<boolean>(false);
+
+  // 6. Estado de Perfil Inicial (Arquitecto Residencial por defecto)
   const [activePersona, setActivePersona] = useState<PersonaProfile>(PERSONA_PRESETS[1]);
   const [needText, setNeedText] = useState<string>(activePersona.sampleNeeds[0].query);
   const [deliverableType, setDeliverableType] = useState<DeliverableType>(
     activePersona.sampleNeeds[0].deliverable
   );
 
-  // 6. Estado de Restricciones
+  // 7. Estado de Restricciones
   const [constraints, setConstraints] = useState<UserConstraints>({
     maxMonthlyBudgetUSD: 30,
     os: 'mac',
@@ -60,18 +65,18 @@ export const App: React.FC = () => {
     requiresSpanish: true,
   });
 
-  // 7. Sustituciones manuales (Swap)
+  // 8. Sustituciones manuales (Swap)
   const [manualOverrides, setManualOverrides] = useState<Record<WorkflowStageId, string>>(
     {} as Record<WorkflowStageId, string>
   );
 
-  // 8. Modal de Inspección de Trade-offs
+  // 9. Modal de Inspección de Trade-offs
   const [inspectedStage, setInspectedStage] = useState<StageRecommendation | null>(null);
 
-  // 9. Estado de Ruta Activa de la Tríada de Decisión
-  const [currentRouteId, setCurrentRouteId] = useState<RouteId>('recommended');
+  // 10. Estado de Ruta Activa de la Tríada de Decisión
+  const [currentRouteId, setCurrentRouteId] = useState<RouteId>('balanced');
 
-  // 10. Manejador de cambio de Preset
+  // 11. Manejador de cambio de Preset
   const handleSelectPreset = (preset: PersonaProfile) => {
     setActivePersona(preset);
     setManualOverrides({} as Record<WorkflowStageId, string>);
@@ -87,7 +92,25 @@ export const App: React.FC = () => {
     }
   };
 
-  // 11. Manejador de Swap (Sustitución de herramienta en una etapa)
+  // 12. Manejador de aplicación de caso desde el Decision Lab
+  const handleApplyTestCase = (testCase: DecisionTestCase) => {
+    setNeedText(testCase.layerB_humanScenario);
+    setDeliverableType(testCase.layerA_syntheticSpec.deliverable);
+    setConstraints(testCase.layerA_syntheticSpec.constraints);
+    const match = PERSONA_PRESETS.find(
+      (p) =>
+        p.role.toLowerCase().includes(testCase.layerA_syntheticSpec.role.toLowerCase()) ||
+        p.label.toLowerCase().includes(testCase.domain.split(' / ')[0].toLowerCase())
+    );
+    if (match) {
+      setActivePersona(match);
+    }
+    setManualOverrides({} as Record<WorkflowStageId, string>);
+    setIsLabOpen(false);
+    setActiveTab('workflow');
+  };
+
+  // 13. Manejador de Swap (Sustitución de herramienta en una etapa)
   const handleSwapTool = (stageId: WorkflowStageId, newToolId: string) => {
     setManualOverrides((prev) => ({
       ...prev,
@@ -95,7 +118,7 @@ export const App: React.FC = () => {
     }));
   };
 
-  // 12. Cálculo reactivo e instantáneo de la Tríada de Rutas de Decisión
+  // 14. Cálculo reactivo e instantáneo de la Tríada de Rutas de Decisión
   const currentQuery: UserWorkflowQuery = useMemo(() => {
     return {
       persona: {
@@ -116,11 +139,11 @@ export const App: React.FC = () => {
     return synthesizeTriadRoutes(currentQuery, TOOLS_DATASET, manualOverrides);
   }, [currentQuery, manualOverrides]);
 
-  const activeStack = routes[currentRouteId].stack;
+  const activeStack = routes[currentRouteId]?.stack || routes.balanced.stack;
 
   return (
     <div className="app-container" data-theme={theme}>
-      {/* Header con navegación de índice, Dark Mode y selector de idioma */}
+      {/* Header con navegación de índice, Dark Mode, selector de idioma y Decision Lab */}
       <Header
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -129,6 +152,7 @@ export const App: React.FC = () => {
         onToggleTheme={handleToggleTheme}
         lang={lang}
         onToggleLang={handleToggleLang}
+        onOpenLab={() => setIsLabOpen(true)}
       />
 
       <main>
@@ -190,6 +214,16 @@ export const App: React.FC = () => {
         onSwapTool={handleSwapTool}
         lang={lang}
       />
+
+      {/* Modal del Laboratorio de Calidad de Decisión (Auditoría de 6 Casos) */}
+      {isLabOpen && (
+        <DecisionQualityLab
+          tools={TOOLS_DATASET}
+          lang={lang}
+          onClose={() => setIsLabOpen(false)}
+          onApplyCaseToMainApp={handleApplyTestCase}
+        />
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ interface HeaderProps {
   onToggleTheme: () => void;
   lang: Language;
   onToggleLang: () => void;
+  onOpenLab?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -23,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleTheme,
   lang,
   onToggleLang,
+  onOpenLab,
 }) => {
   const t = TRANSLATIONS[lang].header;
 
@@ -119,6 +121,18 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Secondary Utilities & External Repositories */}
       <div className="header-utilities">
+        {/* Decision Quality Lab Button */}
+        {onOpenLab && (
+          <button
+            className="utility-lab-btn"
+            onClick={onOpenLab}
+            title={lang === 'es' ? 'Auditar calidad de decisión sobre 6 casos empíricos' : 'Audit decision quality across 6 empirical cases'}
+          >
+            <span className="lab-pulse-dot" />
+            <span>DECISION LAB</span>
+          </button>
+        )}
+
         {/* GitHub Source Link */}
         <a
           href="https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP"
