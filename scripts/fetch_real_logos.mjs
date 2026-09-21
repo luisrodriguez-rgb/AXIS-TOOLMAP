@@ -31,6 +31,12 @@ const LOGO_URLS = {
   rhino: 'https://www.rhino3d.com/reseller/graphics/RhinoLogo.svg',
   geogebra: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg',
   gamma: 'https://cdn.worldvectorlogo.com/logos/gamma.svg',
+  pitch: 'https://api.svgl.app/svg/pitch.svg',
+  powerbi: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg',
+  archicad: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Graphisoft_Archicad_Logo.svg',
+  descript: 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Descript_%28Icon%29.svg',
+  excel: 'https://api.svgl.app/svg/microsoft-excel.svg',
+  copilot: 'https://api.svgl.app/svg/microsoft-copilot.svg',
 };
 
 async function fetchAll() {
@@ -43,7 +49,11 @@ async function fetchAll() {
         }
       });
       if (res.ok) {
-        const svgContent = await res.text();
+        let svgContent = await res.text();
+        // Asegurar que contenga xmlns="http://www.w3.org/2000/svg" (crítico para Safari)
+        if (!svgContent.includes('xmlns=')) {
+          svgContent = svgContent.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+        }
         const filePath = path.join(targetDir, `${id}.svg`);
         fs.writeFileSync(filePath, svgContent, 'utf-8');
         console.log(`✓ [${id}] Saved from ${url} (${svgContent.length} bytes)`);
@@ -52,6 +62,20 @@ async function fetchAll() {
       }
     } catch (err) {
       console.error(`✗ [${id}] Error fetching ${url}:`, err.message);
+    }
+  }
+
+  // Sanitizar todos los archivos SVG existentes en el directorio para asegurar xmlns
+  const files = fs.readdirSync(targetDir);
+  for (const file of files) {
+    if (file.endsWith('.svg')) {
+      const p = path.join(targetDir, file);
+      let content = fs.readFileSync(p, 'utf-8');
+      if (!content.includes('xmlns=')) {
+        content = content.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+        fs.writeFileSync(p, content, 'utf-8');
+        console.log(`✓ Sanitized xmlns in ${file}`);
+      }
     }
   }
 }

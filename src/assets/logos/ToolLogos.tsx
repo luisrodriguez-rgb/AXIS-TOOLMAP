@@ -1,16 +1,22 @@
 import React from 'react';
 
 // Importar los SVGs oficiales reales descargados de svgl.app, simple-icons y fuentes oficiales
+import archicadSvg from './svg/archicad.svg';
 import blenderSvg from './svg/blender.svg';
 import canvaSvg from './svg/canva.svg';
 import chatgptSvg from './svg/chatgpt.svg';
 import claudeSvg from './svg/claude.svg';
+import copilotSvg from './svg/copilot.svg';
 import cursorSvg from './svg/cursor.svg';
+import descriptSvg from './svg/descript.svg';
 import elicitSvg from './svg/elicit.svg';
+import excelSvg from './svg/excel.svg';
 import figmaSvg from './svg/figma.svg';
 import freecadSvg from './svg/freecad.svg';
 import gammaSvg from './svg/gamma.svg';
 import geogebraSvg from './svg/geogebra.svg';
+import juliusSvg from './svg/julius.svg';
+import kreaSvg from './svg/krea.svg';
 import lookxSvg from './svg/lookx.svg';
 import marpSvg from './svg/marp.svg';
 import midjourneySvg from './svg/midjourney.svg';
@@ -18,6 +24,8 @@ import notebooklmSvg from './svg/notebooklm.svg';
 import notionSvg from './svg/notion.svg';
 import obsidianSvg from './svg/obsidian.svg';
 import perplexitySvg from './svg/perplexity.svg';
+import pitchSvg from './svg/pitch.svg';
+import powerbiSvg from './svg/powerbi.svg';
 import rhinoSvg from './svg/rhino.svg';
 import scribusSvg from './svg/scribus.svg';
 import v0Svg from './svg/v0.svg';
@@ -25,16 +33,25 @@ import wolframSvg from './svg/wolfram.svg';
 import zoteroSvg from './svg/zotero.svg';
 
 const REAL_LOGOS_MAP: Record<string, string> = {
+  archicad: archicadSvg,
   blender: blenderSvg,
   canva: canvaSvg,
   chatgpt: chatgptSvg,
   claude: claudeSvg,
+  copilot: copilotSvg,
   cursor: cursorSvg,
+  descript: descriptSvg,
   elicit: elicitSvg,
+  excel: excelSvg,
+  'excel-copilot': excelSvg,
   figma: figmaSvg,
   freecad: freecadSvg,
   gamma: gammaSvg,
   geogebra: geogebraSvg,
+  julius: juliusSvg,
+  'julius-ai': juliusSvg,
+  krea: kreaSvg,
+  'krea-ai': kreaSvg,
   lookx: lookxSvg,
   marp: marpSvg,
   midjourney: midjourneySvg,
@@ -42,10 +59,14 @@ const REAL_LOGOS_MAP: Record<string, string> = {
   notion: notionSvg,
   obsidian: obsidianSvg,
   perplexity: perplexitySvg,
+  pitch: pitchSvg,
+  'power-bi': powerbiSvg,
+  powerbi: powerbiSvg,
   rhino: rhinoSvg,
   scribus: scribusSvg,
   v0: v0Svg,
   wolfram: wolframSvg,
+  'wolfram-alpha': wolframSvg,
   zotero: zoteroSvg,
 };
 
