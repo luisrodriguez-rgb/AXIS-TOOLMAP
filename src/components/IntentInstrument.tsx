@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import type { DeliverableType, PersonaProfile, UserConstraints } from '../types';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
+import { parseNaturalIntent } from '../engine/naturalIntentParser';
+import { DECISION_TEST_CASES } from '../data/decisionTestCases';
 
 interface IntentInstrumentProps {
   needText: string;
@@ -41,6 +43,43 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
   // Smart Scoping: Por defecto mostrar solo las opciones relevantes a la carrera activa
   const [scopeWorkMode, setScopeWorkMode] = useState<'relevant' | 'all'>('relevant');
   const [scopeOutputMode, setScopeOutputMode] = useState<'relevant' | 'all'>('relevant');
+
+  // Parser de lenguaje natural reactivo
+  const parsedIntent = useMemo(() => parseNaturalIntent(needText), [needText]);
+
+  const handleApplyScenario = (scenarioText: string) => {
+    onNeedTextChange(scenarioText);
+    const parsed = parseNaturalIntent(scenarioText);
+
+    if (parsed.detectedDeliverable) {
+      onDeliverableChange(parsed.detectedDeliverable);
+    }
+    if (
+      parsed.detectedOS ||
+      parsed.detectedBudgetUSD !== undefined ||
+      parsed.detectedStrictPrivacy !== undefined ||
+      parsed.detectedTechnicalLevel
+    ) {
+      onChangeConstraints({
+        ...constraints,
+        ...(parsed.detectedOS ? { os: parsed.detectedOS } : {}),
+        ...(parsed.detectedBudgetUSD !== undefined ? { maxMonthlyBudgetUSD: parsed.detectedBudgetUSD } : {}),
+        ...(parsed.detectedStrictPrivacy !== undefined ? { strictPrivacy: parsed.detectedStrictPrivacy } : {}),
+        ...(parsed.detectedTechnicalLevel ? { maxLearningCurve: parsed.detectedTechnicalLevel } : {}),
+      });
+    }
+    if (parsed.detectedProfessionId) {
+      const profId = parsed.detectedProfessionId.toLowerCase();
+      const match = allPresets.find(
+        (p) =>
+          p.id === parsed.detectedProfessionId ||
+          p.role.toLowerCase().includes(profId)
+      );
+      if (match) {
+        onSelectPreset(match);
+      }
+    }
+  };
 
   // 1. Catálogo de 32 Profesiones Calibradas
   const professions = useMemo(() => [
@@ -237,14 +276,75 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
           {t.sub}
         </p>
 
-        <div className="instrument-input-wrapper">
-          <textarea
-            className="instrument-textarea"
-            value={needText}
-            onChange={(e) => onNeedTextChange(e.target.value)}
-            placeholder={t.placeholder}
-            rows={3}
-          />
+        {/* Natural Intent Intake Bar (Layer B -> Layer A) */}
+        <div className="natural-intent-container">
+          <div className="scenario-chips-row">
+            <span className="chips-label">
+              {lang === 'es' ? 'ESCENARIOS REALES DE PRUEBA:' : 'REAL TEST SCENARIOS:'}
+            </span>
+            <div className="chips-list">
+              {DECISION_TEST_CASES.map((tc) => (
+                <button
+                  key={tc.id}
+                  type="button"
+                  className="scenario-chip-btn"
+                  onClick={() => handleApplyScenario(tc.layerB_humanScenario)}
+                  title={tc.title}
+                >
+                  <span className="chip-num">[{tc.caseNumber}]</span>
+                  <span>{tc.title.split(' — ')[0]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="instrument-input-wrapper">
+            <textarea
+              className="instrument-textarea"
+              value={needText}
+              onChange={(e) => onNeedTextChange(e.target.value)}
+              placeholder={t.placeholder}
+              rows={3}
+            />
+          </div>
+
+          {/* Real-time Extracted Tokens Bar */}
+          <div className="extracted-tokens-bar">
+            <div className="tokens-left">
+              <span className="tokens-label">
+                {lang === 'es' ? 'INTENCIÓN DETECTADA:' : 'PARSED INTENT:'}
+              </span>
+              {parsedIntent.extractedKeywords.length > 0 ? (
+                parsedIntent.extractedKeywords.map((kw, i) => (
+                  <span key={i} className="intent-token-pill">
+                    {kw}
+                  </span>
+                ))
+              ) : (
+                <span className="intent-token-empty">
+                  {lang === 'es' ? 'Describe tu entregable o restricciones...' : 'Describe your deliverable or constraints...'}
+                </span>
+              )}
+            </div>
+            <span className={`confidence-badge ${parsedIntent.confidence}`}>
+              {lang === 'es' ? 'CONFIANZA: ' : 'CONFIDENCE: '}
+              {parsedIntent.confidence.toUpperCase()}
+            </span>
+          </div>
+        </div>
+
+        {/* Control Matrix Divider */}
+        <div className="matrix-divider-bar">
+          <span className="divider-label">
+            {lang === 'es'
+              ? 'MATRIZ DE CALIBRACIÓN Y CONTROL (3 COLUMNAS DE PRECISIÓN)'
+              : 'CALIBRATION & CONTROL MATRIX (3 PRECISION COLUMNS)'}
+          </span>
+          <span className="divider-sub">
+            {lang === 'es'
+              ? 'Ajusta manualmente o verifica los parámetros seleccionados'
+              : 'Manually adjust or verify selected parameters'}
+          </span>
         </div>
       </div>
 
