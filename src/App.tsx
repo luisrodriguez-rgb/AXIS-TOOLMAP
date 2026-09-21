@@ -103,12 +103,14 @@ export const App: React.FC = () => {
         technicalLevel: activePersona.technicalLevel,
         os: activePersona.os,
         activeTools: activePersona.activeTools,
+        domainGroup: activePersona.domainGroup,
       },
       needText,
       deliverableType,
       constraints,
+      lang,
     };
-  }, [activePersona, needText, deliverableType, constraints]);
+  }, [activePersona, needText, deliverableType, constraints, lang]);
 
   const routes = useMemo(() => {
     return synthesizeTriadRoutes(currentQuery, TOOLS_DATASET, manualOverrides);
@@ -159,6 +161,7 @@ export const App: React.FC = () => {
               activeStack={activeStack}
               onOpenInspector={(rec) => setInspectedStage(rec)}
               lang={lang}
+              domainGroup={activePersona.domainGroup}
             />
 
             {/* Desglose editorial paso a paso con opciones de swap */}

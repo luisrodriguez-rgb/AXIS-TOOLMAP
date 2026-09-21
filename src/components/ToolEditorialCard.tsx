@@ -18,6 +18,17 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
 }) => {
   const { selectedTool, scoreBreakdown, whyThisTool, tradeOffs } = recommendation;
   const t = TRANSLATIONS[lang].card;
+  const tCat = TRANSLATIONS[lang].categories;
+
+  const categoryLabels: Record<string, string> = {
+    research: tCat.research,
+    calculation: tCat.calculation,
+    design_visual: tCat.design_visual,
+    drafting_3d: tCat.drafting_3d,
+    presentation: tCat.presentation,
+    data_analysis: tCat.data_analysis,
+    productivity: tCat.productivity,
+  };
 
   // Formatear código index: 001, 002, etc.
   const codeIndex = String(index + 1).padStart(3, '0');
@@ -39,7 +50,9 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
       {/* Top Index Bar */}
       <div className="tool-card-top">
         <span className="tool-index-code">{codeIndex}</span>
-        <span className="tool-category-badge">{selectedTool.category}</span>
+        <span className="tool-category-badge">
+          {categoryLabels[selectedTool.category] || selectedTool.category.toUpperCase()}
+        </span>
       </div>
 
       {/* Header */}
@@ -52,7 +65,7 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
             rel="noopener noreferrer"
             className="mono-text"
             style={{ fontSize: '0.75rem', color: 'var(--ink)', textDecoration: 'none', fontWeight: 700 }}
-            title="Sitio web oficial"
+            title={lang === 'es' ? 'Sitio web oficial' : 'Official website'}
           >
             {t.openLink}
           </a>
@@ -134,7 +147,7 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
         <button
           className="btn-swap-editorial"
           onClick={() => onOpenInspector(recommendation)}
-          title="Ver alternativas y sustituir"
+          title={lang === 'es' ? 'Ver alternativas y sustituir' : 'View alternatives and swap'}
         >
           <span>{t.swapBtn}</span>
         </button>

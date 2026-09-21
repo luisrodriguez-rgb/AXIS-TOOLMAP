@@ -2,6 +2,7 @@ import React from 'react';
 import type { StageRecommendation, StackRecommendation } from '../types';
 import type { RouteId, RouteOption } from '../engine/routeSynthesizer';
 import type { Language } from '../i18n/translations';
+import { TRANSLATIONS } from '../i18n/translations';
 import { getToolLogo } from '../assets/logos/ToolLogos';
 import { ArtifactPreview } from './ArtifactPreview';
 
@@ -12,6 +13,7 @@ interface InteractiveWorkflowCanvasProps {
   activeStack: StackRecommendation;
   onOpenInspector: (rec: StageRecommendation) => void;
   lang: Language;
+  domainGroup?: string;
 }
 
 export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps> = ({
@@ -21,8 +23,16 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
   activeStack,
   onOpenInspector,
   lang,
+  domainGroup,
 }) => {
   const currentRoute = routes[currentRouteId];
+  const t = TRANSLATIONS[lang].canvas;
+
+  // Adaptación de vocabulario según dominio profesional (Smart Scoping Vocab)
+  const isHumanitiesDomain = domainGroup === 'SCIENCE' || domainGroup === 'BIZ';
+  const vocab = isHumanitiesDomain
+    ? TRANSLATIONS[lang].domainVocab.humanities
+    : TRANSLATIONS[lang].domainVocab.tech;
 
   // Formatear barras ASCII
   const renderAsciiBar = (score: number) => {
@@ -38,10 +48,10 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
       <div className="canvas-header-bar">
         <div className="canvas-title-group">
           <div className="mono-text" style={{ fontSize: '0.72rem', color: 'var(--signal)', fontWeight: 700 }}>
-            02 / INTERACTIVE WORKFLOW CANVAS
+            {t.sectionTag}
           </div>
           <h2 className="canvas-headline">
-            {lang === 'es' ? 'MAPA DINÁMICO DE HERRAMIENTAS Y FLUJO DE DATOS' : 'DYNAMIC TOOL MAP & DATA FLOW GRAPH'}
+            {t.headline}
           </h2>
         </div>
 
@@ -64,37 +74,37 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
         </div>
       </div>
 
-      {/* 2. Stack Telemetry / Bill of Materials (BOM) Bar */}
+      {/* 2. Stack Telemetry / Bill of Materials (BOM) Bar con Vocabulario Adaptativo */}
       <div className="telemetry-bar">
         <div className="telemetry-metrics-cluster">
           <div className="telemetry-metric">
-            <span className="telemetry-label">{lang === 'es' ? 'COSTO MENSUAL' : 'MONTHLY COST'}</span>
+            <span className="telemetry-label">{vocab.estimatedBudget}</span>
             <span className="telemetry-val-signal">
               {activeStack.totalEstimatedMonthlyCostUSD === 0
-                ? '$0 (FREE)'
+                ? t.free
                 : `$${activeStack.totalEstimatedMonthlyCostUSD} USD/MO`}
             </span>
           </div>
 
           <div className="telemetry-metric">
-            <span className="telemetry-label">{lang === 'es' ? 'AJUSTE GLOBAL' : 'GLOBAL FIT'}</span>
+            <span className="telemetry-label">{t.globalFit}</span>
             <span className="telemetry-val">{activeStack.overallFitScore}%</span>
           </div>
 
           <div className="telemetry-metric">
-            <span className="telemetry-label">{lang === 'es' ? 'CURVA ADOPCIÓN' : 'LEARNING CURVE'}</span>
+            <span className="telemetry-label">{t.learningCurve}</span>
             <span className="telemetry-val">{activeStack.learningCurveOverall.toUpperCase()}</span>
           </div>
 
           <div className="telemetry-metric">
-            <span className="telemetry-label">{lang === 'es' ? 'COMPATIBILIDAD' : 'DATA GLUE'}</span>
+            <span className="telemetry-label">{vocab.dataGlue}</span>
             <span className="telemetry-val">{activeStack.ecosystemSynergyScore}%</span>
           </div>
         </div>
 
         <div className="telemetry-tradeoff-note">
           <strong className="mono-text" style={{ color: 'var(--signal)' }}>
-            {lang === 'es' ? '! TRADE-OFF: ' : '! TRADE-OFF: '}
+            {t.tradeoff}
           </strong>
           <span>{activeStack.keyStackTradeOff}</span>
         </div>
@@ -120,7 +130,7 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
                     {tool.pricing.hasFreeTier
                       ? tool.pricing.startingPricePerMonthUSD === 0
                         ? '$0'
-                        : 'FREE TIER'
+                        : t.freeTier
                       : `$${tool.pricing.startingPricePerMonthUSD}/MO`}
                   </div>
                 </div>
@@ -183,7 +193,7 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
                   className="btn-node-swap"
                   onClick={() => onOpenInspector(stageRec)}
                 >
-                  <span>⇄ {lang === 'es' ? 'SUSTITUIR PIEZA' : 'SWAP TOOL'}</span>
+                  <span>⇄ {t.swapTool}</span>
                 </button>
               </div>
 
@@ -201,9 +211,7 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
                         borderColor: dataGlue.frictionLevel === 'low' ? 'var(--line)' : 'var(--signal)',
                       }}
                     >
-                      {dataGlue.frictionLevel === 'low'
-                        ? lang === 'es' ? 'FLUIDO' : 'SEAMLESS'
-                        : lang === 'es' ? 'MANUAL' : 'MANUAL'}
+                      {dataGlue.frictionLevel === 'low' ? t.seamless : t.manual}
                     </div>
                   </div>
                   <div className="glue-cable-line" />

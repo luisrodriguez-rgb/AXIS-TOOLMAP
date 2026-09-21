@@ -13,16 +13,27 @@ export const ToolArchiveTable: React.FC<ToolArchiveTableProps> = ({ tools, lang 
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const t = TRANSLATIONS[lang].archive;
+  const tCategories = TRANSLATIONS[lang].categories;
 
   const categories = [
-    { id: 'all', label: lang === 'es' ? 'TODAS LAS CATEGORÍAS' : 'ALL CATEGORIES' },
-    { id: 'research', label: lang === 'es' ? 'INVESTIGACIÓN' : 'RESEARCH' },
-    { id: 'calculation', label: lang === 'es' ? 'CÁLCULO' : 'CALCULATION' },
-    { id: 'design_visual', label: lang === 'es' ? 'DISEÑO & 3D' : 'DESIGN & 3D' },
-    { id: 'presentation', label: lang === 'es' ? 'PRESENTACIÓN' : 'PRESENTATION' },
-    { id: 'data_analysis', label: lang === 'es' ? 'DATOS' : 'DATA' },
-    { id: 'productivity', label: lang === 'es' ? 'PRODUCTIVIDAD' : 'PRODUCTIVITY' },
+    { id: 'all', label: tCategories.all },
+    { id: 'research', label: tCategories.research },
+    { id: 'calculation', label: tCategories.calculation },
+    { id: 'design_visual', label: tCategories.design_visual },
+    { id: 'presentation', label: tCategories.presentation },
+    { id: 'data_analysis', label: tCategories.data_analysis },
+    { id: 'productivity', label: tCategories.productivity },
   ];
+
+  const categoryLabels: Record<string, string> = {
+    research: tCategories.research,
+    calculation: tCategories.calculation,
+    design_visual: tCategories.design_visual,
+    drafting_3d: tCategories.drafting_3d,
+    presentation: tCategories.presentation,
+    data_analysis: tCategories.data_analysis,
+    productivity: tCategories.productivity,
+  };
 
   const filteredTools = useMemo(() => {
     return tools.filter((tool) => {
@@ -119,7 +130,7 @@ export const ToolArchiveTable: React.FC<ToolArchiveTableProps> = ({ tools, lang 
                         className="archive-col-mono"
                         style={{ color: 'var(--ink-muted)', textDecoration: 'none' }}
                       >
-                        visit site ↗
+                        {t.visitSite}
                       </a>
                     </div>
                   </div>
@@ -135,11 +146,11 @@ export const ToolArchiveTable: React.FC<ToolArchiveTableProps> = ({ tools, lang 
                       fontWeight: 600,
                     }}
                   >
-                    {tool.isNativeAI ? 'NATIVE AI' : 'TRADITIONAL'}
+                    {tool.isNativeAI ? t.nativeAi : t.traditional}
                   </span>
                 </td>
                 <td className="archive-col-mono" style={{ textTransform: 'uppercase' }}>
-                  {tool.category}
+                  {categoryLabels[tool.category] || tool.category.toUpperCase()}
                 </td>
                 <td style={{ fontSize: '0.8rem', color: 'var(--ink)' }}>
                   ✓ {tool.whatItDoesBest[0]}
@@ -151,7 +162,7 @@ export const ToolArchiveTable: React.FC<ToolArchiveTableProps> = ({ tools, lang 
                   {tool.pricing.hasFreeTier
                     ? tool.pricing.startingPricePerMonthUSD === 0
                       ? '$0'
-                      : 'FREE TIER'
+                      : t.freeTier
                     : `$${tool.pricing.startingPricePerMonthUSD}/MO`}
                 </td>
                 <td className="archive-col-mono" style={{ fontSize: '0.7rem' }}>
