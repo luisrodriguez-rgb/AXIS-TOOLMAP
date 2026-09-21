@@ -1,0 +1,490 @@
+/* Visual Canvas & Modular Rack Styles (Swiss Technical Interactive) */
+
+.workflow-canvas-rack {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  margin-top: 28px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Header & Route Selector */
+.canvas-header-bar {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-canvas);
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.canvas-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.canvas-headline {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.routes-selector-group {
+  display: flex;
+  border: 1px solid var(--line);
+  background: var(--bg-surface);
+}
+
+.route-tab-btn {
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border: none;
+  border-right: 1px solid var(--line);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.route-tab-btn:last-child {
+  border-right: none;
+}
+
+.route-tab-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink);
+}
+
+.route-tab-btn.active {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+
+.route-tab-btn.active .route-bullet {
+  color: var(--signal);
+}
+
+.route-bullet {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+/* 2. Telemetry / BOM Bar */
+.telemetry-bar {
+  padding: 14px 24px;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.telemetry-metrics-cluster {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.telemetry-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.telemetry-label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.telemetry-val {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.telemetry-val-signal {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--signal);
+}
+
+.telemetry-tradeoff-note {
+  max-width: 540px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink-secondary);
+  border-left: 2px solid var(--signal);
+  padding-left: 10px;
+}
+
+/* 3. Canvas Nodes Stream & Data Glue */
+.canvas-nodes-stream {
+  padding: 28px 24px;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  gap: 0;
+  background: var(--bg-canvas);
+}
+
+@media (max-width: 1100px) {
+  .canvas-nodes-stream {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* Node Rack Card */
+.node-rack-card {
+  flex: 1;
+  min-width: 310px;
+  max-width: 380px;
+  background: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.node-rack-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px var(--ink);
+}
+
+.node-top-bar {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-subtle);
+}
+
+.node-stage-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--signal);
+  text-transform: uppercase;
+}
+
+.node-price-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.node-identity-row {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.node-logo-frame {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: var(--bg-canvas);
+  flex-shrink: 0;
+}
+
+.node-tool-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.node-tool-tagline {
+  font-size: 0.78rem;
+  color: var(--ink-secondary);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Artifact Preview Widget */
+.artifact-preview-box {
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-label-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.preview-svg {
+  width: 100%;
+  height: 90px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--line);
+}
+
+/* Document Citation Preview */
+.preview-doc-card {
+  height: 90px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--line);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.preview-doc-line {
+  height: 5px;
+  background: var(--line);
+  border-radius: 1px;
+}
+
+.preview-doc-citation-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-citation-badge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--signal);
+  background: var(--signal-bg);
+  padding: 1px 4px;
+  border: 1px solid var(--signal-border);
+}
+
+/* Slide Preview */
+.preview-slide-layout {
+  height: 90px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-slide-header-line {
+  height: 8px;
+  width: 45%;
+  background: var(--ink);
+}
+
+.preview-slide-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.preview-slide-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preview-slide-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  padding: 6px;
+  text-align: center;
+}
+
+.preview-metric-num {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--signal);
+}
+
+.preview-metric-sub {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+/* Capacity & Evidence in Node */
+.node-capacity-grid {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--bg-surface);
+}
+
+.node-cap-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--ink);
+}
+
+.node-cap-label {
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.node-evidence-box {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.node-evidence-item {
+  font-size: 0.74rem;
+  display: flex;
+  gap: 6px;
+  line-height: 1.3;
+}
+
+.node-evidence-item.pos {
+  color: var(--ink);
+}
+
+.node-evidence-item.pos span:first-child {
+  font-weight: 700;
+}
+
+.node-evidence-item.neg {
+  color: var(--ink-muted);
+}
+
+.node-evidence-item.neg span:first-child {
+  color: var(--signal);
+  font-weight: 700;
+}
+
+.btn-node-swap {
+  padding: 8px 14px;
+  background: var(--ink);
+  color: var(--ink-inverse);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.btn-node-swap:hover {
+  background: var(--signal);
+}
+
+/* 4. Data Glue Connector between Nodes */
+.data-glue-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+@media (max-width: 1100px) {
+  .data-glue-connector {
+    width: 100%;
+    height: 48px;
+    flex-direction: row;
+  }
+}
+
+.glue-cable-line {
+  flex: 1;
+  width: 2px;
+  background: var(--line-strong);
+}
+
+@media (max-width: 1100px) {
+  .glue-cable-line {
+    width: 100%;
+    height: 2px;
+  }
+}
+
+.glue-badge-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+.glue-format-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.glue-method-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.glue-friction-tag {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 800;
+  border: 1px solid var(--line);
+  padding: 1px 4px;
+  margin-top: 2px;
+}

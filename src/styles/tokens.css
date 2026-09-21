@@ -1,0 +1,64 @@
+:root {
+  /* Surface & Canvas: Human-centered Technical Editorial / Swiss Paper (Light) */
+  --bg-canvas: #F5F3EC;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #ECE9DF;
+  --bg-muted: #E2DFD6;
+  --bg-dark: #111111;
+
+  /* Typography / Ink */
+  --ink: #111111;
+  --ink-secondary: #444440;
+  --ink-muted: #6E6C65;
+  --ink-faint: #9E9C95;
+  --ink-inverse: #F5F3EC;
+
+  /* Grid & Lines (Rigid Swiss Structure) */
+  --line: #D4D1C7;
+  --line-strong: #111111;
+  --line-subtle: #E3E0D6;
+
+  /* Single Signal Color: International Safety Orange / Vermilion */
+  --signal: #FF4B22;
+  --signal-hover: #E03E18;
+  --signal-bg: rgba(255, 75, 34, 0.08);
+  --signal-border: rgba(255, 75, 34, 0.35);
+
+  /* Typography Families */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Space Mono', ui-monospace, monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Geometry & Precision */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-normal: 200ms ease;
+}
+
+[data-theme="dark"] {
+  /* Dark Technical Editorial (Terminal / Obsidian Slate) */
+  --bg-canvas: #101114;
+  --bg-surface: #17191E;
+  --bg-subtle: #20232A;
+  --bg-muted: #292D36;
+  --bg-dark: #0A0B0D;
+
+  --ink: #F3F1EB;
+  --ink-secondary: #C8C5BD;
+  --ink-muted: #8E8C85;
+  --ink-faint: #5E5D57;
+  --ink-inverse: #101114;
+
+  --line: #2D3039;
+  --line-strong: #F3F1EB;
+  --line-subtle: #23262E;
+
+  --signal: #FF4B22;
+  --signal-hover: #FF623D;
+  --signal-bg: rgba(255, 75, 34, 0.16);
+  --signal-border: rgba(255, 75, 34, 0.45);
+}
