@@ -80,6 +80,19 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
         </div>
       </div>
 
+      {/* Declaración Formal de la Función Objetivo de la Ruta */}
+      {currentRoute.objectiveFormula && (
+        <div className="route-objective-strip">
+          <div className="objective-formula-box">
+            <span className="obj-label">{lang === 'es' ? 'FUNCIÓN OBJETIVO MATEMÁTICA:' : 'MATHEMATICAL OBJECTIVE:'}</span>
+            <code className="obj-formula">{currentRoute.objectiveFormula}</code>
+          </div>
+          {currentRoute.objectiveStatement && (
+            <div className="obj-statement">{currentRoute.objectiveStatement}</div>
+          )}
+        </div>
+      )}
+
       {/* 2. Stack Telemetry / Bill of Materials (BOM) Bar con Vocabulario Adaptativo */}
       <div className="telemetry-bar">
         <div className="telemetry-metrics-cluster">
@@ -219,6 +232,16 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
                     >
                       {dataGlue.frictionLevel === 'low' ? t.seamless : t.manual}
                     </div>
+
+                    {/* Desglose de Fidelidad 7D en Data Glue */}
+                    {dataGlue.fidelityProfile && (
+                      <div className="glue-fidelity-7d-cluster">
+                        <span className="g7d-tag">GEO:{dataGlue.fidelityProfile.dimensions.geometry?.slice(0, 4)}</span>
+                        <span className="g7d-tag">SEM:{dataGlue.fidelityProfile.dimensions.semantic_data?.slice(0, 4)}</span>
+                        <span className="g7d-tag">PAR:{dataGlue.fidelityProfile.dimensions.parameters?.slice(0, 4)}</span>
+                        <span className="g7d-tag">EDT:{dataGlue.fidelityProfile.dimensions.editability?.slice(0, 4)}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="glue-cable-line" />
                 </div>

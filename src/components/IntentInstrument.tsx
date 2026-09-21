@@ -308,18 +308,36 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
             />
           </div>
 
-          {/* Real-time Extracted Tokens Bar */}
+          {/* Real-time Extracted Tokens Bar con Procedencia */}
           <div className="extracted-tokens-bar">
             <div className="tokens-left">
               <span className="tokens-label">
                 {lang === 'es' ? 'INTENCIÓN DETECTADA:' : 'PARSED INTENT:'}
               </span>
               {parsedIntent.extractedKeywords.length > 0 ? (
-                parsedIntent.extractedKeywords.map((kw, i) => (
-                  <span key={i} className="intent-token-pill">
-                    {kw}
-                  </span>
-                ))
+                <>
+                  {parsedIntent.extractedKeywords.map((kw, i) => (
+                    <span key={i} className="intent-token-pill">
+                      {kw}
+                    </span>
+                  ))}
+                  {/* Chips de Procedencia de Variables */}
+                  {parsedIntent.provenance.deliverable.provenance !== 'unknown' && (
+                    <span className={`intent-provenance-pill ${parsedIntent.provenance.deliverable.provenance}`}>
+                      ENTREGABLE: {parsedIntent.provenance.deliverable.value} [{parsedIntent.provenance.deliverable.provenance.toUpperCase()}]
+                    </span>
+                  )}
+                  {parsedIntent.provenance.os.provenance !== 'unknown' && (
+                    <span className={`intent-provenance-pill ${parsedIntent.provenance.os.provenance}`}>
+                      SO: {parsedIntent.provenance.os.value} [{parsedIntent.provenance.os.provenance.toUpperCase()}]
+                    </span>
+                  )}
+                  {parsedIntent.provenance.budget.provenance !== 'unknown' && (
+                    <span className={`intent-provenance-pill ${parsedIntent.provenance.budget.provenance}`}>
+                      PRESUPUESTO: ${parsedIntent.provenance.budget.value}/mes [{parsedIntent.provenance.budget.provenance.toUpperCase()}]
+                    </span>
+                  )}
+                </>
               ) : (
                 <span className="intent-token-empty">
                   {lang === 'es' ? 'Describe tu entregable o restricciones...' : 'Describe your deliverable or constraints...'}

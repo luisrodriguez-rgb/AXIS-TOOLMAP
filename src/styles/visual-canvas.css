@@ -489,6 +489,69 @@
   margin-top: 2px;
 }
 
+.glue-fidelity-7d-cluster {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dotted var(--line);
+}
+
+.g7d-tag {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  padding: 1px 3px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--line);
+  color: var(--ink-muted);
+}
+
+/* Route Objective Strip */
+.route-objective-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--signal);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.objective-formula-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.obj-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--signal);
+  letter-spacing: 0.04em;
+}
+
+.obj-formula {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--bg-surface);
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+}
+
+.obj-statement {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
 /* Tool Real SVGs styling & Dark Mode Inversion for Monochrome SVGs */
 .tool-real-logo {
   object-fit: contain;

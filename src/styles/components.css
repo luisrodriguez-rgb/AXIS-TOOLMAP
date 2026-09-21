@@ -502,6 +502,26 @@
   color: var(--ink);
 }
 
+.intent-provenance-pill {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.intent-provenance-pill.explicit {
+  background: rgba(46, 164, 79, 0.12);
+  color: #2ea44f;
+  border: 1px solid #2ea44f;
+}
+
+.intent-provenance-pill.inferred {
+  background: rgba(234, 179, 8, 0.12);
+  color: #d97706;
+  border: 1px solid #d97706;
+}
+
 .intent-token-empty {
   font-family: var(--font-body);
   font-size: 0.75rem;
