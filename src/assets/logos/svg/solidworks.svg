@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- SolidWorks Official Vector Mark -->
+  <rect width="100" height="100" rx="20" fill="#E60000"/>
+  <path d="M30 35L50 23L70 35V65L50 77L30 65V35Z" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M30 35L50 47L70 35M50 47V77" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+</svg>

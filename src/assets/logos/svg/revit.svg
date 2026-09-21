@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Autodesk Revit Official Vector Mark -->
+  <rect width="100" height="100" rx="20" fill="#0696D7"/>
+  <path d="M30 25H52C63.0457 25 72 33.9543 72 45C72 56.0457 63.0457 65 52 65H42V75H30V25Z" fill="#FFFFFF"/>
+  <path d="M42 37H51C55.4183 37 59 40.5817 59 45C59 49.4183 55.4183 53 51 53H42V37Z" fill="#0696D7"/>
+  <path d="M52 53L68 75H55L42 57" fill="#FFFFFF"/>
+</svg>

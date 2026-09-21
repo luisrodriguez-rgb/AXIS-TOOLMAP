@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- MathWorks MATLAB Official L-Shaped Membrane Mark -->
+  <rect width="100" height="100" rx="20" fill="#0A192F"/>
+  <path d="M22 68C32 50 42 75 52 40C62 25 72 55 82 35" stroke="#E15A24" stroke-width="6" stroke-linecap="round"/>
+  <path d="M22 68C35 78 65 78 82 35" stroke="#E15A24" stroke-width="4" stroke-dasharray="2 4"/>
+  <circle cx="52" cy="40" r="5" fill="#FFFFFF"/>
+</svg>
