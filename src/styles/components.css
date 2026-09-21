@@ -268,9 +268,86 @@
   justify-content: space-between;
 }
 
+.matrix-toolbar {
+  padding: 6px 10px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.matrix-search-input {
+  width: 100%;
+  background: var(--bg-canvas);
+  border: 1px solid var(--line);
+  padding: 5px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink);
+  outline: none;
+  transition: border var(--transition-fast);
+}
+
+.matrix-search-input:focus {
+  border-color: var(--signal);
+}
+
+.matrix-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.matrix-filter-pill {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  background: var(--bg-canvas);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+}
+
+.matrix-filter-pill:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.matrix-filter-pill.active {
+  background: var(--ink);
+  color: var(--ink-inverse);
+  border-color: var(--ink);
+}
+
 .matrix-options-list {
   display: flex;
   flex-direction: column;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.matrix-options-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.matrix-options-list::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+}
+
+.matrix-options-list::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+}
+
+.matrix-btn-code {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--signal);
+  margin-right: 8px;
 }
 
 .matrix-btn {
