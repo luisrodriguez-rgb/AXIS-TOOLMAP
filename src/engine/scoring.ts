@@ -1,4 +1,4 @@
-import type { Tool, UserWorkflowQuery, WorkflowStageId, DeliverableType, ToolCategory } from '../types';
+import type { Tool, UserWorkflowQuery, WorkflowStageId, DeliverableType, ToolCategory, StageFitLevel } from '../types';
 
 export const DELIVERABLE_COMPATIBLE_CATEGORIES: Record<DeliverableType, ToolCategory[]> = {
   // Documentos, investigación & textos
@@ -46,8 +46,7 @@ export const DELIVERABLE_COMPATIBLE_CATEGORIES: Record<DeliverableType, ToolCate
   journey_map: ['design_visual', 'productivity'],
 };
 
-export type { StageFitLevel } from '../types';
-import type { StageFitLevel } from '../types';
+export type { StageFitLevel };
 
 export interface StageFitEvaluation {
   level: StageFitLevel;

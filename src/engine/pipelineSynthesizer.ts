@@ -45,7 +45,7 @@ export const WORKFLOW_STAGES_DEFINITION: Record<WorkflowStageId, WorkflowStage> 
 export function synthesizeWorkflowStack(
   query: UserWorkflowQuery,
   allTools: Tool[],
-  manualOverrides: Record<WorkflowStageId, string> = {} as Record<WorkflowStageId, string>
+  manualOverrides: Partial<Record<WorkflowStageId, string>> = {}
 ): StackRecommendation {
   // 1. Determinar qué etapas aplican según el entregable
   let activeStageIds: WorkflowStageId[] = [];

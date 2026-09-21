@@ -44,7 +44,7 @@ export interface RouteOption {
 export function synthesizeTriadRoutes(
   baseQuery: UserWorkflowQuery,
   allTools: Tool[],
-  manualOverrides: Record<WorkflowStageId, string> = {} as Record<WorkflowStageId, string>
+  manualOverrides: Partial<Record<WorkflowStageId, string>> = {}
 ): Record<RouteId, RouteOption> {
   const lang = baseQuery.lang || 'es';
   const tRoutes = TRANSLATIONS[lang].routes;
