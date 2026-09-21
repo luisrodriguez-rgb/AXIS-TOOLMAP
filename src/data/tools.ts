@@ -2006,7 +2006,7 @@ export const TOOLS_DATASET: Tool[] = [
       'No incluye modelos de IA por defecto sin configurar APIs externas',
     ],
     integrations: ['zotero', 'git'],
-    supportedStages: ['ingest_research', 'refine_format'],
+    supportedStages: ['ingest_research', 'model_process', 'refine_format'],
   },
   {
     id: 'microsoft-365',

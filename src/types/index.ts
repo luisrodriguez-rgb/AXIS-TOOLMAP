@@ -65,6 +65,15 @@ export interface ToolCapability {
   offlineSupport: boolean;
 }
 
+export type ToolCategory =
+  | 'research'
+  | 'calculation'
+  | 'design_visual'
+  | 'presentation'
+  | 'data_analysis'
+  | 'drafting_3d'
+  | 'productivity';
+
 export interface Tool {
   id: string;
   name: string;
@@ -72,14 +81,7 @@ export interface Tool {
   slug: string;
   websiteUrl: string;
   isNativeAI: boolean;
-  category:
-    | 'research'
-    | 'calculation'
-    | 'design_visual'
-    | 'presentation'
-    | 'data_analysis'
-    | 'drafting_3d'
-    | 'productivity';
+  category: ToolCategory;
   pricing: {
     hasFreeTier: boolean;
     freeTierDetails?: string;

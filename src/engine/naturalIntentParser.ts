@@ -25,10 +25,11 @@ const OS_RULES: KeywordRule<OperatingSystem>[] = [
 
 const DELIVERABLE_RULES: KeywordRule<DeliverableType>[] = [
   { patterns: [/\b(ifc|bim|plano|planos|ejecutivo|arquitectur)\b/i], value: 'bim_model' },
-  { patterns: [/\b(dashboard|tablero|kpi|metricas|métrica)\b/i], value: 'dashboard' },
+  { patterns: [/\b(dashboard|tablero|kpi|metricas|métrica|power bi|tableau)\b/i], value: 'dashboard' },
   { patterns: [/\b(paper|articulo|artículo|latex|investigaci|tesis)\b/i], value: 'latex_manuscript' },
   { patterns: [/\b(design system|sistema de diseno|tokens|prototipo|ui|ux)\b/i], value: 'design_system' },
-  { patterns: [/\b(mvp|landing|crm|base de datos|startup)\b/i], value: 'dashboard' },
+  { patterns: [/\b(mvp|landing|landing page|startup|app web|no-code|sin programar)\b/i], value: 'code' },
+  { patterns: [/\b(crm|base de datos|database|leads|clientes)\b/i], value: 'code' },
   { patterns: [/\b(memoria|calculo estructural|estructural|sismo)\b/i], value: 'structural_calc' },
   { patterns: [/\b(presentacion|presentación|diapositiva|pitch|slides)\b/i], value: 'presentation' },
   { patterns: [/\b(codigo|código|api|backend|frontend|microservicio)\b/i], value: 'code' },

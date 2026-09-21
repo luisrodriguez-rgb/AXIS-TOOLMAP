@@ -8,7 +8,7 @@ import type {
   TechnicalLevel,
 } from '../types';
 import { evaluateHardConstraints } from './filter';
-import { calculateToolScore } from './scoring';
+import { calculateToolScore, DELIVERABLE_COMPATIBLE_CATEGORIES } from './scoring';
 import {
   generateWhyThisTool,
   generateWhatYouSacrifice,
@@ -52,21 +52,54 @@ export function synthesizeWorkflowStack(
 
   switch (query.deliverableType) {
     case 'presentation':
+    case 'brand_guidelines':
       activeStageIds = ['ingest_research', 'model_process', 'present_deliver'];
       break;
     case 'visualization':
-      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
-      break;
-    case 'report':
-      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
-      break;
     case 'render':
       activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
       break;
+    case 'report':
+    case 'latex_manuscript':
+    case 'bib_matrix':
+    case 'clinical_protocol':
+    case 'environmental_study':
+      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
+      break;
+    case 'bim_model':
+    case 'cad_plan':
+    case 'gis_map':
+      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
+      break;
+    case 'structural_calc':
+    case 'cfd_simulation':
+    case 'pcb_schematic':
+      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
+      break;
     case 'dashboard':
+    case 'financial_model':
+    case 'bom_estimate':
+    case 'construction_schedule':
       activeStageIds = ['ingest_research', 'model_process', 'present_deliver'];
       break;
     case 'code':
+    case 'api_spec':
+    case 'docker_infra':
+    case 'security_audit':
+    case 'c4_architecture':
+      activeStageIds = ['ingest_research', 'model_process', 'present_deliver'];
+      break;
+    case 'interactive_prototype':
+    case 'design_system':
+    case 'journey_map':
+    case 'prd_spec':
+      activeStageIds = ['ingest_research', 'model_process', 'present_deliver'];
+      break;
+    case 'video_master':
+    case 'motion_graphics':
+      activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
+      break;
+    case 'computational_notebook':
       activeStageIds = ['ingest_research', 'model_process', 'refine_format'];
       break;
     case 'concept':
@@ -95,9 +128,21 @@ export function synthesizeWorkflowStack(
     const stageDef = getWorkflowStageDefinition(stageId, lang);
 
     // Herramientas que admiten esta etapa
-    const stageCandidates = allTools.filter((tool) =>
+    let stageCandidates = allTools.filter((tool) =>
       tool.supportedStages.includes(stageId)
     );
+
+    // Filtrar estrictamente por categorías compatibles con el entregable (Domain Integrity Filter)
+    const allowedCategories = DELIVERABLE_COMPATIBLE_CATEGORIES[query.deliverableType];
+    if (allowedCategories && allowedCategories.length > 0) {
+      const categoryFiltered = stageCandidates.filter((tool) =>
+        allowedCategories.includes(tool.category)
+      );
+      // Solo aplicar si deja al menos 1 candidato
+      if (categoryFiltered.length > 0) {
+        stageCandidates = categoryFiltered;
+      }
+    }
 
     // 1. Filtrado Estricto de Restricciones Duras (Hard Constraints)
     // Separa candidatos viables de aquellos descartados por presupuesto, SO o privacidad

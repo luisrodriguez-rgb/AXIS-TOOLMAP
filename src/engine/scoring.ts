@@ -1,4 +1,50 @@
-import type { Tool, UserWorkflowQuery, WorkflowStageId } from '../types';
+import type { Tool, UserWorkflowQuery, WorkflowStageId, DeliverableType, ToolCategory } from '../types';
+
+export const DELIVERABLE_COMPATIBLE_CATEGORIES: Record<DeliverableType, ToolCategory[]> = {
+  // Documentos, investigación & textos
+  latex_manuscript: ['research', 'productivity', 'data_analysis'],
+  bib_matrix: ['research', 'productivity'],
+  report: ['research', 'productivity', 'data_analysis'],
+  clinical_protocol: ['research', 'productivity'],
+  environmental_study: ['research', 'data_analysis', 'drafting_3d', 'calculation'],
+  prd_spec: ['productivity', 'design_visual'],
+
+  // Arquitectura, BIM, CAD & 3D
+  bim_model: ['drafting_3d', 'calculation', 'design_visual'],
+  cad_plan: ['drafting_3d', 'calculation'],
+  render: ['drafting_3d', 'design_visual'],
+  visualization: ['drafting_3d', 'design_visual', 'data_analysis', 'calculation'],
+
+  // Ingeniería, Cálculo & Simulación
+  structural_calc: ['calculation', 'drafting_3d', 'data_analysis'],
+  cfd_simulation: ['calculation', 'drafting_3d'],
+  pcb_schematic: ['calculation', 'drafting_3d'],
+  computational_notebook: ['data_analysis', 'calculation', 'productivity'],
+
+  // Software, Producto, Web & Startups
+  code: ['productivity', 'data_analysis', 'design_visual'],
+  api_spec: ['productivity'],
+  docker_infra: ['productivity'],
+  security_audit: ['productivity'],
+  c4_architecture: ['productivity', 'design_visual'],
+  interactive_prototype: ['design_visual', 'productivity'],
+  design_system: ['design_visual', 'productivity'],
+
+  // Datos, Finanzas & Gestión
+  dashboard: ['data_analysis', 'productivity'],
+  financial_model: ['data_analysis', 'productivity', 'calculation'],
+  bom_estimate: ['data_analysis', 'productivity', 'calculation'],
+  construction_schedule: ['productivity', 'drafting_3d', 'data_analysis'],
+  gis_map: ['drafting_3d', 'data_analysis'],
+
+  // Medios, Presentaciones & Marca
+  presentation: ['productivity', 'design_visual', 'research'],
+  brand_guidelines: ['design_visual', 'productivity'],
+  video_master: ['design_visual'],
+  motion_graphics: ['design_visual'],
+  concept: ['productivity', 'design_visual', 'research'],
+  journey_map: ['design_visual', 'productivity'],
+};
 
 export interface ScoreBreakdown {
   taskFit: number;
@@ -18,6 +64,13 @@ export function calculateToolScore(
 
   // --- 1. TASK FIT (Ajuste Funcional a la Tarea y Entregable) ---
   let fitPoints = 50; // base
+
+  // Validación estricta de compatibilidad de categoría
+  const allowedCategories = DELIVERABLE_COMPATIBLE_CATEGORIES[deliverableType];
+  if (allowedCategories && !allowedCategories.includes(tool.category)) {
+    // Penalización estricta por incompatibilidad categórica (evita que SketchUp aparezca en papers o Zotero en BIM)
+    fitPoints -= 150;
+  }
 
   // Relevancia en la etapa específica
   if (tool.supportedStages.includes(stageId)) {
@@ -120,6 +173,12 @@ export function calculateToolScore(
   if ((lowerNeed.includes('encuesta') || lowerNeed.includes('excel') || lowerNeed.includes('dato')) && tool.capabilities.dataAnalysis) {
     fitPoints += 20;
   }
+  if ((lowerNeed.includes('landing') || lowerNeed.includes('mvp') || lowerNeed.includes('sin programar') || lowerNeed.includes('no-code') || lowerNeed.includes('no técnico')) && (tool.id === 'v0' || tool.id === 'supabase' || tool.id === 'notion' || tool.id === 'vercel' || tool.id === 'appflowy')) {
+    fitPoints += 40;
+  }
+  if ((lowerNeed.includes('base de datos') || lowerNeed.includes('crm') || lowerNeed.includes('clientes')) && (tool.id === 'supabase' || tool.id === 'notion' || tool.id === 'appflowy')) {
+    fitPoints += 40;
+  }
 
   // --- AFINIDAD DE DOMINIO PROFESIONAL DIRECTA ---
   const roleLower = (persona.primaryRole || '').toLowerCase();
@@ -129,6 +188,8 @@ export function calculateToolScore(
     fitPoints += 30; // Prioridad a Revit, ArchiCAD, Rhino, SketchUp, LookX, Twinmotion, Enscape
   } else if ((roleLower.includes('software') || roleLower.includes('devops') || roleLower.includes('ciberseguridad') || roleLower.includes('desarroll')) && (tool.capabilities.generatesCode || tool.id === 'docker' || tool.id === 'postman' || tool.id === 'jetbrains-idea' || tool.id === 'supabase' || tool.id === 'vercel' || tool.id === 'sentry')) {
     fitPoints += 35; // Prioridad a VS Code, Cursor, IntelliJ, Docker, Postman, Supabase, Vercel, Sentry, Linear
+  } else if ((roleLower.includes('fundad') || roleLower.includes('emprended') || roleLower.includes('startup') || roleLower.includes('product manager') || roleLower.includes('pm')) && (tool.id === 'v0' || tool.id === 'supabase' || tool.id === 'notion' || tool.id === 'vercel' || tool.id === 'linear' || tool.id === 'appflowy')) {
+    fitPoints += 40; // Prioridad a stack moderno de fundadores
   } else if ((roleLower.includes('mecánic') || roleLower.includes('electrónic') || roleLower.includes('químic') || roleLower.includes('biomédic') || roleLower.includes('industrial') || roleLower.includes('ingenier')) && (tool.category === 'calculation' || tool.category === 'drafting_3d')) {
     fitPoints += 35; // Prioridad a SolidWorks, CATIA, Creo, Inventor, Ansys, MATLAB, COMSOL, Altium, KiCad
   } else if ((roleLower.includes('dato') || roleLower.includes('financ') || roleLower.includes('econometr') || roleLower.includes('matemátic')) && (tool.category === 'data_analysis' || tool.category === 'calculation')) {
@@ -139,7 +200,7 @@ export function calculateToolScore(
     fitPoints += 35; // Prioridad a Zotero, Overleaf, Elicit, Perplexity, Mendeley, Connected Papers, Rayyan, ATLAS.ti, Notion
   }
 
-  const taskFit = Math.min(100, Math.max(10, fitPoints));
+  const taskFit = Math.min(100, Math.max(5, fitPoints));
 
   // --- 2. FRICTION FACTOR (Facilidad de Adopción y Curva de Aprendizaje) ---
   let frictionPoints = 85;
