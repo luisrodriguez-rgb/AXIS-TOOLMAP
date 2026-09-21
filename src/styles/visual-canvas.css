@@ -488,3 +488,22 @@
   padding: 1px 4px;
   margin-top: 2px;
 }
+
+/* Tool Real SVGs styling & Dark Mode Inversion for Monochrome SVGs */
+.tool-real-logo {
+  object-fit: contain;
+  filter: none;
+  transition: filter var(--transition-fast);
+}
+
+[data-theme='dark'] .tool-logo-chatgpt,
+[data-theme='dark'] .tool-logo-notion,
+[data-theme='dark'] .tool-logo-cursor,
+[data-theme='dark'] .tool-logo-zotero,
+[data-theme='dark'] .tool-logo-wolfram,
+[data-theme='dark'] .tool-logo-freecad,
+[data-theme='dark'] .tool-logo-marp,
+[data-theme='dark'] .tool-logo-v0,
+[data-theme='dark'] .tool-logo-rhino {
+  filter: brightness(0) invert(1);
+}
