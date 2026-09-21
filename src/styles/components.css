@@ -23,17 +23,19 @@
   margin-top: 16px;
   margin-bottom: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px 18px;
+  gap: 12px;
+  padding: 8px 14px;
   border-right: 1px solid var(--line);
   transition: background var(--transition-fast);
   user-select: none;
+  flex-shrink: 0;
 }
 
 .brand-wrapper:hover {
@@ -43,21 +45,22 @@
 .brand-telemetry {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .telemetry-pill {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  padding: 2px 7px;
+  font-size: 0.60rem;
+  padding: 2px 6px;
   border: 1px solid var(--line);
   background: var(--bg-canvas);
   color: var(--ink-muted);
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .telemetry-dot {
@@ -77,11 +80,12 @@
 
 .telemetry-badge {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   color: var(--ink-faint);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   padding-left: 2px;
+  white-space: nowrap;
 }
 
 /* Primary Navigation Index */
@@ -89,6 +93,8 @@
   display: flex;
   align-items: stretch;
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-index-item {
@@ -96,8 +102,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 2px;
-  padding: 8px 18px;
+  gap: 1px;
+  padding: 6px 14px;
   border-right: 1px solid var(--line);
   border-bottom: 2px solid transparent;
   border-top: none;
@@ -108,28 +114,31 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-index-item .nav-main-label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
+  gap: 6px;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .nav-kbd-hint {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
-  padding: 1px 4px;
+  font-size: 0.52rem;
+  padding: 1px 3px;
   border: 1px solid var(--line);
   background: var(--bg-canvas);
   color: var(--ink-faint);
   border-radius: 2px;
   font-weight: 600;
-  margin-left: 4px;
+  margin-left: 2px;
   transition: all var(--transition-fast);
 }
 
@@ -145,12 +154,13 @@
 }
 
 .nav-index-item .nav-sub-label {
-  font-size: 0.58rem;
+  font-size: 0.54rem;
   color: var(--ink-faint);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
-  padding-left: 24px;
+  padding-left: 20px;
+  white-space: nowrap;
 }
 
 .nav-index-item:hover {
@@ -181,25 +191,28 @@
 .header-utilities {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
+  gap: 8px;
+  padding: 0 12px;
   background: var(--bg-surface);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .utility-lab-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 9px;
+  gap: 5px;
+  padding: 3px 8px;
   border: 1px solid var(--signal);
   background: var(--bg-canvas);
   color: var(--signal);
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 700;
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .utility-lab-btn:hover {
@@ -225,17 +238,18 @@
 .utility-github-link {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 9px;
+  gap: 5px;
+  padding: 3px 8px;
   border: 1px solid var(--line);
   background: var(--bg-canvas);
   color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 700;
   text-decoration: none;
   letter-spacing: 0.04em;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .utility-github-link:hover {
@@ -246,8 +260,17 @@
 
 .utility-github-link .github-arrow {
   color: var(--signal);
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   line-height: 1;
+}
+
+@media (max-width: 1120px) {
+  .nav-index-item .nav-sub-label {
+    display: none;
+  }
+  .brand-telemetry {
+    display: none;
+  }
 }
 
 .utility-control {

@@ -56,11 +56,16 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
           </h2>
         </div>
 
-        {/* Selector de Rutas */}
+        {/* Selector de 3 Rutas Únicas y Neutrales */}
         <div className="routes-selector-group">
-          {(Object.keys(routes) as RouteId[]).map((rId) => {
+          {(['balanced', 'foss', 'max_capability'] as RouteId[]).map((rId) => {
             const r = routes[rId];
-            const isSelected = rId === currentRouteId;
+            if (!r) return null;
+            const isSelected =
+              rId === currentRouteId ||
+              (currentRouteId === 'recommended' && rId === 'balanced') ||
+              (currentRouteId === 'zero_cost' && rId === 'foss') ||
+              (currentRouteId === 'pro_studio' && rId === 'max_capability');
             return (
               <button
                 key={rId}
