@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import type { DeliverableType, PersonaProfile, UserConstraints } from '../types';
+import type { DeliverableType, PersonaProfile, UserConstraints, OperatingSystem, TechnicalLevel } from '../types';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
 import { parseNaturalIntent } from '../engine/naturalIntentParser';
@@ -574,7 +574,7 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
           <select
             className="select-technical"
             value={constraints.os}
-            onChange={(e) => onChangeConstraints({ ...constraints, os: e.target.value as any })}
+            onChange={(e) => onChangeConstraints({ ...constraints, os: e.target.value as OperatingSystem | 'any' })}
           >
             <option value="mac">macOS</option>
             <option value="windows">Windows</option>
@@ -591,7 +591,7 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
           <select
             className="select-technical"
             value={constraints.maxLearningCurve}
-            onChange={(e) => onChangeConstraints({ ...constraints, maxLearningCurve: e.target.value as any })}
+            onChange={(e) => onChangeConstraints({ ...constraints, maxLearningCurve: e.target.value as TechnicalLevel })}
           >
             <option value="none">{t.curveZero}</option>
             <option value="low">{t.curveLow}</option>

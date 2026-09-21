@@ -1,7 +1,4 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import './styles/base.css';
-import './styles/components.css';
-import './styles/visual-canvas.css';
 import { TOOLS_DATASET } from './data/tools';
 import { PERSONA_PRESETS } from './data/presets';
 import type {
@@ -66,9 +63,7 @@ export const App: React.FC = () => {
   });
 
   // 8. Sustituciones manuales (Swap)
-  const [manualOverrides, setManualOverrides] = useState<Record<WorkflowStageId, string>>(
-    {} as Record<WorkflowStageId, string>
-  );
+  const [manualOverrides, setManualOverrides] = useState<Partial<Record<WorkflowStageId, string>>>({});
 
   // 9. Modal de Inspección de Trade-offs
   const [inspectedStage, setInspectedStage] = useState<StageRecommendation | null>(null);
@@ -79,7 +74,7 @@ export const App: React.FC = () => {
   // 11. Manejador de cambio de Preset
   const handleSelectPreset = (preset: PersonaProfile) => {
     setActivePersona(preset);
-    setManualOverrides({} as Record<WorkflowStageId, string>);
+    setManualOverrides({});
     if (preset.sampleNeeds.length > 0) {
       setNeedText(preset.sampleNeeds[0].query);
       setDeliverableType(preset.sampleNeeds[0].deliverable);
@@ -105,7 +100,7 @@ export const App: React.FC = () => {
     if (match) {
       setActivePersona(match);
     }
-    setManualOverrides({} as Record<WorkflowStageId, string>);
+    setManualOverrides({});
     setIsLabOpen(false);
     setActiveTab('workflow');
   };

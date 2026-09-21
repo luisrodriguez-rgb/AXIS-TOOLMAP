@@ -45,7 +45,7 @@ export const DecisionQualityLab: React.FC<DecisionQualityLabProps> = ({
   }, [selectedCase, lang]);
 
   const triadRoutes = useMemo(() => {
-    return synthesizeTriadRoutes(query, tools, {} as any);
+    return synthesizeTriadRoutes(query, tools);
   }, [query, tools]);
 
   const currentRoute = triadRoutes[activeRoute] || triadRoutes.balanced;
@@ -110,7 +110,7 @@ export const DecisionQualityLab: React.FC<DecisionQualityLabProps> = ({
   const counterfactualExecution = useMemo(() => {
     if (!activePerturbation) return null;
     const perturbedQuery = testCaseToQuery(selectedCase, lang, activePerturbation.patchConstraints);
-    const perturbedRoutes = synthesizeTriadRoutes(perturbedQuery, tools, {} as any);
+    const perturbedRoutes = synthesizeTriadRoutes(perturbedQuery, tools);
     const baselineStack = triadRoutes[activeRoute]?.stack || triadRoutes.balanced.stack;
     const perturbedStack = perturbedRoutes[activeRoute]?.stack || perturbedRoutes.balanced.stack;
 
@@ -152,8 +152,8 @@ export const DecisionQualityLab: React.FC<DecisionQualityLabProps> = ({
       },
     };
 
-    const routesA = synthesizeTriadRoutes(queryA, tools, {} as any);
-    const routesB = synthesizeTriadRoutes(queryB, tools, {} as any);
+    const routesA = synthesizeTriadRoutes(queryA, tools);
+    const routesB = synthesizeTriadRoutes(queryB, tools);
     const stackA = routesA.balanced.stack;
     const stackB = routesB.balanced.stack;
 
