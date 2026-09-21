@@ -1,0 +1,167 @@
+import React, { useState, useMemo } from 'react';
+import type { Tool } from '../types';
+import type { Language } from '../i18n/translations';
+import { TRANSLATIONS } from '../i18n/translations';
+import { getToolLogo } from '../assets/logos/ToolLogos';
+
+interface ToolArchiveTableProps {
+  tools: Tool[];
+  lang: Language;
+}
+
+export const ToolArchiveTable: React.FC<ToolArchiveTableProps> = ({ tools, lang }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const t = TRANSLATIONS[lang].archive;
+
+  const categories = [
+    { id: 'all', label: lang === 'es' ? 'TODAS LAS CATEGORÍAS' : 'ALL CATEGORIES' },
+    { id: 'research', label: lang === 'es' ? 'INVESTIGACIÓN' : 'RESEARCH' },
+    { id: 'calculation', label: lang === 'es' ? 'CÁLCULO' : 'CALCULATION' },
+    { id: 'design_visual', label: lang === 'es' ? 'DISEÑO & 3D' : 'DESIGN & 3D' },
+    { id: 'presentation', label: lang === 'es' ? 'PRESENTACIÓN' : 'PRESENTATION' },
+    { id: 'data_analysis', label: lang === 'es' ? 'DATOS' : 'DATA' },
+    { id: 'productivity', label: lang === 'es' ? 'PRODUCTIVIDAD' : 'PRODUCTIVITY' },
+  ];
+
+  const filteredTools = useMemo(() => {
+    return tools.filter((tool) => {
+      const matchesSearch =
+        tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tool.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tool.whatItDoesBest.some((w) => w.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        tool.whatItDoesNotDo.some((w) => w.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      const matchesCategory =
+        categoryFilter === 'all' ||
+        tool.category === categoryFilter ||
+        (categoryFilter === 'design_visual' && (tool.category === 'design_visual' || tool.category === 'drafting_3d'));
+
+      return matchesSearch && matchesCategory;
+    });
+  }, [tools, searchQuery, categoryFilter]);
+
+  return (
+    <section className="archive-container">
+      {/* Header bar */}
+      <div className="section-index-header" style={{ margin: '20px 20px 0 20px', paddingBottom: '12px' }}>
+        <h2>
+          <span className="section-num">{t.sectionNum}</span>
+          <span>{t.sectionTitle}</span>
+        </h2>
+        <div className="section-meta-right">
+          {t.indexedCount
+            .replace('{filtered}', String(filteredTools.length))
+            .replace('{total}', String(tools.length))}
+        </div>
+      </div>
+
+      {/* Filter toolbar */}
+      <div className="archive-header-bar">
+        <input
+          type="text"
+          className="archive-search-input"
+          placeholder={t.searchPlaceholder}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              className={`matrix-btn-check ${categoryFilter === cat.id ? 'active' : ''}`}
+              style={{
+                padding: '4px 10px',
+                border: '1px solid var(--line)',
+                background: categoryFilter === cat.id ? 'var(--ink)' : 'var(--bg-surface)',
+                color: categoryFilter === cat.id ? 'var(--ink-inverse)' : 'var(--ink)',
+                cursor: 'pointer',
+              }}
+              onClick={() => setCategoryFilter(cat.id)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Swiss dense table */}
+      <div style={{ overflowX: 'auto' }}>
+        <table className="archive-table">
+          <thead>
+            <tr>
+              <th style={{ width: '60px' }}>{t.colIndex}</th>
+              <th style={{ width: '180px' }}>{t.colTool}</th>
+              <th style={{ width: '130px' }}>{t.colType}</th>
+              <th style={{ width: '140px' }}>{t.colCategory}</th>
+              <th>{t.colBest}</th>
+              <th>{t.colNotDo}</th>
+              <th style={{ width: '110px' }}>{t.colPrice}</th>
+              <th style={{ width: '140px' }}>{t.colPlatforms}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredTools.map((tool, idx) => (
+              <tr key={tool.id}>
+                <td className="archive-col-mono" style={{ color: 'var(--signal)', fontWeight: 700 }}>
+                  {String(idx + 1).padStart(3, '0')}
+                </td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {getToolLogo(tool.id, 18)}
+                    <div>
+                      <div className="archive-col-name">{tool.name}</div>
+                      <a
+                        href={tool.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="archive-col-mono"
+                        style={{ color: 'var(--ink-muted)', textDecoration: 'none' }}
+                      >
+                        visit site ↗
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    className="archive-col-mono"
+                    style={{
+                      padding: '2px 6px',
+                      background: tool.isNativeAI ? 'var(--signal-bg)' : 'var(--bg-subtle)',
+                      border: `1px solid ${tool.isNativeAI ? 'var(--signal-border)' : 'var(--line)'}`,
+                      color: tool.isNativeAI ? 'var(--signal)' : 'var(--ink)',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {tool.isNativeAI ? 'NATIVE AI' : 'TRADITIONAL'}
+                  </span>
+                </td>
+                <td className="archive-col-mono" style={{ textTransform: 'uppercase' }}>
+                  {tool.category}
+                </td>
+                <td style={{ fontSize: '0.8rem', color: 'var(--ink)' }}>
+                  ✓ {tool.whatItDoesBest[0]}
+                </td>
+                <td style={{ fontSize: '0.8rem', color: 'var(--ink-muted)' }}>
+                  ! {tool.whatItDoesNotDo[0] || 'N/A'}
+                </td>
+                <td className="archive-col-mono" style={{ fontWeight: 700 }}>
+                  {tool.pricing.hasFreeTier
+                    ? tool.pricing.startingPricePerMonthUSD === 0
+                      ? '$0'
+                      : 'FREE TIER'
+                    : `$${tool.pricing.startingPricePerMonthUSD}/MO`}
+                </td>
+                <td className="archive-col-mono" style={{ fontSize: '0.7rem' }}>
+                  {tool.platforms.map((p) => p.toUpperCase()).join(' · ')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};
