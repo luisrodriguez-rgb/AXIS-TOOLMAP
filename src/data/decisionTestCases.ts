@@ -5,6 +5,16 @@ import type {
   UserWorkflowQuery,
 } from '../types';
 
+export interface CounterfactualPerturbation {
+  id: string;
+  label: string;
+  variableChanged: string;
+  originalValue: string;
+  newValue: string;
+  patchConstraints: Partial<UserConstraints>;
+  expectedChangeHypothesis: string;
+}
+
 export interface DecisionTestCase {
   id: string;
   caseNumber: string;
@@ -23,6 +33,7 @@ export interface DecisionTestCase {
     stagesExpected: string[];
     keyExpectedCharacteristics: string[];
   };
+  counterfactualPerturbations: CounterfactualPerturbation[];
 }
 
 export const DECISION_TEST_CASES: DecisionTestCase[] = [
@@ -53,6 +64,26 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
         'Costo dentro de $50/mes o combinación de FOSS (Bonsai BIM/Blender) con visualización',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_budget_zero',
+        label: 'Presupuesto $50 → $0/mes',
+        variableChanged: 'maxMonthlyBudgetUSD',
+        originalValue: '$50/mo',
+        newValue: '$0/mo',
+        patchConstraints: { maxMonthlyBudgetUSD: 0, strictPrivacy: true },
+        expectedChangeHypothesis: 'Excluye herramientas comerciales; conmuta a Bonsai BIM / FreeCAD / Blender con costo $0 y soberanía de datos.',
+      },
+      {
+        id: 'p2_os_linux',
+        label: 'SO macOS → Linux',
+        variableChanged: 'os',
+        originalValue: 'mac',
+        newValue: 'linux',
+        patchConstraints: { os: 'linux' },
+        expectedChangeHypothesis: 'Filtra modeladores exclusivos de Mac/Windows; prioriza herramientas BIM con soporte Linux nativo.',
+      },
+    ],
   },
   {
     id: 'case_02_industrial_student',
@@ -81,6 +112,17 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
         'Herramienta de análisis/solver accesible sin terminal (ej. Excel/Superset/Tableau Public)',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_curve_high',
+        label: 'Curva Low → High (con programación)',
+        variableChanged: 'maxLearningCurve',
+        originalValue: 'low',
+        newValue: 'high',
+        patchConstraints: { maxLearningCurve: 'high', maxMonthlyBudgetUSD: 30 },
+        expectedChangeHypothesis: 'Habilita RStudio / Python / Jupyter Notebooks para optimización matemática avanzada.',
+      },
+    ],
   },
   {
     id: 'case_03_researcher',
@@ -109,6 +151,17 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
         'Gestión bibliográfica rigurosa (Zotero) + motor reproducible (Python/R/Jupyter)',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_budget_relaxed',
+        label: 'Presupuesto $0 → $35/mes (con nube)',
+        variableChanged: 'maxMonthlyBudgetUSD + strictPrivacy',
+        originalValue: '$0/mo + local',
+        newValue: '$35/mo + cloud',
+        patchConstraints: { maxMonthlyBudgetUSD: 35, strictPrivacy: false },
+        expectedChangeHypothesis: 'Permite Overleaf Pro en la nube colaborativo y Elicit para acelerar revisión bibliográfica.',
+      },
+    ],
   },
   {
     id: 'case_04_designer',
@@ -137,6 +190,17 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
         'Figma o alternativa FOSS soberana Penpot',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_zero_cost_sovereign',
+        label: 'Presupuesto $30 → $0/mes (FOSS Soberano)',
+        variableChanged: 'maxMonthlyBudgetUSD + strictPrivacy',
+        originalValue: '$30/mo',
+        newValue: '$0/mo',
+        patchConstraints: { maxMonthlyBudgetUSD: 0, strictPrivacy: true },
+        expectedChangeHypothesis: 'Sustituye Figma por Penpot FOSS con estándares abiertos SVG y sin vendor lock-in.',
+      },
+    ],
   },
   {
     id: 'case_05_founder',
@@ -147,7 +211,7 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
       'Soy fundador no técnico, quiero lanzar un MVP con landing page, base de datos de clientes y automatización de correos sin contratar programadores con presupuesto bajo de $35/mes.',
     layerA_syntheticSpec: {
       role: 'Fundador / Estratega de Negocio',
-      deliverable: 'dashboard',
+      deliverable: 'code',
       technicalLevel: 'low',
       constraints: {
         maxMonthlyBudgetUSD: 35,
@@ -160,11 +224,31 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
     referenceHypothesis: {
       stagesExpected: ['ingest_research', 'model_process', 'present_deliver'],
       keyExpectedCharacteristics: [
-        'Herramientas no-code visuales',
+        'Herramientas no-code visuales y frontend asistido por IA (v0)',
+        'Base de datos relacional sin servidor (Supabase)',
         'Presupuesto contenido <= $35/mes',
-        'Interoperabilidad rápida mediante webhook o conector nativo',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_founder_high_tech',
+        label: 'Perfil Low-Code → Full-Stack Developer',
+        variableChanged: 'technicalLevel',
+        originalValue: 'low',
+        newValue: 'high',
+        patchConstraints: { maxLearningCurve: 'high', maxMonthlyBudgetUSD: 60 },
+        expectedChangeHypothesis: 'El stack conmuta de v0 + Supabase visual a Cursor / VS Code + Supabase + Docker para ingeniería profunda.',
+      },
+      {
+        id: 'p2_founder_zero_cost',
+        label: 'Presupuesto $35 → $0/mes',
+        variableChanged: 'maxMonthlyBudgetUSD',
+        originalValue: '$35/mo',
+        newValue: '$0/mo',
+        patchConstraints: { maxMonthlyBudgetUSD: 0 },
+        expectedChangeHypothesis: 'Conmuta a AppFlowy + Penpot + Supabase Free Tier con costo mensual $0.',
+      },
+    ],
   },
   {
     id: 'case_06_civil_engineer',
@@ -193,25 +277,45 @@ export const DECISION_TEST_CASES: DecisionTestCase[] = [
         'Exportación de memorias con ecuaciones tipográficas',
       ],
     },
+    counterfactualPerturbations: [
+      {
+        id: 'p1_civil_mac',
+        label: 'SO Windows → macOS',
+        variableChanged: 'os',
+        originalValue: 'windows',
+        newValue: 'mac',
+        patchConstraints: { os: 'mac' },
+        expectedChangeHypothesis: 'Filtra solvers exclusivos de Windows (Civil 3D / ANSYS sin Mac) hacia MATLAB / FreeCAD / LibreCAD.',
+      },
+    ],
   },
 ];
 
 /**
  * Convierte un caso de prueba en una consulta UserWorkflowQuery para ejecución directa en el motor.
  */
-export function testCaseToQuery(testCase: DecisionTestCase, lang: 'es' | 'en' = 'es'): UserWorkflowQuery {
+export function testCaseToQuery(
+  testCase: DecisionTestCase,
+  lang: 'es' | 'en' = 'es',
+  overrideConstraints?: Partial<UserConstraints>
+): UserWorkflowQuery {
   const spec = testCase.layerA_syntheticSpec;
+  const constraints: UserConstraints = {
+    ...spec.constraints,
+    ...(overrideConstraints || {}),
+  };
+
   return {
     persona: {
       primaryRole: spec.role,
       technicalLevel: spec.technicalLevel,
-      os: [spec.constraints.os === 'any' ? 'web' : spec.constraints.os],
+      os: [constraints.os === 'any' ? 'web' : constraints.os],
       activeTools: [],
       domainGroup: testCase.domain.split(' / ')[0],
     },
     needText: testCase.layerB_humanScenario,
     deliverableType: spec.deliverable,
-    constraints: spec.constraints,
+    constraints,
     lang,
   };
 }
