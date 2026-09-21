@@ -1,148 +1,304 @@
 # AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas
 
-> **De directorios genéricos de IA a un motor de decisión multicriterio centrado en personas, entregables y restricciones reales.**
+> **De directorios genéricos de IA a un motor de decisión multicriterio (MCDA) centrado en personas, entregables y restricciones operativas reales.**
 
 ![AXIS Demostración Interactiva](./public/screenshots/demo.webp)
 
-AXIS es una plataforma interactiva y motor de decisión diseñado para resolver el problema fundamental del ecosistema de software contemporáneo: la sobrecarga de herramientas y la ausencia de criterio técnico para ensamblar flujos de trabajo coherentes. En lugar de limitarse a listar "las mejores herramientas de IA", AXIS evalúa de forma cruzada la **profesión del usuario**, el **artefacto entregable**, el **presupuesto real ($/mes)**, la **tolerancia de curva de aprendizaje** y la **soberanía de datos** para sintetizar pipelines de trabajo óptimos entre software comercial consolidado, herramientas de código abierto ($0) y plataformas nativas en IA.
+AXIS es una plataforma técnica y motor de decisión diseñado para resolver el problema estructural del ecosistema de software contemporáneo: la saturación de herramientas y la ausencia de criterio técnico para articular flujos de trabajo coherentes.
+
+En lugar de limitarse a listar herramientas aisladas, AXIS evalúa de forma cruzada la **profesión del usuario**, el **enfoque de trabajo**, el **artefacto técnico entregable**, el **presupuesto mensual ($/mes)**, la **tolerancia de curva de aprendizaje**, el **sistema operativo** y la **soberanía de datos** para sintetizar pipelines de trabajo balanceados entre software comercial consolidado, herramientas de código abierto ($0) y plataformas nativas en inteligencia artificial.
 
 ---
 
-## 1. Filosofía de Diseño: Human-centered Technical Editorial
+## 1. El Problema que Resuelve AXIS
 
-El diseño de AXIS rechaza los clichés visuales de las startups de IA (gradientes morados genéricos, tarjetas infladas, tipografías predeterminadas) y adopta una disciplina rigurosa inspirada en:
-- **Estilo Tipográfico Suizo (International Typographic Style):** Retículas estructuradas de 1px, orden asimétrico y tipografía como elemento primario de navegación e información.
-- **Brutalismo Técnico Contenido:** Estructuras expuestas, índices numéricos de 3 dígitos (`001`, `002`), barras de telemetría y especificaciones de ingeniería.
-- **Archivo y Catálogo Digital:** Sensación de instrumento de laboratorio o consola de conmutación técnica.
+### El Fallo de los Directorios Tradicionales
+Los directorios de software e IA convencionales (estilo "Top 100 AI Tools") fallan por tres razones fundamentales:
+1. **Descontextualización Total:** Presentan listas alfabéticas o por popularidad sin entender si el usuario es un arquitecto que necesita emitir planos IFC acotados o un docente que necesita rúbricas de evaluación pedagógica.
+2. **Aislamiento de Etapas:** Sugieren aplicaciones sueltas sin considerar la interoperabilidad formativa ni cómo viaja el dato entre una herramienta y la siguiente.
+3. **Ceguera Financiera y Operativa:** Ignoran las restricciones duras de presupuesto, curvas de aprendizaje prohibitivas y requisitos de privacidad local o cumplimiento normativo.
+
+| Dimensión de Análisis | Directorios Tradicionales | AXIS (Decision Layer) |
+| :--- | :--- | :--- |
+| **Unidad de Decisión** | Herramienta individual aislada | Flujo de trabajo secuencial (Pipeline de 3-4 etapas) |
+| **Criterio de Orden** | Popularidad, patrocinio o votos | Puntuación Multicriterio (MCDA) calibrada por entregable |
+| **Restricciones Duras** | Filtros básicos de categoría | Filtros estrictos de presupuesto, SO, privacidad y curva |
+| **Interoperabilidad** | Inexistente (el usuario adivina formatos) | Conectores **Data Glue** con nivel de fricción y formato |
+| **Contextualización** | Lista genérica para todos los perfiles | **Smart Scoping**: adaptación por carrera y entregable |
+| **Vocabulario** | Sesgado a desarrollo de software | Vocabulario adaptativo según dominio profesional |
+
+---
+
+## 2. Filosofía de Diseño: Human-Centered Technical Editorial
+
+El diseño de AXIS rechaza deliberadamente las convenciones estéticas infladas de las startups de IA (gradientes morados genéricos, bordes redondeados excesivos, tipografías predeterminadas) y adopta una disciplina rigurosa inspirada en:
+- **Estilo Tipográfico Suizo (International Typographic Style):** Retículas estructuradas de 1px, orden asimétrico y la tipografía como elemento primario de jerarquía e información.
+- **Brutalismo Técnico Contenido:** Estructuras expuestas, índices numéricos de 3 dígitos (`[001]`, `[002]`), barras de telemetría y especificaciones de ingeniería.
+- **Sensación de Instrumento de Precisión:** Interfaz calibrada que evoca consolas de conmutación técnica, racks de laboratorio y matrices de decisión.
+- **Regla Estricta:** Cero emojis. Iconografía técnica y glifos vectoriales de precisión.
 
 ![AXIS Instrumento de Entrada y Descubrimiento](./public/screenshots/discover-instrument.png)
 
 ### Sistema de Tokens y Paleta de Color
-- **Modo Claro (Lienzo de Archivo):** Fondo `#F5F3EC`, superficie `#FFFFFF`, tinta profunda `#111111`, líneas nítidas `#D4D1C7` y acento de señal `#FF4B22` (International Orange).
-- **Modo Oscuro (Pizarra Obsidiana):** Fondo `#101114`, superficie `#17191E`, tinta nítida `#F3F1EB`, líneas técnicas `#2D3039` y acento `#FF5722`.
+- **Modo Claro (Lienzo de Archivo):**
+  - Fondo: `#F5F3EC`
+  - Superficie: `#FFFFFF`
+  - Tinta profunda: `#111111`
+  - Tinta secundaria: `#444444`
+  - Líneas nítidas: `#D4D1C7`
+  - Acento de señal: `#FF4B22` (International Orange)
+- **Modo Oscuro (Pizarra Obsidiana):**
+  - Fondo: `#101114`
+  - Superficie: `#17191E`
+  - Tinta nítida: `#F3F1EB`
+  - Líneas técnicas: `#2D3039`
+  - Acento de señal: `#FF5722`
 - **Tipografías:**
   - `Space Grotesk`: Titulares contundentes y encabezados de rack modular.
   - `IBM Plex Mono`: Metadatos, barras de ajuste ASCII, índices numéricos y especificaciones de fricción.
   - `Inter`: Lectura fluida en descripciones, capacidades y evidencias.
-- **Disciplina Estricta:** Cero emojis. Iconografía técnica y glifos vectoriales de precisión.
 
 ---
 
-## 2. Jerarquía de Navegación y Arquitectura del Sistema
+## 3. Arquitectura del Sistema y Módulos de la Interfaz
 
-La interfaz de AXIS se estructura en tres niveles operacionales desacoplados:
+La plataforma opera en tres niveles funcionales interconectados de forma reactiva:
 
 ```
 AXIS / TOOLMAP
 ├── 01 / DESCUBRIR (Intent Instrument)
 │   ├── Entrada de intención en lenguaje natural con presets instantáneos
-│   ├── Matriz Suiza 3-Columnas: [A] Profesión (8 arquetipos), [B] Enfoque de Trabajo, [C] Entregable
-│   ├── Barra de Restricciones Técnicas: Presupuesto ($0 a $300+/mes), SO, Curva de aprendizaje y Privacidad
+│   ├── Matriz Suiza 3-Columnas (32 x 32 x 32):
+│   │   ├── [A] PROFESIÓN: 32 carreras en 8 macro-dominios con filtros rápidos
+│   │   ├── [B] ENFOQUE DE TRABAJO: Smart Scoping adaptado al perfil activo
+│   │   └── [C] ARTEFACTO ENTREGABLE: 32 tipos de entregables técnicos normalizados
+│   ├── Barra de Restricciones Técnicas: Presupuesto ($0 a $300+/mes), SO, Curva y Privacidad
 │   └── Botón de transición directa al Canvas: [ MAPEAR MI TRABAJO → ]
 │
 ├── 02 / MAPA DE FLUJO (Interactive Workflow Canvas)
-│   ├── Tríada de Rutas: [RUTA RECOMENDADA], [STACK $0 OPEN-SOURCE], [PRO STUDIO]
-│   ├── Barra de Telemetría BOM: Costo Mensual ($/mo), Ajuste Global (%), Curva de Aprendizaje y Sinergia
-│   ├── Rack Modular & Conexiones SVG: Nodos de herramientas activas por etapa
-│   ├── Previsualizaciones de Artefactos: 3D Surface, Render Esquemático, Cited Document, Slide Layout
+│   ├── Tríada de Rutas Estratégicas:
+│   │   ├── [RUTA RECOMENDADA / RECOMMENDED ROUTE]
+│   │   ├── [RUTA $0 GRATIS / $0 FREE ROUTE]
+│   │   └── [RUTA PRO STUDIO / PRO STUDIO ROUTE]
+│   ├── Barra de Telemetría BOM con Vocabulario Adaptativo por Dominio
+│   ├── Grafo Secuencial de Nodos: Racks por etapa con logos SVG sanitizados
 │   ├── Conectores "Data Glue": Formatos intercambiados y advertencias de fricción
-│   └── Inspector de Trade-offs y Sustitución Técnica (Swap)
+│   ├── Previsualizaciones de Artefactos: Mallas 3D, Planos, Renders, Cuadernos
+│   └── Inspector de Trade-offs y Sustitución Técnica (Modal de Swap)
 │
-└── 03 / ARCHIVO (Tools Archive)
-    ├── Catálogo técnico de 90 herramientas calibradas (gratuitas y comerciales de alta gama)
-    ├── Logotipos vectoriales oficiales sanitizados con soporte multiplataforma y Safari
-    ├── Filtros por categoría, modelo de licenciamiento y compatibilidad de SO
-    └── Búsqueda en tiempo real por capacidades, limitaciones y qué NO hace la herramienta
+└── 03 / ARCHIVO (Tools Archive & Decision Matrix)
+    ├── Catálogo técnico de 90 herramientas calibradas ($0 a $450/mes)
+    ├── Logotipos vectoriales oficiales sanitizados con namespace xmlns (WebKit/Safari)
+    ├── Filtros por categoría: Investigación, Cálculo, Diseño & 3D, Presentación, Datos, Productividad
+    └── Búsqueda en tiempo real por capacidades, limitaciones y lo que NO hace la herramienta
 ```
 
 ---
 
-## 3. Características Principales
+## 4. Innovaciones Clave
 
-### A. Catálogo Expandido de 90 Herramientas Reales
-El catálogo incluye 90 soluciones tecnológicas calibradas con precios de mercado verificados (desde $0 hasta $450/mes):
-- **Arquitectura, BIM & AEC:** Autodesk Revit ($355/mo), Autodesk AutoCAD ($250/mo), Autodesk Civil 3D ($325/mo), Graphisoft ArchiCAD ($290/mo), Vectorworks Architect ($153/mo), Procore Construction ($375/mo), OpenSpace AI ($190/mo), Chief Architect Premier ($199/mo), Rhino 3D, SketchUp Pro, Blender, FreeCAD.
-- **Ingeniería, Simulación & Electrónica:** Dassault Systèmes CATIA ($450/mo), PTC Creo Parametric ($230/mo), Autodesk Inventor ($290/mo), MathWorks MATLAB & Simulink ($250/mo), COMSOL Multiphysics ($260/mo), Ansys Mechanical & CFD ($300/mo), Altium Designer ($325/mo), KiCad EDA ($0), OpenFOAM ($0), GNU Octave ($0).
-- **Datos, ML & Business Intelligence:** Snowflake ($120/mo), Databricks ($150/mo), Alteryx Designer ($350/mo), Microsoft Power BI Pro ($10/mo), Tableau Creator ($75/mo), dbt Core/Cloud ($50/mo), Apache Superset ($0), Metabase ($0 / $85/mo), Posit/RStudio ($0 / $25/mo), Julius AI ($20/mo), Google Looker Studio ($0).
-- **Desarrollo, DevOps & Infraestructura:** JetBrains IntelliJ IDEA Ultimate ($29/mo), Postman ($14/mo), Docker Desktop ($5/mo), Supabase ($25/mo), Vercel ($20/mo), Linear ($10/mo), Sentry ($29/mo), Visual Studio Code ($0), Cursor Pro ($20/mo), GitHub Copilot ($10/mo), v0 by Vercel.
-- **Diseño, 3D & Creatividad:** Adobe Premiere Pro ($38/mo), Adobe After Effects ($38/mo), DaVinci Resolve Studio ($0 / $25/mo), Maxon Cinema 4D ($99/mo), Spline 3D ($9/mo), Chaos Enscape ($49/mo), Twinmotion ($0 / $37/mo), D5 Render ($0 / $38/mo), Midjourney Pro ($30/mo), Runway Gen-3 ($12/mo), Krea AI ($10/mo), LookX AI ($20/mo), Vizcom ($15/mo).
-- **Investigación & Documentos:** Zotero ($0), Overleaf Pro ($21/mo), Mendeley ($0), Connected Papers ($5/mo), Rayyan AI ($30/mo), ATLAS.ti ($45/mo), Elicit Plus ($10/mo), Perplexity Pro ($20/mo), NotebookLM ($0), Consensus AI ($20/mo).
-
-![AXIS Matriz de Archivo de 90 Herramientas](./public/screenshots/archive-90-tools.png)
-
-### B. Tríada de Rutas de Decisión (Decision Triad)
-El motor sintetiza simultáneamente 3 alternativas estratégicas para cada consulta:
-1. **[ RUTA RECOMENDADA ]:** Balance óptimo ajustado al presupuesto activo del usuario, maximizando la sinergia del ecosistema.
-2. **[ STACK $0 OPEN-SOURCE ]:** Forzado a costo estrictamente **$0/mes**, priorizando herramientas comunitarias, autohospedadas o con planes gratuitos perpetuos (Blender, FreeCAD, GeoGebra, Zotero, Obsidian, Marp, KiCad, OpenFOAM).
-3. **[ PRO STUDIO ]:** Configuración de máxima potencia para estudios y entornos comerciales (herramientas industriales de alto calibre como Revit, Civil 3D, CATIA, MATLAB, Tableau, Premiere Pro, Ansys).
+### A. Contextualización Adaptativa por Carrera (Smart Scoping)
+Al expandir la matriz a 32 carreras, 32 tareas y 32 entregables, el usuario se enfrenta a 96 dimensiones de decisión. Para evitar la sobrecarga cognitiva:
+- **Filtrado Inteligente de Dominio:** Al seleccionar una profesión en la Columna `[A]` (p. ej. *Docente Universitario*), las columnas `[B]` (Enfoque de Trabajo) y `[C]` (Artefacto Entregable) activan automáticamente la pastilla `[RELEVANTES A MI PERFIL]`, mostrando únicamente las tareas y entregables pertinentes a su área disciplinar.
+- **Eliminación de Jerga Ajena:** Un docente universitario o un abogado nunca se verá inundado con opciones de ruteo de circuitos impresos (PCB), dinámica de fluidos (CFD) o manifiestos de Kubernetes a menos que lo solicite explícitamente.
+- **Exploración Interdisciplinaria:** Mediante la pastilla `[VER TODAS (32)]`, cualquier usuario puede voluntariamente expandir el catálogo completo para flujos cruzados.
 
 ![AXIS Canvas con Ruta Pro Studio y Telemetría BOM](./public/screenshots/workflow-pro-studio.png)
 
-### C. Conectores "Data Glue" & Análisis de Fricción
-A diferencia de los asistentes conversacionales que recomiendan herramientas aisladas, AXIS calcula **cómo se transfieren los datos entre etapas**:
-- **Formatos explícitos:** `PDF / Citas Markdown`, `PNG Raster 4K`, `3DM / OBJ Poligonal`, `CSV / Relacional`, `STEP / IFC BIM`.
-- **Nivel de fricción:** `LOW` (traspaso nativo fluido), `MEDIUM` (requiere exportación/conversión manual), `HIGH` (incompatibilidad de vectores/mallas o pérdida de capas).
+### B. Vocabulario Adaptativo por Dominio
+La interfaz ajusta su terminología en función de la familia profesional seleccionada:
+- **Dominio Humanidades, Educación, Legal y Negocios (`SCIENCE` / `BIZ`):**
+  - En lugar de *"DATA GLUE"* → *"COMPATIBILIDAD DE DOCUMENTOS"* (`DOCUMENT INTEROPERABILITY`).
+  - En lugar de *"PIPELINE NODES"* → *"HERRAMIENTAS DEL FLUJO"* (`WORKFLOW TOOLS`).
+  - En lugar de *"BOM"* → *"PRESUPUESTO ESTIMADO"* (`ESTIMATED BUDGET`).
+- **Dominio Ingeniería, AEC, Hard-Tech y Software (`ING`, `AEC`, `TECH`, `DATA`):**
+  - Mantiene la terminología rigurosa de ingeniería: *"DATA GLUE"*, *"TELEMETRÍA BOM"*, *"NODOS DE PROCESAMIENTO"*.
 
-### D. Modal de Inspección de Trade-offs y Sustitución (Swap)
-Permite inspeccionar en detalle el desglose de ajuste funcional, curva de aprendizaje y costo de cada herramienta, permitiendo sustituir cualquier nodo del stack en tiempo real con recálculo automático de la telemetría BOM.
+### C. Internacionalización Integral (100% Full i18n)
+AXIS cuenta con soporte bilingüe integral (`ES` / `EN`) con cero fugas de idioma:
+- **Navegación y Cabeceras:** Etiquetas de sección, subíndices, selectores de tema e idioma.
+- **Columnas de la Matriz:** Títulos, descripciones de tareas, nombres de entregables, badges de estado (`● ACTIVO` / `● ACTIVE`, `● SELECCIONADO` / `● SELECTED`, `+ AGREGAR` / `+ ADD`).
+- **Tríada de Rutas:** `RUTA RECOMENDADA` / `RECOMMENDED ROUTE`, `RUTA $0 GRATIS` / `$0 FREE ROUTE`, `RUTA PRO STUDIO` / `PRO STUDIO ROUTE`.
+- **Etapas de Flujo:** `1. Ingesta & Fuentes` / `1. Ingest & Research`, `2. Núcleo & Procesamiento` / `2. Core & Processing`, `3. Estructuración & Refinamiento` / `3. Structuring & Refinement`, `4. Presentación & Entrega` / `4. Presentation & Delivery`.
+- **Notas de Trade-off:** Generación sintética en lenguaje natural en ambos idiomas.
+- **Data Glue:** Métodos de transferencia (`EXPORTACIÓN / IMPORTACIÓN MANUAL` / `MANUAL EXPORT/IMPORT`, `COPIAR / PEGAR TEXTO` / `COPY / PASTE TEXT`), formatos y niveles de fricción (`FLUIDO` / `SEAMLESS`, `MANUAL`).
+- **Archivo de Herramientas:** Badges `NATIVA IA` / `NATIVE AI`, `TRADICIONAL` / `TRADITIONAL`, `CAPA GRATIS` / `FREE TIER`, categorías traducidas y enlaces `visitar sitio ↗` / `visit site ↗`.
+
+---
+
+## 5. Catálogo de 32 Profesiones Indexadas
+
+AXIS agrupa sus 32 arquetipos profesionales calibrados en 8 macro-dominios:
+
+| Macro-Dominio | Código | Profesión Calibrada | Enfoque Típico | Entregable Primario |
+| :--- | :--- | :--- | :--- | :--- |
+| **AEC & Arquitectura** | `[001]` | Arquitecto Residencial & Urbanista | Modelado 3D, Planimetría, Renders | Planos DWG/PDF, Renders, BIM |
+| | `[002]` | Ingeniero Civil / Estructural | Análisis FEM, Planimetría, Esfuerzos | Memoria de Cálculo, Planos |
+| | `[003]` | Gerente de Construcción & Obra | Coordinación BIM, Mediciones, RFIs | Cronograma Gantt, Cómputos BOM |
+| | `[004]` | Especialista GIS & Topografía | Nubes LiDAR, Modelos DEM, Rasters | Mapa GIS, Trazado Topográfico |
+| **Ingeniería & Hard-Tech** | `[005]` | Ingeniero Mecánico & Automotriz | CAD Paramétrico, FEA, CFD | Planos GD&T, Simulación CFD |
+| | `[006]` | Ingeniero Electrónico & Hardware | Esquemáticos, Ruteo PCB, DRC | Gerber PCB, Esquemático |
+| | `[007]` | Ingeniero Industrial & Operaciones | Optimización, Líneas, Logística | Dashboards BI, Modelo Financiero |
+| | `[008]` | Ingeniero Químico & Procesos | Termodinámica, PFD, Balances | Simulación CFD, Memoria Técnica |
+| | `[009]` | Ingeniero Biomédico & Bioingeniería | Biomecánica, Señales Fisiológicas | Memoria de Cálculo, Protocolo |
+| | `[010]` | Ingeniero Ambiental & Sostenibilidad | Huella de Carbono, Matriz ESG | Estudio de Impacto EIA, Dashboard |
+| **Software & Cloud** | `[011]` | Ingeniero de Software / Fullstack | APIs, Microservicios, Frontend | Código Fuente, OpenAPI Spec |
+| | `[012]` | Ingeniero DevOps & Cloud Infrastructure | CI/CD, Contenedores, Terraform | Manifiestos K8s, Arquitectura C4 |
+| | `[013]` | Analista de Ciberseguridad & DevSecOps | SAST/DAST, OWASP, Pentesting | Auditoría de Seguridad, Reporte |
+| **Datos & Cuantitativa** | `[014]` | Científico de Datos / Machine Learning | Pipelines ETL, Modelos ML, Clustering | Cuaderno Jupyter, Dashboard BI |
+| | `[015]` | Analista Financiero & Finanzas Quant | Valoración DCF, Monte Carlo, Flujos | Modelo Financiero Excel, Dashboard |
+| | `[016]` | Matemático Aplicado & Modelador | Sistemas Dinámicos, Álgebra, MILP | Visualización 3D, Código |
+| | `[017]` | Economista & Analista Econométrico | Datos de Panel, Series de Tiempo | Cuaderno Quarto, Informe Macro |
+| **Diseño & Creatividad** | `[018]` | Diseñador UI/UX & Producto Digital | Design Systems, Prototipado, UXR | Prototipo Figma, Journey Map |
+| | `[019]` | Diseñador Gráfico & Marca | Branding, Tipografía, Packaging | Manual de Marca, Lámina |
+| | `[020]` | Diseñador Industrial & Producto Físico | Bocetado, NURBS, CMF, STEP | Render Fotorrealista, Malla 3D |
+| | `[021]` | Animador 3D & Motion Designer | Motion Graphics, Cinemáticas 3D | Animación Lottie/MP4, Master |
+| | `[022]` | Editor de Video & Colorista | Montaje Rítmico, LUTs, Mezcla Audio | Video Master Editado, Subtítulos |
+| **Investigación & Salud** | `[023]` | Investigador Académico & Científico | IMRaD, Citas DOIs, Bibliografía | Manuscrito LaTeX, Matriz BibTeX |
+| | `[024]` | Médico & Investigador Clínico | Ensayos RCT, CONSORT, Bioética | Protocolo Clínico, Metaanálisis |
+| | `[025]` | Biólogo & Bioinformático | Secuenciación NGS, Docking Molecular | Cuaderno Reproducible, Malla 3D |
+| | `[026]` | Redactor Técnico & Documentalista | Docs-as-Code, Markdown, Manuales | Documentación OpenAPI, Manual |
+| | `[027]` | Docente Universitario & Pedagogo | Diseño Curricular, Rúbricas, Clases | Lámina de Clase, Guía de Estudio |
+| **Negocios & Legal** | `[028]` | Fundador & Product Manager | PRDs, OKRs, Pitch Decks, Backlog | Documento PRD, Pitch Deck |
+| | `[029]` | Consultor de Estrategia de Negocios | Diagnóstico FODA, Porter, M&A | Informe Estratégico, Lámina |
+| | `[030]` | Estratega de Growth Marketing | Embudo de Conversión, CAC/LTV | Dashboard Analítico, Presentación |
+| | `[031]` | Abogado & Compliance Legal Tech | Contratos B2B, GDPR, IA Act, SLAs | Dictamen Legal, Matriz Normativa |
+| **Educación STEM** | `[032]` | Estudiante Universitario STEM | Cálculo, Física, Modelos Simbólicos | Informe de Laboratorio, Gráficos |
+
+---
+
+## 6. Motor de Puntuación Multicriterio (MCDA Engine)
+
+El motor evalúa a cada candidata en 4 vectores matemáticos independientes:
+
+$$\text{Score} = w_1 \cdot \text{TaskFit} + w_2 \cdot \text{FrictionFactor} + w_3 \cdot \text{ConstraintCompliance} + w_4 \cdot \text{EcosystemSynergy}$$
+
+1. **Ajuste de Tarea (`TaskFit` - Ponderación: 35%):**
+   - Evalúa si la herramienta posee capacidades intrínsecas para resolver el artefacto requerido (`cad3DModeling`, `symbolicMath`, `vectorExport`, `citationsEnabled`, `voiceAudio`, etc.).
+   - Aplica bonificaciones directas de afinidad de dominio para herramientas estándar de la industria (p. ej. *Civil 3D* para topografía, *Altium* para PCBs, *Revit* para BIM).
+2. **Factor de Facilidad / Menor Fricción (`FrictionFactor` - Ponderación: 25%):**
+   - Mide la accesibilidad de la curva de aprendizaje de la herramienta en contraste con el nivel técnico del usuario.
+   - Penaliza herramientas con curvas avanzadas si el usuario declaró tolerancia baja o cero código.
+3. **Cumplimiento de Restricciones (`ConstraintCompliance` - Ponderación: 25%):**
+   - Filtro de presupuesto mensual ($/mo) y compatibilidad con el sistema operativo activo (`mac`, `windows`, `linux`, `web`).
+   - Evaluación estricta de soberanía de datos: si el usuario exige privacidad estricta (`strictPrivacy`), solo herramientas de ejecución local o con política explícita de cero retención de datos obtienen puntuación completa.
+4. **Sinergia del Ecosistema (`EcosystemSynergy` - Ponderación: 15%):**
+   - Bonifica combinaciones de herramientas con integraciones nativas directas (p. ej. Figma + Claude, Obsidian + Zotero, VS Code + Docker + Supabase).
+
+---
+
+## 7. Catálogo de 90 Herramientas Reales y Verificadas
+
+AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento auditados:
+
+![AXIS Matriz de Archivo de 90 Herramientas](./public/screenshots/archive-90-tools.png)
+
+### Desglose por Categorías Técnicas
+- **Arquitectura, BIM & AEC:** Autodesk Revit ($355/mo), Autodesk AutoCAD ($250/mo), Autodesk Civil 3D ($325/mo), Graphisoft ArchiCAD ($290/mo), Vectorworks Architect ($153/mo), Procore Construction ($375/mo), OpenSpace AI ($190/mo), Chief Architect Premier ($199/mo), Rhino 3D, SketchUp Pro, Blender, FreeCAD.
+- **Ingeniería, Simulación & Electrónica:** Dassault Systèmes CATIA ($450/mo), PTC Creo Parametric ($230/mo), Autodesk Inventor ($290/mo), MathWorks MATLAB & Simulink ($250/mo), COMSOL Multiphysics ($260/mo), Ansys Mechanical & CFD ($300/mo), Altium Designer ($325/mo), KiCad EDA ($0), OpenFOAM ($0), GNU Octave ($0).
+- **Datos, ML & Business Intelligence:** Snowflake ($120/mo), Databricks ($150/mo), Alteryx Designer ($350/mo), Microsoft Power BI Pro ($10/mo), Tableau Creator ($75/mo), dbt Core/Cloud ($50/mo), Apache Superset ($0), Metabase ($0 / $85/mo), Posit/RStudio ($0 / $25/mo), Julius AI ($20/mo), Google Looker Studio ($0).
+- **Desarrollo, DevOps & Cloud:** JetBrains IntelliJ IDEA Ultimate ($29/mo), Postman ($14/mo), Docker Desktop ($5/mo), Supabase ($25/mo), Vercel ($20/mo), Linear ($10/mo), Sentry ($29/mo), Visual Studio Code ($0), Cursor Pro ($20/mo), GitHub Copilot ($10/mo), v0 by Vercel.
+- **Diseño, 3D & Creatividad:** Adobe Premiere Pro ($38/mo), Adobe After Effects ($38/mo), DaVinci Resolve Studio ($0 / $25/mo), Maxon Cinema 4D ($99/mo), Spline 3D ($9/mo), Chaos Enscape ($49/mo), Twinmotion ($0 / $37/mo), D5 Render ($0 / $38/mo), Midjourney Pro ($30/mo), Runway Gen-3 ($12/mo), Krea AI ($10/mo), LookX AI ($20/mo), Vizcom ($15/mo).
+- **Investigación & Documentos:** Zotero ($0), Overleaf Pro ($21/mo), Mendeley ($0), Connected Papers ($5/mo), Rayyan AI ($30/mo), ATLAS.ti ($45/mo), Elicit Plus ($10/mo), Perplexity Pro ($20/mo), NotebookLM ($0), Consensus AI ($20/mo).
+
+### Sanitización de Logotipos SVG y Compatibilidad Multi-Navegador
+- **Soporte WebKit / Safari:** Todos los logotipos vectoriales incorporan obligatoriamente el atributo de espacio de nombres `xmlns="http://www.w3.org/2000/svg"`, eliminando el problema recurrente de imágenes rotas en navegadores Safari en macOS e iOS.
+- **Inversión de Luminancia en Modo Oscuro:** Los logotipos monocromáticos (OpenAI, Notion, Cursor, Zotero, Wolfram, FreeCAD, Marp, Docker, Vercel) invierten su color a blanco puro en modo oscuro, mientras que los logotipos cromáticos oficiales (Figma, Canva, Blender, Rhino, GeoGebra, Scribus) conservan sus colores de marca exactos.
+
+---
+
+## 8. Inspector de Trade-offs y Sustitución en Tiempo Real (Swap)
+
+Cuando el usuario desea explorar alternativas en cualquier etapa del flujo:
+1. Hace clic en `⇄ SUSTITUIR PIEZA` / `⇄ SWAP TOOL` en el nodo correspondiente del canvas.
+2. Se abre el **TradeOffInspector Modal**, que expone:
+   - Desglose porcentual y barras ASCII de los 4 vectores de decisión.
+   - Puntos fuertes verificados (`[+]`) y límites explícitos (`[!]`) de la herramienta actual.
+   - Lista de herramientas alternativas compatibles con indicación de coincidencia (`% MATCH`), variación de precio (`deltaBudgetUSD`) y variación de curva de aprendizaje.
+3. Al seleccionar una alternativa, la herramienta se sustituye de inmediato y toda la telemetría del stack (costo mensual, ajuste global y compatibilidad Data Glue) se recalcula de forma reactiva.
 
 ![AXIS Inspector de Trade-offs y Sustitución](./public/screenshots/tradeoff-inspector.png)
 
-### E. Logotipos Vectoriales Oficiales & Compatibilidad Safari
-- Logotipos extraídos directamente de **svgl.app**, **Simple Icons**, **Wikimedia Commons** y repositorios oficiales de marca.
-- **Compatibilidad Safari:** Todos los archivos SVG incorporan explícitamente el espacio de nombres `xmlns="http://www.w3.org/2000/svg"`, evitando los errores de imagen rota `[?]` en navegadores WebKit/Safari.
-- **Inversión de Contraste en Dark Mode:** Los logotipos monocromáticos (OpenAI, Notion, Cursor, Zotero, Wolfram, FreeCAD, Marp, Docker, Vercel) invierten su luminancia a blanco puro en modo oscuro, mientras que los logos policromáticos (Figma, Canva, Blender, Rhino, GeoGebra, Scribus) preservan sus colores oficiales.
+---
+
+## 9. Estructura del Repositorio
+
+```
+AXIS/
+├── public/
+│   ├── favicon.svg               # Favicon vectorial con isotipo AXIS
+│   ├── icons.svg                 # Sprite SVG técnico
+│   └── screenshots/              # Capturas y video WebP de demostración
+│       ├── demo.webp
+│       ├── discover-instrument.png
+│       ├── workflow-pro-studio.png
+│       ├── tradeoff-inspector.png
+│       ├── archive-90-tools.png
+│       ├── canvas-dark.png
+│       └── canvas-light.png
+│
+├── src/
+│   ├── assets/
+│   │   └── logos/
+│   │       ├── svg/              # 40+ SVGs oficiales sanitizados con xmlns
+│   │       └── ToolLogos.tsx     # Componente y diccionario de logotipos
+│   │
+│   ├── components/
+│   │   ├── ArtifactPreview.tsx   # Previsualizador técnico de artefactos
+│   │   ├── Header.tsx            # Cabecera con índice, modo claro/oscuro e i18n
+│   │   ├── IntentInstrument.tsx  # Matriz Suiza 3-columnas con Smart Scoping
+│   │   ├── InteractiveWorkflowCanvas.tsx # Canvas interactivo con Tríada de Rutas
+│   │   ├── ToolArchiveTable.tsx  # Matriz de archivo densa con filtros
+│   │   ├── ToolEditorialCard.tsx # Tarjetas editoriales con telemetría ASCII
+│   │   ├── TradeOffInspector.tsx # Modal de inspección y sustitución (Swap)
+│   │   └── WorkflowMap.tsx       # Desglose secuencial del flujo de trabajo
+│   │
+│   ├── data/
+│   │   ├── presets.ts            # 32 perfiles profesionales calibrados para Smart Scoping
+│   │   └── tools.ts              # Dataset ontológico de 90 herramientas con precios reales
+│   │
+│   ├── engine/
+│   │   ├── filter.ts             # Evaluación de restricciones duras (Hard Constraints)
+│   │   ├── pipelineSynthesizer.ts # Ensamblaje secuencial de etapas y trade-offs
+│   │   ├── routeSynthesizer.ts   # Síntesis de Tríada de Rutas y Data Glue
+│   │   ├── scoring.ts            # Motor MCDA de 4 vectores y afinidades de dominio
+│   │   └── tradeoffs.ts          # Generador de evidencias y alternativas de swap
+│   │
+│   ├── i18n/
+│   │   └── translations.ts       # Diccionario integral 100% bilingüe (ES/EN)
+│   │
+│   ├── styles/
+│   │   ├── base.css              # Reset, fuentes Google y variables base
+│   │   ├── components.css        # Estilos de la matriz suiza, archivo y modal
+│   │   ├── tokens.css            # Tokens de diseño y variables CSS
+│   │   └── visual-canvas.css     # Estilos del rack interactivo y cables Data Glue
+│   │
+│   ├── types/
+│   │   └── index.ts              # Definiciones TypeScript estrictas
+│   ├── App.tsx                   # Estado raíz, routing reactivo y cálculo de query
+│   └── main.tsx                  # Punto de entrada de la aplicación
+│
+├── scripts/
+│   └── fetch_more_logos.mjs      # Script de descarga y sanitización de SVGs
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
 
 ---
 
-## 4. Estructura del Código
-
-```
-src/
-├── assets/
-│   └── logos/
-│       ├── svg/                  # 37+ SVGs oficiales sanitizados (xmlns garantizado)
-│       └── ToolLogos.tsx         # Componente y diccionario de mapeo de logotipos
-├── components/
-│   ├── ArtifactPreview.tsx       # Previsualizaciones de artefactos entregables (3D, Render, Citas)
-│   ├── Header.tsx                # Índice superior, temas (Dark/Light) y selector de idioma (ES/EN)
-│   ├── IntentInstrument.tsx      # Instrumento de entrada y matriz 3-columnas (8 profesiones)
-│   ├── InteractiveWorkflowCanvas.tsx # Rack modular, cables SVG y Tríada de Rutas
-│   ├── ToolArchiveTable.tsx      # Tabla técnica del catálogo denso (90 herramientas)
-│   ├── ToolEditorialCard.tsx     # Tarjetas de herramientas con barras ASCII
-│   ├── TradeOffInspector.tsx     # Modal de inspección y sustitución (Swap)
-│   └── WorkflowMap.tsx           # Desglose secuencial del flujo de trabajo
-├── data/
-│   ├── presets.ts                # 8 perfiles profesionales y casos de uso calibrados
-│   └── tools.ts                  # Dataset ontológico de 90 herramientas con precios reales
-├── engine/
-│   ├── filter.ts                 # Filtros duros de restricciones (SO, presupuesto, privacidad)
-│   ├── scoring.ts                # Puntuación multicriterio (MCDA) y afinidad de dominio profesional
-│   ├── pipelineSynthesizer.ts    # Ensamblado del stack paso a paso
-│   ├── routeSynthesizer.ts       # Síntesis de la Tríada de Rutas y Data Glue
-│   └── tradeoffs.ts              # Detección de compromisos y alternativas de swap
-├── i18n/
-│   └── translations.ts           # Diccionario completo Español / Inglés
-└── styles/
-    ├── base.css                  # Variables CSS, reset y tipografía
-    ├── components.css            # Estilos del instrumento, header y archivo
-    ├── tokens.css                # Tokens de espaciado y colores
-    └── visual-canvas.css         # Estilos del rack interactivo y previsualizaciones
-```
-
----
-
-## 5. Instalación y Ejecución Local
+## 10. Guía de Instalación y Ejecución Local
 
 ### Prerrequisitos
-- Node.js 18+
-- npm o pnpm
+- Node.js 18.0 o superior
+- Gestor de paquetes npm, pnpm o yarn
 
-### Comandos
+### Instrucciones
 
 ```bash
-# 1. Clonar el repositorio y navegar a la carpeta
-cd AXIS
+# 1. Clonar el repositorio
+git clone https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP.git
+cd AXIS-TOOLMAP
 
 # 2. Instalar dependencias
 npm install
@@ -150,12 +306,19 @@ npm install
 # 3. Iniciar servidor de desarrollo en localhost:5173
 npm run dev
 
-# 4. Validar tipos de TypeScript y construir bundle de producción
+# 4. Compilar para producción (validación de TypeScript con 0 errores)
 npm run build
+
+# 5. Previsualizar bundle de producción localmente
+npm run preview
 ```
 
 ---
 
-## 6. Scripts de Utilidad
+## 11. Estándar de Commits y Mantenimiento
 
-- `scripts/fetch_more_logos.mjs`: Script automatizado para descargar y sanitizar logotipos vectoriales oficiales desde Simple Icons y fuentes de marca, asegurando el atributo `xmlns="http://www.w3.org/2000/svg"` para garantizar la visualización nítida y sin fallos en Safari y WebKit.
+Este proyecto sigue rigurosamente el estándar de **Conventional Commits** y la regla de **Commits Atómicos y Descriptivos**:
+- Cada commit representa una única modificación lógica e independiente.
+- Los mensajes explican qué cambió y cuál es su propósito técnico.
+- Se inspecciona el diff conceptualmente antes de cada confirmación.
+- Formato: `feat(scope): ...`, `fix(scope): ...`, `refactor(scope): ...`, `style(scope): ...`, `docs(scope): ...`.
