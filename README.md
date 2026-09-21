@@ -1,10 +1,12 @@
-<p align="center">
-  <img src="./public/brand/axis-logo.png" width="90" alt="AXIS Logo" />
+<div align="center">
+  <a href="https://github.com/luisrodriguez-rgb/AXIS-TOOLMAP">
+    <img src="https://raw.githubusercontent.com/luisrodriguez-rgb/AXIS-TOOLMAP/main/public/brand/axis-logo.png" width="130" alt="AXIS Logo" />
+  </a>
   <br />
-  <strong style="font-size: 1.4rem; letter-spacing: -0.02em;">AXIS [MCDA ENGINE]</strong>
+  <strong style="font-size: 1.5rem; letter-spacing: -0.02em;">AXIS [MCDA ENGINE]</strong>
   <br />
   <code style="color: #FF4B22; font-weight: 700;">001 / 002 / 003 · DECISION LAYER</code>
-</p>
+</div>
 
 # AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas
 
@@ -21,7 +23,9 @@ En lugar de limitarse a listar herramientas aisladas, AXIS evalúa de forma cruz
 ## 1. El Problema que Resuelve AXIS
 
 ### El Fallo de los Directorios Tradicionales
+
 Los directorios de software e IA convencionales (estilo "Top 100 AI Tools") fallan por tres razones fundamentales:
+
 1. **Descontextualización Total:** Presentan listas alfabéticas o por popularidad sin entender si el usuario es un arquitecto que necesita emitir planos IFC acotados o un docente que necesita rúbricas de evaluación pedagógica.
 2. **Aislamiento de Etapas:** Sugieren aplicaciones sueltas sin considerar la interoperabilidad formativa ni cómo viaja el dato entre una herramienta y la siguiente.
 3. **Ceguera Financiera y Operativa:** Ignoran las restricciones duras de presupuesto, curvas de aprendizaje prohibitivas y requisitos de privacidad local o cumplimiento normativo.
@@ -40,6 +44,7 @@ Los directorios de software e IA convencionales (estilo "Top 100 AI Tools") fall
 ## 2. Filosofía de Diseño: Human-Centered Technical Editorial
 
 El diseño de AXIS rechaza deliberadamente las convenciones estéticas infladas de las startups de IA (gradientes morados genéricos, bordes redondeados excesivos, tipografías predeterminadas) y adopta una disciplina rigurosa inspirada en:
+
 - **Estilo Tipográfico Suizo (International Typographic Style):** Retículas estructuradas de 1px, orden asimétrico y la tipografía como elemento primario de jerarquía e información.
 - **Brutalismo Técnico Contenido:** Estructuras expuestas, índices numéricos de 3 dígitos (`[001]`, `[002]`), barras de telemetría y especificaciones de ingeniería.
 - **Sensación de Instrumento de Precisión:** Interfaz calibrada que evoca consolas de conmutación técnica, racks de laboratorio y matrices de decisión.
@@ -48,6 +53,7 @@ El diseño de AXIS rechaza deliberadamente las convenciones estéticas infladas 
 ![AXIS Instrumento de Entrada y Descubrimiento](./public/screenshots/discover-instrument.png)
 
 ### Sistema de Tokens y Paleta de Color
+
 - **Modo Claro (Lienzo de Archivo):**
   - Fondo: `#F5F3EC`
   - Superficie: `#FFFFFF`
@@ -106,7 +112,9 @@ AXIS / TOOLMAP
 ## 4. Innovaciones Clave
 
 ### A. Contextualización Adaptativa por Carrera (Smart Scoping)
+
 Al expandir la matriz a 32 carreras, 32 tareas y 32 entregables, el usuario se enfrenta a 96 dimensiones de decisión. Para evitar la sobrecarga cognitiva:
+
 - **Filtrado Inteligente de Dominio:** Al seleccionar una profesión en la Columna `[A]` (p. ej. *Docente Universitario*), las columnas `[B]` (Enfoque de Trabajo) y `[C]` (Artefacto Entregable) activan automáticamente la pastilla `[RELEVANTES A MI PERFIL]`, mostrando únicamente las tareas y entregables pertinentes a su área disciplinar.
 - **Eliminación de Jerga Ajena:** Un docente universitario o un abogado nunca se verá inundado con opciones de ruteo de circuitos impresos (PCB), dinámica de fluidos (CFD) o manifiestos de Kubernetes a menos que lo solicite explícitamente.
 - **Exploración Interdisciplinaria:** Mediante la pastilla `[VER TODAS (32)]`, cualquier usuario puede voluntariamente expandir el catálogo completo para flujos cruzados.
@@ -114,7 +122,9 @@ Al expandir la matriz a 32 carreras, 32 tareas y 32 entregables, el usuario se e
 ![AXIS Canvas con Ruta Pro Studio y Telemetría BOM](./public/screenshots/workflow-pro-studio.png)
 
 ### B. Vocabulario Adaptativo por Dominio
+
 La interfaz ajusta su terminología en función de la familia profesional seleccionada:
+
 - **Dominio Humanidades, Educación, Legal y Negocios (`SCIENCE` / `BIZ`):**
   - En lugar de *"DATA GLUE"* → *"COMPATIBILIDAD DE DOCUMENTOS"* (`DOCUMENT INTEROPERABILITY`).
   - En lugar de *"PIPELINE NODES"* → *"HERRAMIENTAS DEL FLUJO"* (`WORKFLOW TOOLS`).
@@ -123,7 +133,9 @@ La interfaz ajusta su terminología en función de la familia profesional selecc
   - Mantiene la terminología rigurosa de ingeniería: *"DATA GLUE"*, *"TELEMETRÍA BOM"*, *"NODOS DE PROCESAMIENTO"*.
 
 ### C. Internacionalización Integral (100% Full i18n)
+
 AXIS cuenta con soporte bilingüe integral (`ES` / `EN`) con cero fugas de idioma:
+
 - **Navegación y Cabeceras:** Etiquetas de sección, subíndices, selectores de tema e idioma.
 - **Columnas de la Matriz:** Títulos, descripciones de tareas, nombres de entregables, badges de estado (`● ACTIVO` / `● ACTIVE`, `● SELECCIONADO` / `● SELECTED`, `+ AGREGAR` / `+ ADD`).
 - **Tríada de Rutas:** `RUTA RECOMENDADA` / `RECOMMENDED ROUTE`, `RUTA $0 GRATIS` / `$0 FREE ROUTE`, `RUTA PRO STUDIO` / `PRO STUDIO ROUTE`.
@@ -202,6 +214,7 @@ AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento a
 ![AXIS Matriz de Archivo de 90 Herramientas](./public/screenshots/archive-90-tools.png)
 
 ### Desglose por Categorías Técnicas
+
 - **Arquitectura, BIM & AEC:** Autodesk Revit ($355/mo), Autodesk AutoCAD ($250/mo), Autodesk Civil 3D ($325/mo), Graphisoft ArchiCAD ($290/mo), Vectorworks Architect ($153/mo), Procore Construction ($375/mo), OpenSpace AI ($190/mo), Chief Architect Premier ($199/mo), Rhino 3D, SketchUp Pro, Blender, FreeCAD.
 - **Ingeniería, Simulación & Electrónica:** Dassault Systèmes CATIA ($450/mo), PTC Creo Parametric ($230/mo), Autodesk Inventor ($290/mo), MathWorks MATLAB & Simulink ($250/mo), COMSOL Multiphysics ($260/mo), Ansys Mechanical & CFD ($300/mo), Altium Designer ($325/mo), KiCad EDA ($0), OpenFOAM ($0), GNU Octave ($0).
 - **Datos, ML & Business Intelligence:** Snowflake ($120/mo), Databricks ($150/mo), Alteryx Designer ($350/mo), Microsoft Power BI Pro ($10/mo), Tableau Creator ($75/mo), dbt Core/Cloud ($50/mo), Apache Superset ($0), Metabase ($0 / $85/mo), Posit/RStudio ($0 / $25/mo), Julius AI ($20/mo), Google Looker Studio ($0).
@@ -210,6 +223,7 @@ AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento a
 - **Investigación & Documentos:** Zotero ($0), Overleaf Pro ($21/mo), Mendeley ($0), Connected Papers ($5/mo), Rayyan AI ($30/mo), ATLAS.ti ($45/mo), Elicit Plus ($10/mo), Perplexity Pro ($20/mo), NotebookLM ($0), Consensus AI ($20/mo).
 
 ### Sanitización de Logotipos SVG y Compatibilidad Multi-Navegador
+
 - **Soporte WebKit / Safari:** Todos los logotipos vectoriales incorporan obligatoriamente el atributo de espacio de nombres `xmlns="http://www.w3.org/2000/svg"`, eliminando el problema recurrente de imágenes rotas en navegadores Safari en macOS e iOS.
 - **Inversión de Luminancia en Modo Oscuro:** Los logotipos monocromáticos (OpenAI, Notion, Cursor, Zotero, Wolfram, FreeCAD, Marp, Docker, Vercel) invierten su color a blanco puro en modo oscuro, mientras que los logotipos cromáticos oficiales (Figma, Canva, Blender, Rhino, GeoGebra, Scribus) conservan sus colores de marca exactos.
 
@@ -218,6 +232,7 @@ AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento a
 ## 8. Inspector de Trade-offs y Sustitución en Tiempo Real (Swap)
 
 Cuando el usuario desea explorar alternativas en cualquier etapa del flujo:
+
 1. Hace clic en `⇄ SUSTITUIR PIEZA` / `⇄ SWAP TOOL` en el nodo correspondiente del canvas.
 2. Se abre el **TradeOffInspector Modal**, que expone:
    - Desglose porcentual y barras ASCII de los 4 vectores de decisión.
@@ -241,10 +256,12 @@ AXIS incorpora un motor de evaluación dedicado a la **soberanía tecnológica y
 | **Notion** ($10–$18/mes) | **AppFlowy** | `AppFlowy-IO/AppFlowy` | AGPL-3.0 | Arquitectura local-first con Rust y Flutter, cifrado y control absoluto. |
 | **Slack / Teams** ($8–$15/asiento) | **Mattermost** | `mattermost/mattermost-server` | AGPL-3.0 | Despliegue on-premise estricto, cumplimiento HIPAA/SOC2/GDPR verificado. |
 | **Adobe Photoshop** ($22.99/mes) | **Krita** | `KDE/krita` | GPL-3.0 | Soporte CMYK y HDR para ilustración y retoque sin telemetría corporativa. |
-| **Autodesk Revit** ($355/mes) | **Bonsai (Blender BIM)**| `IfcOpenShell/IfcOpenShell` | LGPL-3.0 | Autoría nativa en estándar internacional IFC sin formatos intermedios cerrados. |
+| **Autodesk Revit** ($355/mes) | **Bonsai (Blender BIM)** | `IfcOpenShell/IfcOpenShell` | LGPL-3.0 | Autoría nativa en estándar internacional IFC sin formatos intermedios cerrados. |
 
 ### Dimensiones de la Evaluación Cara a Cara (Head-to-Head)
+
 Al pulsar el botón `[⇄ VS FOSS]` en el Archivo, AXIS despliega un modal de análisis comparativo en 5 dimensiones:
+
 1. **Costo Anual & TCO a 3 Años:** Cálculo de ahorro acumulado en licencias por usuario.
 2. **Soberanía y Resguardo de Datos:** Comparativa de nube cerrada vs. servidor local u on-premise.
 3. **Estándares Abiertos y Formatos:** Riesgo de vendor lock-in frente a formatos abiertos (SVG, IFC, SQL, Markdown).
@@ -253,28 +270,7 @@ Al pulsar el botón `[⇄ VS FOSS]` en el Archivo, AXIS despliega un modal de an
 
 ---
 
-## 10. Roadmap Estratégico de AXIS (Fases 1 a 4)
-
-- **Fase 1: Identidad Oficial, FOSS Intelligence & Comparativa Inicial (Completada):**
-  - Integración del logotipo técnico oficial AXIS (`[A]`/`[B]`, gráfico de barras ascendentes, flecha de señal `#FF4B22`, código `001 / 002 / 003`).
-  - Extensión ontológica de herramientas con campos FOSS (`isOpenSource`, `githubRepo`, `license`, `fossAlternativeTo`).
-  - Componente interactivo `HeadToHeadComparison.tsx` y filtro de código abierto en la tabla de archivo.
-  - Soporte bilingüe completo (`ES`/`EN`) con traducción contextual de capacidades y limitaciones.
-- **Fase 2: Expansión de Entradas/Salidas & Personalización por Carrera:**
-  - Importador de stacks existentes (JSON/CSV de suscripciones activas).
-  - Selector de tamaño de equipo (1, 5, 20, 100+ licencias) con cálculo de TCO multi-asiento.
-  - Generador de **Procurement Report** en PDF ejecutivo para comités de compras.
-  - Generador de **`docker-compose.yml`** para levantar stacks FOSS autoalojados en un comando.
-- **Fase 3: AXIS CLI & Grafo de Interoperabilidad:**
-  - Herramienta de terminal `npx @axis/cli audit --stack stack.json` para auditorías continuas en CI/CD.
-  - Visualizador de grafo de rutas de exportación/importación de formatos entre herramientas.
-- **Fase 4: Ecosistema & Validación Comunitaria:**
-  - Sincronización automática de métricas con la API de GitHub (estrellas, releases, actividad).
-  - Pipeline abierto de Pull Requests para contribución y verificación de nuevas herramientas.
-
----
-
-## 11. Estructura del Repositorio
+## 10. Estructura del Repositorio
 
 ```
 AXIS/
@@ -337,9 +333,10 @@ AXIS/
 
 ---
 
-## 12. Guía de Instalación y Ejecución Local
+## 11. Guía de Instalación y Ejecución Local
 
 ### Prerrequisitos
+
 - Node.js 18.0 o superior
 - Gestor de paquetes npm, pnpm o yarn
 
@@ -364,11 +361,3 @@ npm run preview
 ```
 
 ---
-
-## 13. Estándar de Commits y Mantenimiento
-
-Este proyecto sigue rigurosamente el estándar de **Conventional Commits** y la regla de **Commits Atómicos y Descriptivos**:
-- Cada commit representa una única modificación lógica e independiente.
-- Los mensajes explican qué cambió y cuál es su propósito técnico.
-- Se inspecciona el diff conceptualmente antes de cada confirmación.
-- Formato: `feat(scope): ...`, `fix(scope): ...`, `refactor(scope): ...`, `style(scope): ...`, `docs(scope): ...`.
