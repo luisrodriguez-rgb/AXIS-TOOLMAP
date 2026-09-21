@@ -94,6 +94,10 @@ export interface Tool {
   whatItDoesNotDo: string[];
   integrations: string[];
   supportedStages: WorkflowStageId[];
+  isOpenSource?: boolean;
+  githubRepo?: string;
+  license?: string;
+  fossAlternativeTo?: string[];
 }
 
 export interface PersonaProfile {
