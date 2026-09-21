@@ -27,6 +27,7 @@ export function calculateToolScore(
   // Capacidades según el tipo de entregable
   switch (deliverableType) {
     case 'presentation':
+    case 'brand_guidelines':
       if (tool.capabilities.presentationBuilder) fitPoints += 25;
       if (tool.capabilities.generatesImages) fitPoints += 10;
       if (tool.capabilities.vectorExport) fitPoints += 10;
@@ -37,21 +38,70 @@ export function calculateToolScore(
       if (tool.capabilities.vectorExport) fitPoints += 10;
       break;
     case 'report':
+    case 'environmental_study':
+    case 'clinical_protocol':
+    case 'prd_spec':
       if (tool.capabilities.handlesPDF) fitPoints += 20;
       if (tool.capabilities.citationsEnabled) fitPoints += 25;
       if (tool.capabilities.dataAnalysis) fitPoints += 10;
+      break;
+    case 'latex_manuscript':
+    case 'bib_matrix':
+      if (tool.capabilities.citationsEnabled) fitPoints += 35;
+      if (tool.capabilities.handlesPDF) fitPoints += 20;
+      break;
+    case 'cad_plan':
+    case 'bim_model':
+      if (tool.capabilities.cad3DModeling) fitPoints += 35;
+      if (tool.capabilities.vectorExport) fitPoints += 20;
+      break;
+    case 'structural_calc':
+    case 'cfd_simulation':
+      if (tool.capabilities.symbolicMath || tool.category === 'calculation') fitPoints += 35;
+      if (tool.capabilities.cad3DModeling) fitPoints += 20;
+      break;
+    case 'pcb_schematic':
+      if (tool.id === 'altium' || tool.id === 'kicad') fitPoints += 45;
+      if (tool.capabilities.vectorExport) fitPoints += 15;
       break;
     case 'render':
       if (tool.capabilities.cad3DModeling || tool.capabilities.generatesImages) fitPoints += 30;
       break;
     case 'dashboard':
+    case 'financial_model':
+    case 'bom_estimate':
+    case 'construction_schedule':
       if (tool.capabilities.dataAnalysis) fitPoints += 30;
       if (tool.capabilities.interactiveCollaboration) fitPoints += 10;
       break;
     case 'code':
-      if (tool.capabilities.generatesCode) fitPoints += 35;
+    case 'api_spec':
+    case 'docker_infra':
+    case 'security_audit':
+    case 'c4_architecture':
+      if (tool.capabilities.generatesCode || tool.category === 'productivity') fitPoints += 35;
+      break;
+    case 'interactive_prototype':
+    case 'design_system':
+      if (tool.capabilities.interactiveCollaboration) fitPoints += 25;
+      if (tool.capabilities.vectorExport) fitPoints += 20;
+      break;
+    case 'computational_notebook':
+      if (tool.capabilities.dataAnalysis) fitPoints += 25;
+      if (tool.capabilities.generatesCode) fitPoints += 25;
+      if (tool.capabilities.symbolicMath) fitPoints += 15;
+      break;
+    case 'video_master':
+    case 'motion_graphics':
+      if (tool.capabilities.voiceAudio || tool.category === 'design_visual') fitPoints += 35;
+      if (tool.capabilities.generatesImages) fitPoints += 20;
+      break;
+    case 'gis_map':
+      if (tool.id === 'civil-3d' || tool.capabilities.dataAnalysis) fitPoints += 35;
+      if (tool.capabilities.vectorExport) fitPoints += 15;
       break;
     case 'concept':
+    case 'journey_map':
       if (tool.capabilities.generatesImages || tool.capabilities.interactiveCollaboration) fitPoints += 20;
       break;
   }
@@ -73,20 +123,20 @@ export function calculateToolScore(
 
   // --- AFINIDAD DE DOMINIO PROFESIONAL DIRECTA ---
   const roleLower = (persona.primaryRole || '').toLowerCase();
-  if (roleLower.includes('civil') && (tool.category === 'drafting_3d' || tool.category === 'calculation')) {
-    fitPoints += 35; // Prioridad a Civil 3D, AutoCAD, Revit, OpenFOAM, Ansys
+  if ((roleLower.includes('civil') || roleLower.includes('construc') || roleLower.includes('gis')) && (tool.category === 'drafting_3d' || tool.category === 'calculation')) {
+    fitPoints += 35; // Prioridad a Civil 3D, AutoCAD, Revit, Procore, OpenSpace, OpenFOAM
   } else if (roleLower.includes('arquitect') && (tool.category === 'drafting_3d' || tool.capabilities.cad3DModeling)) {
-    fitPoints += 30; // Prioridad alta a Revit, ArchiCAD, Rhino, SketchUp, LookX, Twinmotion
-  } else if ((roleLower.includes('software') || roleLower.includes('desarroll') || roleLower.includes('programad')) && (tool.capabilities.generatesCode || tool.id === 'docker' || tool.id === 'postman' || tool.id === 'jetbrains-idea' || tool.id === 'supabase' || tool.id === 'vercel')) {
-    fitPoints += 35; // Prioridad a VS Code, Cursor, IntelliJ, Docker, Postman, Supabase, Vercel, Linear
-  } else if (roleLower.includes('ingenier') && (tool.category === 'calculation' || tool.category === 'drafting_3d')) {
-    fitPoints += 30; // Prioridad alta a MATLAB, SolidWorks, Ansys, GeoGebra, KiCad, Inventor
-  } else if (roleLower.includes('dato') && tool.category === 'data_analysis') {
-    fitPoints += 30; // Prioridad alta a Power BI, Tableau, Snowflake, Databricks, dbt, Superset, Metabase, RStudio
-  } else if (roleLower.includes('diseñ') && tool.category === 'design_visual') {
-    fitPoints += 30; // Prioridad alta a Figma, Adobe Photoshop/Illustrator/Premiere, Midjourney, Blender, Cinema 4D
-  } else if (roleLower.includes('investig') && tool.category === 'research') {
-    fitPoints += 30; // Prioridad alta a Zotero, Overleaf, Elicit, Perplexity, Mendeley, Connected Papers, Rayyan, ATLAS.ti
+    fitPoints += 30; // Prioridad a Revit, ArchiCAD, Rhino, SketchUp, LookX, Twinmotion, Enscape
+  } else if ((roleLower.includes('software') || roleLower.includes('devops') || roleLower.includes('ciberseguridad') || roleLower.includes('desarroll')) && (tool.capabilities.generatesCode || tool.id === 'docker' || tool.id === 'postman' || tool.id === 'jetbrains-idea' || tool.id === 'supabase' || tool.id === 'vercel' || tool.id === 'sentry')) {
+    fitPoints += 35; // Prioridad a VS Code, Cursor, IntelliJ, Docker, Postman, Supabase, Vercel, Sentry, Linear
+  } else if ((roleLower.includes('mecánic') || roleLower.includes('electrónic') || roleLower.includes('químic') || roleLower.includes('biomédic') || roleLower.includes('industrial') || roleLower.includes('ingenier')) && (tool.category === 'calculation' || tool.category === 'drafting_3d')) {
+    fitPoints += 35; // Prioridad a SolidWorks, CATIA, Creo, Inventor, Ansys, MATLAB, COMSOL, Altium, KiCad
+  } else if ((roleLower.includes('dato') || roleLower.includes('financ') || roleLower.includes('econometr') || roleLower.includes('matemátic')) && (tool.category === 'data_analysis' || tool.category === 'calculation')) {
+    fitPoints += 35; // Prioridad a Power BI, Tableau, Snowflake, Databricks, dbt, Superset, Metabase, RStudio, Excel
+  } else if ((roleLower.includes('diseñ') || roleLower.includes('motion') || roleLower.includes('video') || roleLower.includes('branding')) && tool.category === 'design_visual') {
+    fitPoints += 35; // Prioridad a Figma, Adobe Photoshop/Illustrator/Premiere/After Effects, DaVinci Resolve, Cinema 4D, Spline
+  } else if ((roleLower.includes('investig') || roleLower.includes('clínic') || roleLower.includes('bioinformátic') || roleLower.includes('redactor') || roleLower.includes('docente') || roleLower.includes('abogado')) && (tool.category === 'research' || tool.category === 'productivity')) {
+    fitPoints += 35; // Prioridad a Zotero, Overleaf, Elicit, Perplexity, Mendeley, Connected Papers, Rayyan, ATLAS.ti, Notion
   }
 
   const taskFit = Math.min(100, Math.max(10, fitPoints));

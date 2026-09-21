@@ -10,7 +10,32 @@ export type DeliverableType =
   | 'code'
   | 'render'
   | 'dashboard'
-  | 'concept';
+  | 'concept'
+  | 'cad_plan'
+  | 'bim_model'
+  | 'structural_calc'
+  | 'cfd_simulation'
+  | 'pcb_schematic'
+  | 'interactive_prototype'
+  | 'computational_notebook'
+  | 'financial_model'
+  | 'design_system'
+  | 'video_master'
+  | 'motion_graphics'
+  | 'latex_manuscript'
+  | 'bib_matrix'
+  | 'api_spec'
+  | 'journey_map'
+  | 'prd_spec'
+  | 'security_audit'
+  | 'docker_infra'
+  | 'environmental_study'
+  | 'construction_schedule'
+  | 'bom_estimate'
+  | 'gis_map'
+  | 'brand_guidelines'
+  | 'clinical_protocol'
+  | 'c4_architecture';
 
 export type WorkflowStageId =
   | 'ingest_research'
@@ -76,6 +101,9 @@ export interface PersonaProfile {
   label: string;
   role: string;
   domain: string;
+  domainGroup?: 'AEC' | 'ING' | 'TECH' | 'DATA' | 'DESIGN' | 'SCIENCE' | 'BIZ';
+  relevantWorkCodes?: string[];
+  relevantDeliverableCodes?: string[];
   technicalLevel: TechnicalLevel;
   os: OperatingSystem[];
   activeTools: string[];
@@ -104,10 +132,12 @@ export interface UserWorkflowQuery {
     technicalLevel: TechnicalLevel;
     os: OperatingSystem[];
     activeTools: string[];
+    domainGroup?: string;
   };
   needText: string;
   deliverableType: DeliverableType;
   constraints: UserConstraints;
+  lang?: 'es' | 'en';
 }
 
 export interface AlternativeOption {
