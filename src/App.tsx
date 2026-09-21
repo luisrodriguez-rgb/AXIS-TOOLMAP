@@ -146,27 +146,6 @@ export const App: React.FC = () => {
               onMapWork={() => setActiveTab('workflow')}
               lang={lang}
             />
-
-            {/* Canvas Visual e Interactivo: Tríada de Rutas + Logos Vectoriales + Data Glue */}
-            <div style={{ marginTop: '36px' }}>
-              <InteractiveWorkflowCanvas
-                currentRouteId={currentRouteId}
-                onSelectRoute={setCurrentRouteId}
-                routes={routes}
-                activeStack={activeStack}
-                onOpenInspector={(rec) => setInspectedStage(rec)}
-                lang={lang}
-              />
-            </div>
-
-            {/* Vista editorial detallada con opciones de swap y desglose de trade-offs */}
-            <div style={{ marginTop: '36px' }}>
-              <WorkflowMap
-                stack={activeStack}
-                onOpenInspector={(rec) => setInspectedStage(rec)}
-                lang={lang}
-              />
-            </div>
           </>
         )}
 
@@ -182,7 +161,7 @@ export const App: React.FC = () => {
               lang={lang}
             />
 
-            {/* Desglose editorial paso a paso */}
+            {/* Desglose editorial paso a paso con opciones de swap */}
             <div style={{ marginTop: '36px' }}>
               <WorkflowMap
                 stack={activeStack}

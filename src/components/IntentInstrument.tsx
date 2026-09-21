@@ -33,11 +33,14 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
   const t = TRANSLATIONS[lang].discover;
 
   const professions = [
-    { label: lang === 'es' ? 'Arquitecto' : 'Architect', role: 'Arquitecto / Proyectista', deliverable: 'presentation' as DeliverableType },
-    { label: lang === 'es' ? 'Ingeniero' : 'Engineer', role: 'Estudiante / Ingeniero', deliverable: 'visualization' as DeliverableType },
-    { label: lang === 'es' ? 'Estudiante' : 'Student', role: 'Estudiante Universitario', deliverable: 'visualization' as DeliverableType },
-    { label: lang === 'es' ? 'Fundador / PM' : 'Founder / PM', role: 'Fundador / Product Manager', deliverable: 'dashboard' as DeliverableType },
-    { label: lang === 'es' ? 'Diseñador' : 'Designer', role: 'Diseñador Visual / UX', deliverable: 'concept' as DeliverableType },
+    { id: 'architect', label: lang === 'es' ? 'Arquitecto' : 'Architect' },
+    { id: 'civil-engineer', label: lang === 'es' ? 'Ingeniero Civil' : 'Civil Engineer' },
+    { id: 'software-engineer', label: lang === 'es' ? 'Ingeniero Software' : 'Software Engineer' },
+    { id: 'student', label: lang === 'es' ? 'Estudiante' : 'Student' },
+    { id: 'founder-pm', label: lang === 'es' ? 'Fundador / PM' : 'Founder / PM' },
+    { id: 'ux-designer', label: lang === 'es' ? 'Diseñador' : 'Designer' },
+    { id: 'data-scientist', label: lang === 'es' ? 'Científico de Datos' : 'Data Scientist' },
+    { id: 'academic-researcher', label: lang === 'es' ? 'Investigador' : 'Researcher' },
   ];
 
   const workTypes = [
@@ -125,18 +128,21 @@ export const IntentInstrument: React.FC<IntentInstrumentProps> = ({
           <div className="matrix-options-list">
             {professions.map((prof) => {
               const isMatch =
+                activePersona.id === prof.id ||
                 activePersona.role.toLowerCase().includes(prof.label.toLowerCase()) ||
                 activePersona.label.toLowerCase().includes(prof.label.toLowerCase());
               return (
                 <button
-                  key={prof.label}
+                  key={prof.id}
                   className={`matrix-btn ${isMatch ? 'active' : ''}`}
                   onClick={() => {
                     const preset =
+                      allPresets.find((p) => p.id === prof.id) ||
                       allPresets.find((p) =>
                         p.label.toLowerCase().includes(prof.label.toLowerCase()) ||
                         p.role.toLowerCase().includes(prof.label.toLowerCase())
-                      ) || allPresets[0];
+                      ) ||
+                      allPresets[0];
                     onSelectPreset(preset);
                   }}
                 >
