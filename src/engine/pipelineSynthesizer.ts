@@ -15,31 +15,30 @@ import {
   generateAlternatives,
 } from './tradeoffs';
 
+import { TRANSLATIONS } from '../i18n/translations';
+
+export function getWorkflowStageDefinition(stageId: WorkflowStageId, lang: 'es' | 'en' = 'es'): WorkflowStage {
+  const t = TRANSLATIONS[lang].stages[stageId];
+  const stepNumbers: Record<WorkflowStageId, number> = {
+    ingest_research: 1,
+    model_process: 2,
+    refine_format: 3,
+    present_deliver: 4,
+  };
+
+  return {
+    id: stageId,
+    title: t.title,
+    stepNumber: stepNumbers[stageId],
+    description: t.description,
+  };
+}
+
 export const WORKFLOW_STAGES_DEFINITION: Record<WorkflowStageId, WorkflowStage> = {
-  ingest_research: {
-    id: 'ingest_research',
-    title: '1. Ingesta & Fuentes',
-    stepNumber: 1,
-    description: 'Recopilación de documentos, referencias, apuntes o datos brutos.',
-  },
-  model_process: {
-    id: 'model_process',
-    title: '2. Núcleo & Procesamiento',
-    stepNumber: 2,
-    description: 'Cálculo, renderizado, diseño conceptual o análisis estadístico.',
-  },
-  refine_format: {
-    id: 'refine_format',
-    title: '3. Estructuración & Refinamiento',
-    stepNumber: 3,
-    description: 'Organización de contenidos, edición y preparación de artefactos.',
-  },
-  present_deliver: {
-    id: 'present_deliver',
-    title: '4. Presentación & Entrega',
-    stepNumber: 4,
-    description: 'Maquetación de diapositivas, informe final o entrega interactiva.',
-  },
+  ingest_research: getWorkflowStageDefinition('ingest_research', 'es'),
+  model_process: getWorkflowStageDefinition('model_process', 'es'),
+  refine_format: getWorkflowStageDefinition('refine_format', 'es'),
+  present_deliver: getWorkflowStageDefinition('present_deliver', 'es'),
 };
 
 export function synthesizeWorkflowStack(
@@ -88,9 +87,11 @@ export function synthesizeWorkflowStack(
     high: 3,
   };
 
+  const lang = query.lang || 'es';
+
   // 2. Para cada etapa, evaluar candidatos
   for (const stageId of activeStageIds) {
-    const stageDef = WORKFLOW_STAGES_DEFINITION[stageId];
+    const stageDef = getWorkflowStageDefinition(stageId, lang);
 
     // Herramientas que admiten esta etapa
     const stageCandidates = allTools.filter((tool) =>
@@ -174,13 +175,13 @@ export function synthesizeWorkflowStack(
 
   // Sintetizar el trade-off principal del stack completo
   let keyStackTradeOff = '';
+  const tTrade = TRANSLATIONS[lang].tradeoffs;
   if (totalCostUSD === 0) {
-    keyStackTradeOff =
-      'Stack 100% libre de costo fijo mensual: óptimo para investigación y estudio, pero con límites de consumo diario en ciertas herramientas freemium.';
+    keyStackTradeOff = tTrade.zeroCost;
   } else if (totalCostUSD <= query.constraints.maxMonthlyBudgetUSD) {
-    keyStackTradeOff = `Presupuesto balanceado ($${totalCostUSD} USD/mes): alta fidelidad de entrega manteniendo costos bajo control y curva accesible.`;
+    keyStackTradeOff = tTrade.balanced.replace('{cost}', String(totalCostUSD));
   } else {
-    keyStackTradeOff = `Supera el presupuesto inicial en +$${totalCostUSD - query.constraints.maxMonthlyBudgetUSD} USD/mes: se recomienda evaluar alternativas gratuitas en las etapas secundarias.`;
+    keyStackTradeOff = tTrade.exceeded.replace('{delta}', String(totalCostUSD - query.constraints.maxMonthlyBudgetUSD));
   }
 
   return {
