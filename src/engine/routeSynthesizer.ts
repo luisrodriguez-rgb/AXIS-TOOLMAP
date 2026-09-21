@@ -1,8 +1,21 @@
-import type { Tool, UserWorkflowQuery, StackRecommendation, WorkflowStageId } from '../types';
+import type {
+  Tool,
+  UserWorkflowQuery,
+  StackRecommendation,
+  WorkflowStageId,
+  DataFrictionState,
+  DataFidelityLoss,
+} from '../types';
 import { synthesizeWorkflowStack } from './pipelineSynthesizer';
 import { TRANSLATIONS } from '../i18n/translations';
 
-export type RouteId = 'recommended' | 'zero_cost' | 'pro_studio';
+export type RouteId =
+  | 'balanced'
+  | 'foss'
+  | 'max_capability'
+  | 'recommended'
+  | 'zero_cost'
+  | 'pro_studio';
 
 export interface DataGlueConnection {
   fromStageId: WorkflowStageId;
@@ -10,7 +23,10 @@ export interface DataGlueConnection {
   formatLabel: string;
   transferMethod: string;
   frictionLevel: 'low' | 'medium' | 'high';
+  frictionState: DataFrictionState;
+  fidelity: DataFidelityLoss;
   frictionNote: string;
+  fidelityWarning?: string;
 }
 
 export interface RouteOption {
@@ -30,21 +46,22 @@ export function synthesizeTriadRoutes(
   const tRoutes = TRANSLATIONS[lang].routes;
   const tGlue = TRANSLATIONS[lang].dataGlue;
 
-  // 1. Ruta A: Recomendada / Balanceada (respetando restricciones activas)
-  const recommendedStack = synthesizeWorkflowStack(baseQuery, allTools, manualOverrides);
+  // 1. Ruta A: Balanceada (óptimo compromiso de capacidades y costo dentro de restricciones)
+  const balancedStack = synthesizeWorkflowStack(baseQuery, allTools, manualOverrides);
 
-  // 2. Ruta B: Zero-Cost / Open Stack (forzar presupuesto $0)
-  const zeroCostQuery: UserWorkflowQuery = {
+  // 2. Ruta B: $0 / FOSS (soberanía local, formatos abiertos, forzar presupuesto $0)
+  const fossQuery: UserWorkflowQuery = {
     ...baseQuery,
     constraints: {
       ...baseQuery.constraints,
       maxMonthlyBudgetUSD: 0,
+      strictPrivacy: true,
     },
   };
-  const zeroCostStack = synthesizeWorkflowStack(zeroCostQuery, allTools, manualOverrides);
+  const fossStack = synthesizeWorkflowStack(fossQuery, allTools, manualOverrides);
 
-  // 3. Ruta C: Pro Studio (máxima potencia, presupuesto alto $200/mo, tolerancia curva alta)
-  const proStudioQuery: UserWorkflowQuery = {
+  // 3. Ruta C: Pro / Máxima Capacidad (máxima potencia técnica, presupuesto $200/mo, tolerancia curva alta)
+  const maxCapabilityQuery: UserWorkflowQuery = {
     ...baseQuery,
     constraints: {
       ...baseQuery.constraints,
@@ -52,9 +69,9 @@ export function synthesizeTriadRoutes(
       maxLearningCurve: 'high',
     },
   };
-  const proStudioStack = synthesizeWorkflowStack(proStudioQuery, allTools, manualOverrides);
+  const maxCapabilityStack = synthesizeWorkflowStack(maxCapabilityQuery, allTools, manualOverrides);
 
-  // Helper para generar el "Data Glue" entre etapas con textos internacionalizados
+  // Helper para generar el "Data Glue" entre etapas con fricción y fidelidad
   const buildDataGlue = (stack: StackRecommendation): DataGlueConnection[] => {
     const connections: DataGlueConnection[] = [];
     const stages = stack.stages;
@@ -66,17 +83,46 @@ export function synthesizeTriadRoutes(
       let formatLabel = tGlue.formatLabel.data_file;
       let transferMethod = tGlue.transferMethod.manual;
       let frictionLevel: 'low' | 'medium' | 'high' = 'low';
+      let frictionState: DataFrictionState = 'one_click';
+      let fidelity: DataFidelityLoss = 'full';
       let frictionNote = tGlue.frictionNote.seamless_transfer;
+      let fidelityWarning: string | undefined = undefined;
 
-      if (fromTool.category === 'research' && (toTool.category === 'design_visual' || toTool.category === 'drafting_3d')) {
+      // Modelado de transformaciones específicas
+      if (fromTool.category === 'drafting_3d' && toTool.category === 'design_visual') {
+        // BIM/CAD -> Raster/Vector: pérdida de datos paramétricos
+        formatLabel = 'IFC / OBJ → SVG / PNG';
+        transferMethod = 'Render / Export 2D';
+        frictionLevel = 'medium';
+        frictionState = 'manual';
+        fidelity = 'partial';
+        fidelityWarning =
+          lang === 'es'
+            ? 'Pérdida de propiedades paramétricas e información BIM al exportar a geometría plana/malla'
+            : 'Loss of parametric properties and BIM metadata when exporting to flat geometry/mesh';
+        frictionNote =
+          lang === 'es'
+            ? 'Requiere exportar vistas 2D o mallas poligonales'
+            : 'Requires exporting 2D views or polygonal meshes';
+      } else if (fromTool.category === 'research' && (toTool.category === 'design_visual' || toTool.category === 'drafting_3d')) {
         formatLabel = tGlue.formatLabel.prompt_notes;
         transferMethod = tGlue.transferMethod.copy_paste;
         frictionLevel = 'low';
+        frictionState = 'one_click';
+        fidelity = 'full';
         frictionNote = tGlue.frictionNote.text_refs;
       } else if ((fromTool.category === 'design_visual' || fromTool.category === 'drafting_3d') && toTool.category === 'presentation') {
         formatLabel = fromTool.capabilities.vectorExport ? tGlue.formatLabel.svg_vector : tGlue.formatLabel.png_raster;
         transferMethod = tGlue.transferMethod.file_import;
         frictionLevel = fromTool.capabilities.vectorExport ? 'low' : 'medium';
+        frictionState = fromTool.capabilities.vectorExport ? 'automatic' : 'one_click';
+        fidelity = fromTool.capabilities.vectorExport ? 'full' : 'partial';
+        if (!fromTool.capabilities.vectorExport) {
+          fidelityWarning =
+            lang === 'es'
+              ? 'Rasterización: pérdida de escalabilidad vectorial infinita'
+              : 'Rasterization: loss of infinite vector scalability';
+        }
         frictionNote = fromTool.capabilities.vectorExport
           ? tGlue.frictionNote.vector_infinite
           : tGlue.frictionNote.raster_layers;
@@ -84,12 +130,30 @@ export function synthesizeTriadRoutes(
         formatLabel = tGlue.formatLabel.equation_plot;
         transferMethod = tGlue.transferMethod.embed;
         frictionLevel = 'low';
+        frictionState = 'one_click';
+        fidelity = 'full';
         frictionNote = tGlue.frictionNote.export_plots;
-      } else if (fromTool.category === 'data_analysis') {
+      } else if (fromTool.category === 'data_analysis' && (toTool.category === 'calculation' || toTool.category === 'presentation')) {
         formatLabel = tGlue.formatLabel.csv_metrics;
         transferMethod = tGlue.transferMethod.connector;
         frictionLevel = 'medium';
+        frictionState = 'one_click';
+        fidelity = 'full';
         frictionNote = tGlue.frictionNote.column_consistency;
+      } else if (fromTool.category === 'research' && toTool.category === 'calculation') {
+        formatLabel = 'PDF / Paper → Clean Data';
+        transferMethod = 'Manual Data Entry / Extraction';
+        frictionLevel = 'high';
+        frictionState = 'manual';
+        fidelity = 'partial';
+        fidelityWarning =
+          lang === 'es'
+            ? 'Extracción no estructurada: requiere verificación humana de tablas y fórmulas'
+            : 'Unstructured extraction: requires human verification of tables and formulas';
+        frictionNote =
+          lang === 'es'
+            ? 'Conversión manual de datos numéricos desde literatura'
+            : 'Manual numeric data conversion from literature';
       }
 
       connections.push({
@@ -98,34 +162,47 @@ export function synthesizeTriadRoutes(
         formatLabel,
         transferMethod,
         frictionLevel,
+        frictionState,
+        fidelity,
         frictionNote,
+        fidelityWarning,
       });
     }
 
     return connections;
   };
 
+  const balancedOption: RouteOption = {
+    id: 'balanced',
+    label: lang === 'es' ? 'Ruta Balanceada' : 'Balanced Route',
+    description: tRoutes.recommendedDesc,
+    stack: balancedStack,
+    dataGlue: buildDataGlue(balancedStack),
+  };
+
+  const fossOption: RouteOption = {
+    id: 'foss',
+    label: lang === 'es' ? 'Ruta $0 / FOSS Soberana' : '$0 / FOSS Sovereign Route',
+    description: tRoutes.zero_costDesc,
+    stack: fossStack,
+    dataGlue: buildDataGlue(fossStack),
+  };
+
+  const maxCapabilityOption: RouteOption = {
+    id: 'max_capability',
+    label: lang === 'es' ? 'Ruta Pro / Máxima Capacidad' : 'Pro / Max Capability Route',
+    description: tRoutes.pro_studioDesc,
+    stack: maxCapabilityStack,
+    dataGlue: buildDataGlue(maxCapabilityStack),
+  };
+
   return {
-    recommended: {
-      id: 'recommended',
-      label: tRoutes.recommended,
-      description: tRoutes.recommendedDesc,
-      stack: recommendedStack,
-      dataGlue: buildDataGlue(recommendedStack),
-    },
-    zero_cost: {
-      id: 'zero_cost',
-      label: tRoutes.zero_cost,
-      description: tRoutes.zero_costDesc,
-      stack: zeroCostStack,
-      dataGlue: buildDataGlue(zeroCostStack),
-    },
-    pro_studio: {
-      id: 'pro_studio',
-      label: tRoutes.pro_studio,
-      description: tRoutes.pro_studioDesc,
-      stack: proStudioStack,
-      dataGlue: buildDataGlue(proStudioStack),
-    },
+    balanced: balancedOption,
+    foss: fossOption,
+    max_capability: maxCapabilityOption,
+    // Aliases para compatibilidad hacia atrás
+    recommended: balancedOption,
+    zero_cost: fossOption,
+    pro_studio: maxCapabilityOption,
   };
 }

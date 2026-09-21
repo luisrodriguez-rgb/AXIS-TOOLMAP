@@ -99,41 +99,48 @@ export function synthesizeWorkflowStack(
       tool.supportedStages.includes(stageId)
     );
 
-    // Evaluar restricciones y score de cada candidata
-    const scoredCandidates = stageCandidates
-      .map((tool) => {
-        const filterResult = evaluateHardConstraints(tool, query.constraints);
-        const breakdown = calculateToolScore(tool, query, stageId);
+    // 1. Filtrado Estricto de Restricciones Duras (Hard Constraints)
+    // Separa candidatos viables de aquellos descartados por presupuesto, SO o privacidad
+    const evaluatedCandidates = stageCandidates.map((tool) => {
+      const filterResult = evaluateHardConstraints(tool, query.constraints);
+      const breakdown = calculateToolScore(tool, query, stageId);
 
-        // Si ya fue seleccionada en una etapa previa, aplicar leve penalización para favorecer diversidad en el flujo
-        const alreadySelected = stageRecommendations.some(
-          (prev) => prev.selectedTool.id === tool.id
-        );
-        const diversityPenalty = alreadySelected ? 20 : 0;
+      // Si ya fue seleccionada en una etapa previa, aplicar leve penalización para favorecer diversidad en el flujo
+      const alreadySelected = stageRecommendations.some(
+        (prev) => prev.selectedTool.id === tool.id
+      );
+      const diversityPenalty = alreadySelected ? 20 : 0;
+      const adjustedScore = Math.max(5, breakdown.finalScore - diversityPenalty);
 
-        // Si fue descartada por filtro duro, penalizar fuertemente el score
-        const adjustedScore = filterResult.passes
-          ? Math.max(5, breakdown.finalScore - diversityPenalty)
-          : Math.max(5, breakdown.finalScore - 45);
+      return {
+        tool,
+        filterResult,
+        breakdown: { ...breakdown, finalScore: adjustedScore },
+      };
+    });
 
-        return {
-          tool,
-          filterResult,
-          breakdown: { ...breakdown, finalScore: adjustedScore },
-        };
-      })
+    // Candidatos que superan estrictamente todas las restricciones duras
+    const compliantCandidates = evaluatedCandidates
+      .filter((c) => c.filterResult.passes)
       .sort((a, b) => b.breakdown.finalScore - a.breakdown.finalScore);
+
+    // Candidatos no conformes (para análisis de trade-offs o alternativas descartadas)
+    const nonCompliantCandidates = evaluatedCandidates
+      .filter((c) => !c.filterResult.passes)
+      .sort((a, b) => b.breakdown.finalScore - a.breakdown.finalScore);
+
+    // Lista combinada ordenada dando prioridad absoluta a los conformes
+    const allSortedCandidates = [...compliantCandidates, ...nonCompliantCandidates];
 
     // Comprobar si hay un override manual del usuario (por botón Swap)
     const overrideToolId = manualOverrides[stageId];
-    let selectedCandidate = scoredCandidates.find(
+    let selectedCandidate = allSortedCandidates.find(
       (c) => c.tool.id === overrideToolId
     );
 
-    // Si no hay override o no se encuentra, tomar el primer candidato compatible
+    // Si no hay override o no se encuentra, tomar el primer candidato estrictamente conforme
     if (!selectedCandidate) {
-      selectedCandidate =
-        scoredCandidates.find((c) => c.filterResult.passes) || scoredCandidates[0];
+      selectedCandidate = compliantCandidates[0] || nonCompliantCandidates[0];
     }
 
     if (!selectedCandidate) continue;
@@ -144,7 +151,7 @@ export function synthesizeWorkflowStack(
     const locSelectedTool = getLocalizedTool(selectedTool, lang);
     const whyThisTool = generateWhyThisTool(selectedTool, query, breakdown, lang);
     const tradeOffs = generateWhatYouSacrifice(selectedTool, query, lang);
-    const alternatives = generateAlternatives(scoredCandidates, selectedTool, query.constraints, lang);
+    const alternatives = generateAlternatives(allSortedCandidates, selectedTool, query.constraints, lang);
 
     stageRecommendations.push({
       stage: stageDef,
