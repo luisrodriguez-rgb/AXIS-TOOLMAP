@@ -13,15 +13,16 @@
 
 </div>
 
-# AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas
+# AXIS — A Decision Layer for How You Work (Work Stack Decision Engine)
 
-> **De directorios genéricos de IA a un motor de decisión multicriterio (MCDA) centrado en personas, entregables, soberanía de datos y restricciones operativas reales.**
+> **De directorios genéricos de software a una capa de decisión arquitectónica: evaluamos personas, tareas, restricciones operativas y soberanía de datos para sintetizar pipelines de herramientas viables con trazabilidad de trade-offs.**
 
 ![AXIS Demostración Interactiva](./public/screenshots/demo.webp)
 
-AXIS es una plataforma técnica y motor de decisión diseñado para resolver el problema estructural del ecosistema de software contemporáneo: la saturación de herramientas y la ausencia de criterio técnico para articular flujos de trabajo coherentes.
+AXIS es una plataforma técnica y motor de decisión diseñado para resolver el problema estructural del ecosistema de software contemporáneo: la saturación de herramientas, la fatiga de suscripciones SaaS y la ausencia de criterio técnico para articular flujos de trabajo coherentes.
 
-En lugar de limitarse a listar herramientas aisladas, AXIS evalúa de forma cruzada la **profesión del usuario**, el **enfoque de trabajo**, el **artefacto técnico entregable**, el **presupuesto mensual ($/mes)**, la **tolerancia de curva de aprendizaje**, el **sistema operativo** y la **soberanía de datos** para sintetizar pipelines de trabajo balanceados entre software comercial consolidado, herramientas de código abierto ($0) y plataformas nativas en inteligencia artificial.
+En lugar de limitarse a listar herramientas aisladas, AXIS opera bajo una arquitectura de decisión rigurosa:
+$$\text{CONTEXTO} \longrightarrow \text{OBJETIVO} \longrightarrow \text{ENTREGABLE} \longrightarrow \text{RESTRICCIONES DURAS} \longrightarrow \text{PIPELINE} \longrightarrow \text{TRADE-OFFS}$$
 
 ---
 
@@ -29,20 +30,20 @@ En lugar de limitarse a listar herramientas aisladas, AXIS evalúa de forma cruz
 
 ### El Fallo de los Directorios Tradicionales
 
-Los directorios de software e IA convencionales (estilo "Top 100 AI Tools") fallan por tres razones fundamentales:
+Los directorios de software e IA convencionales (estilo "Top 100 Tools") fallan por tres razones fundamentales:
 
-1. **Descontextualización Total:** Presentan listas alfabéticas o por popularidad sin entender si el usuario es un arquitecto que necesita emitir planos IFC acotados o un docente que necesita rúbricas de evaluación pedagógica.
-2. **Aislamiento de Etapas:** Sugieren aplicaciones sueltas sin considerar la interoperabilidad formativa ni cómo viaja el dato entre una herramienta y la siguiente.
-3. **Ceguera Financiera y Operativa:** Ignoran las restricciones duras de presupuesto, curvas de aprendizaje prohibitivas y requisitos de privacidad local o cumplimiento normativo.
+1. **Descontextualización Total:** Presentan listas alfabéticas o por popularidad sin entender si el usuario es un arquitecto que necesita emitir planos IFC acotados o un estudiante de ingeniería que necesita un modelo de optimización sin programar.
+2. **Aislamiento de Etapas:** Sugieren aplicaciones sueltas sin considerar la interoperabilidad formativa ni la pérdida de fidelidad en la transferencia de datos.
+3. **Ceguera Financiera y Operativa:** Ignoran las restricciones duras de presupuesto, curvas de aprendizaje prohibitivas y requisitos de privacidad local o soberanía de datos.
 
-| Dimensión de Análisis | Directorios Tradicionales | AXIS (Decision Layer) |
+| Dimensión de Análisis | Directorios Tradicionales | AXIS (Work Stack Decision Engine) |
 | :--- | :--- | :--- |
-| **Unidad de Decisión** | Herramienta individual aislada | Flujo de trabajo secuencial (Pipeline de 3-4 etapas) |
-| **Criterio de Orden** | Popularidad, patrocinio o votos | Puntuación Multicriterio (MCDA) calibrada por entregable |
-| **Restricciones Duras** | Filtros básicos de categoría | Filtros estrictos de presupuesto, SO, privacidad y curva |
-| **Interoperabilidad** | Inexistente (el usuario adivina formatos) | Conectores **Data Glue** con nivel de fricción y formato |
-| **Contextualización** | Lista genérica para todos los perfiles | **Smart Scoping**: adaptación por carrera y entregable |
-| **Vocabulario** | Sesgado a desarrollo de software | Vocabulario adaptativo según dominio profesional |
+| **Unidad de Decisión** | Herramienta individual aislada | Flujo de trabajo secuencial (Pipeline de 3-4 etapas interoperables) |
+| **Criterio de Orden** | Popularidad, patrocinio o votos | Filtro estricto de **Hard Constraints** + Heurística MCDA interna |
+| **Restricciones Duras** | Filtros básicos de categoría | **Hard Constraints** excluyentes (Presupuesto, SO, Privacidad local) |
+| **Interoperabilidad** | Inexistente (el usuario adivina formatos) | **Data Glue**: Matriz de fricción y nivel de fidelidad (*Fidelity Loss*) |
+| **Explicación** | Puntuación decimal opaca | Razonamiento explícito: *Why this fits*, *What you give up*, *Trade-offs* |
+| **Sustitución** | Comparativa estática A vs B | **Trade-off Inspector**: Recálculo reactivo del impacto en todo el stack |
 
 ---
 
@@ -74,80 +75,82 @@ El diseño de AXIS rechaza deliberadamente las convenciones estéticas infladas 
   - Acento de señal: `#FF5722`
 - **Tipografías:**
   - `Space Grotesk`: Titulares contundentes y encabezados de rack modular.
-  - `IBM Plex Mono`: Metadatos, barras de ajuste ASCII, índices numéricos y especificaciones de fricción.
+  - `IBM Plex Mono`: Metadatos, barras de telemetría ASCII, índices numéricos y especificaciones de fricción.
   - `Inter`: Lectura fluida en descripciones, capacidades y evidencias.
 
 ---
 
 ## 3. Arquitectura del Sistema y Módulos de la Interfaz
 
-La plataforma opera en tres niveles funcionales interconectados de forma reactiva:
+La plataforma opera en cuatro niveles funcionales interconectados de forma reactiva:
 
 ```
-AXIS / TOOLMAP
-├── 01 / DESCUBRIR (Intent Instrument)
-│   ├── Entrada de intención en lenguaje natural con presets instantáneos
-│   ├── Matriz Suiza 3-Columnas (32 x 32 x 32):
+AXIS / DECISION ENGINE
+├── 01 / DESCUBRIR (Intent Instrument & Control Matrix)
+│   ├── Natural Intent Intake Bar: Entrada libre en lenguaje natural (Layer B → Layer A)
+│   ├── Chips de Escenarios Empíricos: 6 casos de prueba de referencia
+│   ├── Extracción de Tokens en Tiempo Real (SO, Presupuesto, Entregable, Privacidad, Curva)
+│   ├── Matriz Suiza de Control (32 x 32 x 32):
 │   │   ├── [A] PROFESIÓN: 32 carreras en 8 macro-dominios con filtros rápidos
 │   │   ├── [B] ENFOQUE DE TRABAJO: Smart Scoping adaptado al perfil activo
 │   │   └── [C] ARTEFACTO ENTREGABLE: 32 tipos de entregables técnicos normalizados
-│   ├── Barra de Restricciones Técnicas: Presupuesto ($0 a $300+/mes), SO, Curva y Privacidad
-│   └── Botón de transición directa al Canvas: [ MAPEAR MI TRABAJO → ]
+│   └── Barra de Restricciones Técnicas: Presupuesto ($0 a $300+/mes), SO, Curva y Privacidad
 │
 ├── 02 / MAPA DE FLUJO (Interactive Workflow Canvas)
-│   ├── Tríada de Rutas Estratégicas:
-│   │   ├── [RUTA RECOMENDADA / RECOMMENDED ROUTE]
-│   │   ├── [RUTA $0 GRATIS / $0 FREE ROUTE]
-│   │   └── [RUTA PRO STUDIO / PRO STUDIO ROUTE]
+│   ├── Tríada de Rutas Estratégicas Neutrales:
+│   │   ├── [RUTA BALANCEADA / BALANCED ROUTE] (Óptimo compromiso de capacidades y costo)
+│   │   ├── [RUTA $0 FOSS SOBERANA / $0 FOSS SOVEREIGN ROUTE] (Soberanía local y formatos abiertos)
+│   │   └── [RUTA PRO MÁXIMA CAPACIDAD / PRO MAX CAPABILITY ROUTE] (Potencia sin restricción de gasto)
 │   ├── Barra de Telemetría BOM con Vocabulario Adaptativo por Dominio
 │   ├── Grafo Secuencial de Nodos: Racks por etapa con logos SVG sanitizados
-│   ├── Conectores "Data Glue": Formatos intercambiados y advertencias de fricción
-│   ├── Previsualizaciones de Artefactos: Mallas 3D, Planos, Renders, Cuadernos
-│   └── Inspector de Trade-offs y Sustitución Técnica (Modal de Swap)
+│   ├── Conectores "Data Glue": Matriz de Fricción (AUTOMATIC/ONE CLICK/MANUAL) y Fidelidad (FULL/PARTIAL/LOSSY)
+│   └── Trade-off Inspector: Recálculo reactivo del delta de costo, soberanía y fricción al sustituir piezas
 │
-└── 03 / ARCHIVO (Tools Archive & Decision Matrix)
-    ├── Catálogo técnico de 90 herramientas calibradas ($0 a $450/mes)
-    ├── Logotipos vectoriales oficiales sanitizados con namespace xmlns (WebKit/Safari)
-    ├── Filtros por categoría: Investigación, Cálculo, Diseño & 3D, Presentación, Datos, Productividad
-    └── Búsqueda en tiempo real por capacidades, limitaciones y lo que NO hace la herramienta
+├── 03 / ARCHIVO (Tools Archive & Evidence Matrix)
+│   ├── Catálogo técnico de 95+ herramientas indexadas y calibradas ($0 a $450/mes)
+│   ├── Ontología de Evidencia: Verificación de precios, modelos de licenciamiento y nivel de confianza
+│   ├── Logotipos vectoriales oficiales sanitizados con namespace xmlns (WebKit/Safari)
+│   ├── Filtro de Código Abierto (FOSS) y modal de Condiciones de Sustitución Comercial vs Libre
+│   └── Búsqueda en tiempo real por capacidades, limitaciones y lo que NO hace la herramienta
+│
+└── 04 / DECISION QUALITY LAB (Auditoría Empírica de 5 Dimensiones)
+    ├── Batería de 6 casos empíricos de prueba en dos capas (Layer B Humano / Layer A Sintético)
+    ├── Auditoría automatizada de 5 dimensiones:
+    │   ├── 1. Constraint Compliance (Presupuesto duro, SO, Privacidad local)
+    │   ├── 2. Task / Output Fit (Capacidad real de emisión del entregable)
+    │   ├── 3. Workflow Coherence (Alimentación secuencial entre etapas)
+    │   ├── 4. Data Glue & Fidelity Loss (Pérdida de metadatos o retrabajo)
+    │   └── 5. Human Adoption Audit (Reducción de incertidumbre)
+    └── Aplicación directa de cualquier caso de prueba al Canvas principal con un clic
 ```
 
 ---
 
 ## 4. Innovaciones Clave
 
-### A. Contextualización Adaptativa por Carrera (Smart Scoping)
+### A. Separación Estricta: Hard Constraints vs. Soft Preferences
 
-Al expandir la matriz a 32 carreras, 32 tareas y 32 entregables, el usuario se enfrenta a 96 dimensiones de decisión. Para evitar la sobrecarga cognitiva:
+Para evitar que una herramienta con alta afinidad técnica sea recomendada cuando viola una restricción innegociable, AXIS separa formalmente:
 
-- **Filtrado Inteligente de Dominio:** Al seleccionar una profesión en la Columna `[A]` (p. ej. *Docente Universitario*), las columnas `[B]` (Enfoque de Trabajo) y `[C]` (Artefacto Entregable) activan automáticamente la pastilla `[RELEVANTES A MI PERFIL]`, mostrando únicamente las tareas y entregables pertinentes a su área disciplinar.
-- **Eliminación de Jerga Ajena:** Un docente universitario o un abogado nunca se verá inundado con opciones de ruteo de circuitos impresos (PCB), dinámica de fluidos (CFD) o manifiestos de Kubernetes a menos que lo solicite explícitamente.
-- **Exploración Interdisciplinaria:** Mediante la pastilla `[VER TODAS (32)]`, cualquier usuario puede voluntariamente expandir el catálogo completo para flujos cruzados.
+* **Hard Constraints (Filtro Excluyente):**
+  * Si falla el sistema operativo, el presupuesto absoluto o la privacidad local requerida, la herramienta queda **estrictamente fuera** del conjunto de candidatos elegibles.
+* **Soft Preferences (Ordenador Heurístico Interno):**
+  * Tolerancia de curva de aprendizaje, preferencia por código abierto, colaboración interactiva o herramientas nativas en IA modulan los pesos del motor MCDA.
+  * La puntuación matemática permanece como una capa interna del motor; la interfaz prioriza el **razonamiento cualitativo**: *Why this fits*, *What you give up* y *What changes if you swap it*.
 
-![AXIS Canvas con Ruta Pro Studio y Telemetría BOM](./public/screenshots/workflow-pro-studio.png)
+### B. Data Glue: Fricción y Pérdida de Fidelidad (*Fidelity Loss*)
 
-### B. Vocabulario Adaptativo por Dominio
+AXIS modela el contrato de transferencia entre herramientas adyacentes no solo por el formato de archivo, sino por el nivel de fricción y la integridad del dato:
 
-La interfaz ajusta su terminología en función de la familia profesional seleccionada:
-
-- **Dominio Humanidades, Educación, Legal y Negocios (`SCIENCE` / `BIZ`):**
-  - En lugar de *"DATA GLUE"* → *"COMPATIBILIDAD DE DOCUMENTOS"* (`DOCUMENT INTEROPERABILITY`).
-  - En lugar de *"PIPELINE NODES"* → *"HERRAMIENTAS DEL FLUJO"* (`WORKFLOW TOOLS`).
-  - En lugar de *"BOM"* → *"PRESUPUESTO ESTIMADO"* (`ESTIMATED BUDGET`).
-- **Dominio Ingeniería, AEC, Hard-Tech y Software (`ING`, `AEC`, `TECH`, `DATA`):**
-  - Mantiene la terminología rigurosa de ingeniería: *"DATA GLUE"*, *"TELEMETRÍA BOM"*, *"NODOS DE PROCESAMIENTO"*.
-
-### C. Internacionalización Integral (100% Full i18n)
-
-AXIS cuenta con soporte bilingüe integral (`ES` / `EN`) con cero fugas de idioma:
-
-- **Navegación y Cabeceras:** Etiquetas de sección, subíndices, selectores de tema e idioma.
-- **Columnas de la Matriz:** Títulos, descripciones de tareas, nombres de entregables, badges de estado (`● ACTIVO` / `● ACTIVE`, `● SELECCIONADO` / `● SELECTED`, `+ AGREGAR` / `+ ADD`).
-- **Tríada de Rutas:** `RUTA RECOMENDADA` / `RECOMMENDED ROUTE`, `RUTA $0 GRATIS` / `$0 FREE ROUTE`, `RUTA PRO STUDIO` / `PRO STUDIO ROUTE`.
-- **Etapas de Flujo:** `1. Ingesta & Fuentes` / `1. Ingest & Research`, `2. Núcleo & Procesamiento` / `2. Core & Processing`, `3. Estructuración & Refinamiento` / `3. Structuring & Refinement`, `4. Presentación & Entrega` / `4. Presentation & Delivery`.
-- **Notas de Trade-off:** Generación sintética en lenguaje natural en ambos idiomas.
-- **Data Glue:** Métodos de transferencia (`EXPORTACIÓN / IMPORTACIÓN MANUAL` / `MANUAL EXPORT/IMPORT`, `COPIAR / PEGAR TEXTO` / `COPY / PASTE TEXT`), formatos y niveles de fricción (`FLUIDO` / `SEAMLESS`, `MANUAL`).
-- **Archivo de Herramientas:** Badges `NATIVA IA` / `NATIVE AI`, `TRADICIONAL` / `TRADITIONAL`, `CAPA GRATIS` / `FREE TIER`, categorías traducidas y enlaces `visitar sitio ↗` / `visit site ↗`.
+* **Estados de Fricción:**
+  * `[AUTOMATIC]`: Sincronización nativa directa sin intervención manual.
+  * `[ONE CLICK]`: Exportación e importación directa en formatos abiertos estándar (IFC, SVG, CSV).
+  * `[MANUAL]`: Requiere conversión de formato, limpieza de datos o script intermedio.
+  * `[UNSUPPORTED]`: Incompatibilidad de flujo; riesgo de retrabajo severo.
+* **Nivel de Fidelidad de Datos:**
+  * `FIDELITY: FULL`: Conservación íntegra de esquemas, fórmulas o entidades paramétricas.
+  * `FIDELITY: PARTIAL`: Pérdida de metadatos o propiedades paramétricas (ej. BIM $\rightarrow$ OBJ pierde entidades paramétricas IFC).
+  * `FIDELITY: LOSSY`: Rasterización o pérdida irreversible de escalabilidad o precisión analítica.
 
 ---
 
@@ -194,29 +197,31 @@ AXIS agrupa sus 32 arquetipos profesionales calibrados en 8 macro-dominios:
 
 ## 6. Motor de Puntuación Multicriterio (MCDA Engine)
 
-El motor evalúa a cada candidata en 4 vectores matemáticos independientes:
+El motor evalúa a cada candidata en 4 vectores heurísticos independientes:
 
 $$\text{Score} = w_1 \cdot \text{TaskFit} + w_2 \cdot \text{FrictionFactor} + w_3 \cdot \text{ConstraintCompliance} + w_4 \cdot \text{EcosystemSynergy}$$
 
-1. **Ajuste de Tarea (`TaskFit` - Ponderación: 35%):**
-   - Evalúa si la herramienta posee capacidades intrínsecas para resolver el artefacto requerido (`cad3DModeling`, `symbolicMath`, `vectorExport`, `citationsEnabled`, `voiceAudio`, etc.).
-   - Aplica bonificaciones directas de afinidad de dominio para herramientas estándar de la industria (p. ej. *Civil 3D* para topografía, *Altium* para PCBs, *Revit* para BIM).
-2. **Factor de Facilidad / Menor Fricción (`FrictionFactor` - Ponderación: 25%):**
-   - Mide la accesibilidad de la curva de aprendizaje de la herramienta en contraste con el nivel técnico del usuario.
-   - Penaliza herramientas con curvas avanzadas si el usuario declaró tolerancia baja o cero código.
-3. **Cumplimiento de Restricciones (`ConstraintCompliance` - Ponderación: 25%):**
-   - Filtro de presupuesto mensual ($/mo) y compatibilidad con el sistema operativo activo (`mac`, `windows`, `linux`, `web`).
-   - Evaluación estricta de soberanía de datos: si el usuario exige privacidad estricta (`strictPrivacy`), solo herramientas de ejecución local o con política explícita de cero retención de datos obtienen puntuación completa.
-4. **Sinergia del Ecosistema (`EcosystemSynergy` - Ponderación: 15%):**
-   - Bonifica combinaciones de herramientas con integraciones nativas directas (p. ej. Figma + Claude, Obsidian + Zotero, VS Code + Docker + Supabase).
+1. **Ajuste de Tarea (`TaskFit` - 35%):** Evalúa capacidades intrínsecas para resolver el artefacto requerido (`cad3DModeling`, `symbolicMath`, `vectorExport`, `citationsEnabled`, etc.).
+2. **Factor de Menor Fricción (`FrictionFactor` - 25%):** Mide la accesibilidad de la curva de aprendizaje en contraste con el nivel técnico del usuario.
+3. **Cumplimiento de Restricciones (`ConstraintCompliance` - 25%):** Validación de presupuesto mensual y compatibilidad de SO.
+4. **Sinergia del Ecosistema (`EcosystemSynergy` - 15%):** Bonifica combinaciones con integraciones directas probadas.
 
 ---
 
-## 7. Catálogo de 90 Herramientas Reales y Verificadas
+## 7. Catálogo Ontológico de 95+ Herramientas Indexadas
 
-AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento auditados:
+AXIS indexa 95+ herramientas con ontología de evidencia empírica:
 
-![AXIS Matriz de Archivo de 90 Herramientas](./public/screenshots/archive-90-tools.png)
+| Campo de Evidencia | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `pricingVerifiedAt` | Fecha de verificación de precios oficiales | `2026-09` |
+| `pricingModel` | Modelo contractual | `free`, `subscription`, `usage-based` |
+| `platformsSupported` | Plataformas auditadas | `['mac', 'windows', 'linux', 'web']` |
+| `dataSovereigntyGrade` | Grado de soberanía del dato | `local_first`, `cloud_encrypted` |
+| `confidence` | Confianza en la exactitud del dato | `high` (oficial), `medium` (comunidad) |
+| `lastReviewed` | Fecha de última auditoría técnica | `2026-09` |
+
+![AXIS Matriz de Archivo de 95+ Herramientas](./public/screenshots/archive-90-tools.png)
 
 ### Desglose por Categorías Técnicas
 
@@ -239,79 +244,101 @@ AXIS indexa 90 herramientas con precios de mercado y modelos de licenciamiento a
 Cuando el usuario desea explorar alternativas en cualquier etapa del flujo:
 
 1. Hace clic en `⇄ SUSTITUIR PIEZA` / `⇄ SWAP TOOL` en el nodo correspondiente del canvas.
-2. Se abre el **TradeOffInspector Modal**, que expone:
-   - Desglose porcentual y barras ASCII de los 4 vectores de decisión.
+2. Se abre el **TradeOffInspector**, que expone:
+   - Desglose porcentual y barras de los 4 vectores heurísticos.
    - Puntos fuertes verificados (`[+]`) y límites explícitos (`[!]`) de la herramienta actual.
-   - Lista de herramientas alternativas compatibles con indicación de coincidencia (`% MATCH`), variación de precio (`deltaBudgetUSD`) y variación de curva de aprendizaje.
-3. Al seleccionar una alternativa, la herramienta se sustituye de inmediato y toda la telemetría del stack (costo mensual, ajuste global y compatibilidad Data Glue) se recalcula de forma reactiva.
+   - Consecuencias reactivas sobre el pipeline completo:
+     * $\Delta \text{ Costo mensual}$
+     * $\Delta \text{ Soberanía / Privacidad}$
+     * $\Delta \text{ Fricción y Fidelidad de Data Glue}$
+     * $\Delta \text{ Curva de adopción del equipo}$
+3. Al seleccionar una alternativa, toda la telemetría del stack se recalcula instantáneamente.
 
 ![AXIS Inspector de Trade-offs y Sustitución](./public/screenshots/tradeoff-inspector.png)
 
 ---
 
-## 9. Inteligencia FOSS (Free & Open Source Software) y Matriz Cara a Cara
+## 9. Inteligencia FOSS y Condiciones de Sustitución (Migration Trade-offs)
 
-AXIS incorpora un motor de evaluación dedicado a la **soberanía tecnológica y la reducción de costos operativos (TCO)**, contrastando software privativo comercial frente a sus equivalentes de código abierto consolidados:
+AXIS mantiene una postura rigurosamente neutral: no asume que "lo comercial es malo" ni que "lo libre es siempre superior". Reconoce las fortalezas genuinas de cada modelo:
 
-| Software Comercial Privativo | Alternativa FOSS | Repositorio GitHub | Licencia | Soberanía y Estándares Abiertos |
+* **Ventajas del Software Comercial:** Soporte corporativo SLA, estándares de facto en la industria, ecosistema pulido y menor curva de onboarding inicial.
+* **Ventajas de las Alternativas FOSS:** Soberanía absoluta del dato, cero costos de licencia recurrente, formatos abiertos auditables y capacidad de self-hosting.
+
+| Software Comercial | Alternativa FOSS | Repositorio GitHub | Licencia | Condiciones de Sustitución / Migration Trade-offs |
 | :--- | :--- | :--- | :--- | :--- |
-| **Figma** ($15–$75/mes) | **Penpot** | `penpot/penpot` | MPL-2.0 | Formato nativo SVG y CSS, autoalojable, sin bloqueo binario propietario. |
-| **SolidWorks** ($150+/mes) | **FreeCAD** | `FreeCAD/FreeCAD` | LGPL-2.1 | Modelado paramétrico de piezas mecánicas en local, formatos STEP/IGES libres. |
-| **Tableau** ($75/mes) | **Apache Superset** | `apache/superset` | Apache-2.0 | Conexión a 40+ motores SQL, arquitectura cloud nativa, 60k+ estrellas GitHub. |
-| **Notion** ($10–$18/mes) | **AppFlowy** | `AppFlowy-IO/AppFlowy` | AGPL-3.0 | Arquitectura local-first con Rust y Flutter, cifrado y control absoluto. |
-| **Slack / Teams** ($8–$15/asiento) | **Mattermost** | `mattermost/mattermost-server` | AGPL-3.0 | Despliegue on-premise estricto, cumplimiento HIPAA/SOC2/GDPR verificado. |
-| **Adobe Photoshop** ($22.99/mes) | **Krita** | `KDE/krita` | GPL-3.0 | Soporte CMYK y HDR para ilustración y retoque sin telemetría corporativa. |
-| **Autodesk Revit** ($355/mes) | **Bonsai (Blender BIM)** | `IfcOpenShell/IfcOpenShell` | LGPL-3.0 | Autoría nativa en estándar internacional IFC sin formatos intermedios cerrados. |
-
-### Dimensiones de la Evaluación Cara a Cara (Head-to-Head)
-
-Al pulsar el botón `[⇄ VS FOSS]` en el Archivo, AXIS despliega un modal de análisis comparativo en 5 dimensiones:
-
-1. **Costo Anual & TCO a 3 Años:** Cálculo de ahorro acumulado en licencias por usuario.
-2. **Soberanía y Resguardo de Datos:** Comparativa de nube cerrada vs. servidor local u on-premise.
-3. **Estándares Abiertos y Formatos:** Riesgo de vendor lock-in frente a formatos abiertos (SVG, IFC, SQL, Markdown).
-4. **Curva de Adopción y Extensibilidad:** Balance entre refinamiento de interfaz y capacidad de personalización/código abierto.
-5. **Veredicto Estratégico Determinista:** Recomendación explícita sobre cuándo mantener la herramienta comercial y cuándo migrar a FOSS.
+| **Figma** ($15–$75/mes) | **Penpot** | `penpot/penpot` | MPL-2.0 | Mantener Figma si el equipo requiere plugins corporativos masivos; migrar a Penpot si se exige autoalojamiento y control de SVG/CSS nativo. |
+| **SolidWorks** ($150+/mes) | **FreeCAD** | `FreeCAD/FreeCAD` | LGPL-2.1 | Mantener SolidWorks en líneas de ensamblaje con tolerancias aeroespaciales; migrar a FreeCAD para modelado paramétrico libre sin licencias nodales. |
+| **Tableau** ($75/mes) | **Apache Superset** | `apache/superset` | Apache-2.0 | Mantener Tableau para reportes ejecutivos no técnicos; migrar a Superset para consultas SQL directas en bases analíticas a gran escala. |
+| **Notion** ($10–$18/mes) | **AppFlowy** | `AppFlowy-IO/AppFlowy` | AGPL-3.0 | Mantener Notion para colaboración en nube pública ligera; migrar a AppFlowy para resguardo local-first de documentos confidenciales. |
+| **Slack / Teams** ($8–$15/asiento) | **Mattermost** | `mattermost/mattermost-server` | AGPL-3.0 | Mantener Slack para integraciones SaaS inmediatas; migrar a Mattermost para cumplimiento estricto HIPAA/GDPR en servidores propios. |
+| **Adobe Photoshop** ($22.99/mes) | **Krita** | `KDE/krita` | GPL-3.0 | Mantener Photoshop para flujos vinculados a Adobe Creative Cloud; migrar a Krita para ilustración y retoque digital con perfiles CMYK libres de telemetría. |
+| **Autodesk Revit** ($355/mes) | **Bonsai (Blender BIM)** | `IfcOpenShell/IfcOpenShell` | LGPL-3.0 | Mantener Revit si el cliente exige archivo propietario `.rvt`; migrar a Bonsai para autoría nativa abierta en estándar internacional IFC. |
 
 ---
 
-## 10. Estructura del Repositorio
+## 10. Decision Quality Lab: Benchmark de 5 Dimensiones
+
+Para verificar que AXIS no se limite a reproducir sesgos preconfigurados, la plataforma integra un **laboratorio interno de auditoría** con 6 escenarios empíricos evaluados en dos capas:
+
+* **Layer B (Entrada Humana en Lenguaje Natural):** Captura la necesidad tal como la expresa una persona real.
+* **Layer A (Especificación Sintética):** Restricciones duras y parámetros de decisión procesados por el motor.
+
+| Caso | Perfil Real | Expresión Humana (Layer B) | Restricción Dura (Layer A) | Dimensión Crítica |
+| :--- | :--- | :--- | :--- | :--- |
+| **[01]** | **Arquitecto** | *"Planos ejecutivos con modelo IFC para coordinación en macOS con $50/mes"* | Mac, IFC, $\le \$50/\text{mes}$ | Interoperabilidad IFC sin pérdida de datos BIM |
+| **[02]** | **Estudiante Ing. Industrial** | *"Dashboard y modelo de optimización en Mac sin programar pesado y $20/mes"* | Mac, Curva Low, $\le \$20/\text{mes}$ | Curva de aprendizaje baja y costo accesible |
+| **[03]** | **Investigador Académico** | *"Paper LaTeX con citas rigurosas y datos médicos confidenciales con $0"* | Linux/Mac, $0, Privacidad local | Soberanía total (Zero retention) y bibliografía |
+| **[04]** | **Diseñador UI/UX** | *"Design System con tokens y handoff a frontend en Web/Mac"* | Web/Mac, Colaboración | Exportación vectorial limpia sin fricción |
+| **[05]** | **Fundador No-Técnico** | *"MVP con landing page, base de datos y correos sin programar con $35/mes"* | Web, No-code, $\le \$35/\text{mes}$ | Velocidad de entrega y costo contenido |
+| **[06]** | **Ingeniero Civil** | *"Memoria de cálculo estructural con normas y trazabilidad en Windows"* | Windows, Curva High, $\le \$80/\text{mes}$ | Precisión matemática y tipografía de ecuaciones |
+
+### Las 5 Dimensiones de Calidad Evaluadas:
+1. **Constraint Compliance:** 100% de cumplimiento en presupuesto duro, SO y privacidad.
+2. **Task / Output Fit:** Verificación empírica de capacidades para generar el artefacto entregable.
+3. **Workflow Coherence:** Conexión secuencial lógica entre etapas sin redundancias.
+4. **Data Glue & Fidelity:** Auditoría de fricción (`AUTOMATIC`, `ONE CLICK`, `MANUAL`) y pérdida de fidelidad (`FULL`, `PARTIAL`, `LOSSY`).
+5. **Human Adoption Audit:** Checklist de reducción de incertidumbre (¿Una persona experta adoptaría este flujo?).
+
+---
+
+## 11. Estructura del Repositorio
 
 ```
 AXIS/
 ├── public/
 │   ├── brand/                    # Activos oficiales de marca (logo, guías de retícula)
+│   ├── favicon.ico               # Favicon multi-resolución para soporte universal
 │   ├── favicon.svg               # Favicon con isotipo técnico oficial
-│   ├── icons.svg                 # Sprite SVG técnico
+│   ├── apple-touch-icon.png      # Icono de alta resolución para dispositivos Apple
 │   └── screenshots/              # Capturas y video WebP de demostración
 │
 ├── src/
 │   ├── assets/
-│   │   └── logos/
-│   │       ├── svg/              # 40+ SVGs oficiales sanitizados con xmlns
-│   │       └── ToolLogos.tsx     # Componente y diccionario de logotipos
+│   │   └── logos/                # SVGs oficiales sanitizados con namespace xmlns
 │   │
 │   ├── components/
 │   │   ├── ArtifactPreview.tsx   # Previsualizador técnico de artefactos
 │   │   ├── AxisBrandLogo.tsx     # Logotipo oficial reactivo SVG (Full, Mark, Horizontal)
-│   │   ├── Header.tsx            # Cabecera con marca oficial, índice e i18n
+│   │   ├── DecisionQualityLab.tsx # Laboratorio de auditoría de 6 casos empíricos
+│   │   ├── Header.tsx            # Cabecera con telemetría suiza, atajos [1][2][3] y enlace a GitHub
 │   │   ├── HeadToHeadComparison.tsx # Modal de análisis comparativo Comercial vs FOSS
-│   │   ├── IntentInstrument.tsx  # Matriz Suiza 3-columnas con Smart Scoping
+│   │   ├── IntentInstrument.tsx  # Intake bar de lenguaje natural y matriz suiza 3-columnas
 │   │   ├── InteractiveWorkflowCanvas.tsx # Canvas interactivo con Tríada de Rutas
 │   │   ├── ToolArchiveTable.tsx  # Matriz de archivo con filtro FOSS y disparador comparativo
-│   │   ├── ToolEditorialCard.tsx # Tarjetas editoriales con telemetría ASCII
-│   │   ├── TradeOffInspector.tsx # Modal de inspección y sustitución (Swap)
-│   │   └── WorkflowMap.tsx       # Desglose secuencial del flujo de trabajo
+│   │   └── TradeOffInspector.tsx # Modal de inspección y sustitución reactiva (Swap)
 │   │
 │   ├── data/
+│   │   ├── decisionTestCases.ts  # Batería de 6 casos empíricos (Layer A & Layer B)
 │   │   ├── presets.ts            # 32 perfiles profesionales calibrados para Smart Scoping
 │   │   └── tools.ts              # Dataset ontológico de 95+ herramientas con metadatos FOSS
 │   │
 │   ├── engine/
-│   │   ├── filter.ts             # Evaluación de restricciones duras (Hard Constraints)
+│   │   ├── filter.ts             # Filtrado estricto de restricciones duras (Hard Constraints)
+│   │   ├── naturalIntentParser.ts # Parser determinista de lenguaje natural
 │   │   ├── pipelineSynthesizer.ts # Ensamblaje secuencial de etapas y trade-offs
-│   │   ├── routeSynthesizer.ts   # Síntesis de Tríada de Rutas y Data Glue
-│   │   ├── scoring.ts            # Motor MCDA de 4 vectores y afinidades de dominio
+│   │   ├── routeSynthesizer.ts   # Síntesis de Tríada de Rutas y Data Glue con fidelidad
+│   │   ├── scoring.ts            # Motor MCDA de 4 vectores heurísticos
 │   │   └── tradeoffs.ts          # Generador de evidencias y alternativas bilingües
 │   │
 │   ├── i18n/
@@ -321,16 +348,15 @@ AXIS/
 │   ├── styles/
 │   │   ├── base.css              # Reset, fuentes Google y variables base
 │   │   ├── components.css        # Estilos de la matriz suiza, archivo y modal
+│   │   ├── lab.css               # Estilos suizos del Decision Quality Lab
 │   │   ├── tokens.css            # Tokens de diseño y variables CSS
 │   │   └── visual-canvas.css     # Estilos del rack interactivo y cables Data Glue
 │   │
 │   ├── types/
-│   │   └── index.ts              # Definiciones TypeScript estrictas (incluyendo FOSS)
+│   │   └── index.ts              # Definiciones TypeScript estrictas (Hard/Soft constraints, FOSS)
 │   ├── App.tsx                   # Estado raíz, routing reactivo y cálculo de query
 │   └── main.tsx                  # Punto de entrada de la aplicación
 │
-├── scripts/
-│   └── fetch_more_logos.mjs      # Script de descarga y sanitización de SVGs
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
