@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
+import { AxisBrandLogo } from './AxisBrandLogo';
 
 export type ActiveTab = 'discover' | 'workflow' | 'archive';
 
@@ -27,11 +28,22 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="app-header">
-      <div className="brand-wrapper">
-        <div className="brand-title">AXIS / TOOLMAP</div>
-        <div className="brand-sub">
-          {t.brandSub.replace('{count}', String(toolCount))}
-        </div>
+      <div className="brand-wrapper" onClick={() => onSelectTab('discover')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <AxisBrandLogo variant="horizontal" size={26} lang={lang} />
+        <span
+          className="mono-text"
+          style={{
+            fontSize: '0.62rem',
+            padding: '2px 6px',
+            border: '1px solid var(--line)',
+            background: 'var(--bg-canvas)',
+            color: 'var(--ink-muted)',
+            fontWeight: 700,
+          }}
+          title={t.brandSub.replace('{count}', String(toolCount))}
+        >
+          [{toolCount} TOOLS]
+        </span>
       </div>
 
       {/* Navegación Primaria (Jerarquía Principal) */}
