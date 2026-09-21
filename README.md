@@ -1,6 +1,14 @@
+<p align="center">
+  <img src="./public/brand/axis-logo.png" width="90" alt="AXIS Logo" />
+  <br />
+  <strong style="font-size: 1.4rem; letter-spacing: -0.02em;">AXIS [MCDA ENGINE]</strong>
+  <br />
+  <code style="color: #FF4B22; font-weight: 700;">001 / 002 / 003 · DECISION LAYER</code>
+</p>
+
 # AXIS — Capa de Decisión para Flujos de Trabajo y Stacks de Herramientas
 
-> **De directorios genéricos de IA a un motor de decisión multicriterio (MCDA) centrado en personas, entregables y restricciones operativas reales.**
+> **De directorios genéricos de IA a un motor de decisión multicriterio (MCDA) centrado en personas, entregables, soberanía de datos y restricciones operativas reales.**
 
 ![AXIS Demostración Interactiva](./public/screenshots/demo.webp)
 
@@ -221,21 +229,60 @@ Cuando el usuario desea explorar alternativas en cualquier etapa del flujo:
 
 ---
 
-## 9. Estructura del Repositorio
+## 9. Inteligencia FOSS (Free & Open Source Software) y Matriz Cara a Cara
+
+AXIS incorpora un motor de evaluación dedicado a la **soberanía tecnológica y la reducción de costos operativos (TCO)**, contrastando software privativo comercial frente a sus equivalentes de código abierto consolidados:
+
+| Software Comercial Privativo | Alternativa FOSS | Repositorio GitHub | Licencia | Soberanía y Estándares Abiertos |
+| :--- | :--- | :--- | :--- | :--- |
+| **Figma** ($15–$75/mes) | **Penpot** | `penpot/penpot` | MPL-2.0 | Formato nativo SVG y CSS, autoalojable, sin bloqueo binario propietario. |
+| **SolidWorks** ($150+/mes) | **FreeCAD** | `FreeCAD/FreeCAD` | LGPL-2.1 | Modelado paramétrico de piezas mecánicas en local, formatos STEP/IGES libres. |
+| **Tableau** ($75/mes) | **Apache Superset** | `apache/superset` | Apache-2.0 | Conexión a 40+ motores SQL, arquitectura cloud nativa, 60k+ estrellas GitHub. |
+| **Notion** ($10–$18/mes) | **AppFlowy** | `AppFlowy-IO/AppFlowy` | AGPL-3.0 | Arquitectura local-first con Rust y Flutter, cifrado y control absoluto. |
+| **Slack / Teams** ($8–$15/asiento) | **Mattermost** | `mattermost/mattermost-server` | AGPL-3.0 | Despliegue on-premise estricto, cumplimiento HIPAA/SOC2/GDPR verificado. |
+| **Adobe Photoshop** ($22.99/mes) | **Krita** | `KDE/krita` | GPL-3.0 | Soporte CMYK y HDR para ilustración y retoque sin telemetría corporativa. |
+| **Autodesk Revit** ($355/mes) | **Bonsai (Blender BIM)**| `IfcOpenShell/IfcOpenShell` | LGPL-3.0 | Autoría nativa en estándar internacional IFC sin formatos intermedios cerrados. |
+
+### Dimensiones de la Evaluación Cara a Cara (Head-to-Head)
+Al pulsar el botón `[⇄ VS FOSS]` en el Archivo, AXIS despliega un modal de análisis comparativo en 5 dimensiones:
+1. **Costo Anual & TCO a 3 Años:** Cálculo de ahorro acumulado en licencias por usuario.
+2. **Soberanía y Resguardo de Datos:** Comparativa de nube cerrada vs. servidor local u on-premise.
+3. **Estándares Abiertos y Formatos:** Riesgo de vendor lock-in frente a formatos abiertos (SVG, IFC, SQL, Markdown).
+4. **Curva de Adopción y Extensibilidad:** Balance entre refinamiento de interfaz y capacidad de personalización/código abierto.
+5. **Veredicto Estratégico Determinista:** Recomendación explícita sobre cuándo mantener la herramienta comercial y cuándo migrar a FOSS.
+
+---
+
+## 10. Roadmap Estratégico de AXIS (Fases 1 a 4)
+
+- **Fase 1: Identidad Oficial, FOSS Intelligence & Comparativa Inicial (Completada):**
+  - Integración del logotipo técnico oficial AXIS (`[A]`/`[B]`, gráfico de barras ascendentes, flecha de señal `#FF4B22`, código `001 / 002 / 003`).
+  - Extensión ontológica de herramientas con campos FOSS (`isOpenSource`, `githubRepo`, `license`, `fossAlternativeTo`).
+  - Componente interactivo `HeadToHeadComparison.tsx` y filtro de código abierto en la tabla de archivo.
+  - Soporte bilingüe completo (`ES`/`EN`) con traducción contextual de capacidades y limitaciones.
+- **Fase 2: Expansión de Entradas/Salidas & Personalización por Carrera:**
+  - Importador de stacks existentes (JSON/CSV de suscripciones activas).
+  - Selector de tamaño de equipo (1, 5, 20, 100+ licencias) con cálculo de TCO multi-asiento.
+  - Generador de **Procurement Report** en PDF ejecutivo para comités de compras.
+  - Generador de **`docker-compose.yml`** para levantar stacks FOSS autoalojados en un comando.
+- **Fase 3: AXIS CLI & Grafo de Interoperabilidad:**
+  - Herramienta de terminal `npx @axis/cli audit --stack stack.json` para auditorías continuas en CI/CD.
+  - Visualizador de grafo de rutas de exportación/importación de formatos entre herramientas.
+- **Fase 4: Ecosistema & Validación Comunitaria:**
+  - Sincronización automática de métricas con la API de GitHub (estrellas, releases, actividad).
+  - Pipeline abierto de Pull Requests para contribución y verificación de nuevas herramientas.
+
+---
+
+## 11. Estructura del Repositorio
 
 ```
 AXIS/
 ├── public/
-│   ├── favicon.svg               # Favicon vectorial con isotipo AXIS
+│   ├── brand/                    # Activos oficiales de marca (logo, guías de retícula)
+│   ├── favicon.svg               # Favicon con isotipo técnico oficial
 │   ├── icons.svg                 # Sprite SVG técnico
 │   └── screenshots/              # Capturas y video WebP de demostración
-│       ├── demo.webp
-│       ├── discover-instrument.png
-│       ├── workflow-pro-studio.png
-│       ├── tradeoff-inspector.png
-│       ├── archive-90-tools.png
-│       ├── canvas-dark.png
-│       └── canvas-light.png
 │
 ├── src/
 │   ├── assets/
@@ -245,26 +292,29 @@ AXIS/
 │   │
 │   ├── components/
 │   │   ├── ArtifactPreview.tsx   # Previsualizador técnico de artefactos
-│   │   ├── Header.tsx            # Cabecera con índice, modo claro/oscuro e i18n
+│   │   ├── AxisBrandLogo.tsx     # Logotipo oficial reactivo SVG (Full, Mark, Horizontal)
+│   │   ├── Header.tsx            # Cabecera con marca oficial, índice e i18n
+│   │   ├── HeadToHeadComparison.tsx # Modal de análisis comparativo Comercial vs FOSS
 │   │   ├── IntentInstrument.tsx  # Matriz Suiza 3-columnas con Smart Scoping
 │   │   ├── InteractiveWorkflowCanvas.tsx # Canvas interactivo con Tríada de Rutas
-│   │   ├── ToolArchiveTable.tsx  # Matriz de archivo densa con filtros
+│   │   ├── ToolArchiveTable.tsx  # Matriz de archivo con filtro FOSS y disparador comparativo
 │   │   ├── ToolEditorialCard.tsx # Tarjetas editoriales con telemetría ASCII
 │   │   ├── TradeOffInspector.tsx # Modal de inspección y sustitución (Swap)
 │   │   └── WorkflowMap.tsx       # Desglose secuencial del flujo de trabajo
 │   │
 │   ├── data/
 │   │   ├── presets.ts            # 32 perfiles profesionales calibrados para Smart Scoping
-│   │   └── tools.ts              # Dataset ontológico de 90 herramientas con precios reales
+│   │   └── tools.ts              # Dataset ontológico de 95+ herramientas con metadatos FOSS
 │   │
 │   ├── engine/
 │   │   ├── filter.ts             # Evaluación de restricciones duras (Hard Constraints)
 │   │   ├── pipelineSynthesizer.ts # Ensamblaje secuencial de etapas y trade-offs
 │   │   ├── routeSynthesizer.ts   # Síntesis de Tríada de Rutas y Data Glue
 │   │   ├── scoring.ts            # Motor MCDA de 4 vectores y afinidades de dominio
-│   │   └── tradeoffs.ts          # Generador de evidencias y alternativas de swap
+│   │   └── tradeoffs.ts          # Generador de evidencias y alternativas bilingües
 │   │
 │   ├── i18n/
+│   │   ├── toolLocalization.ts   # Traducción bilingüe completa del dataset de herramientas
 │   │   └── translations.ts       # Diccionario integral 100% bilingüe (ES/EN)
 │   │
 │   ├── styles/
@@ -274,7 +324,7 @@ AXIS/
 │   │   └── visual-canvas.css     # Estilos del rack interactivo y cables Data Glue
 │   │
 │   ├── types/
-│   │   └── index.ts              # Definiciones TypeScript estrictas
+│   │   └── index.ts              # Definiciones TypeScript estrictas (incluyendo FOSS)
 │   ├── App.tsx                   # Estado raíz, routing reactivo y cálculo de query
 │   └── main.tsx                  # Punto de entrada de la aplicación
 │
@@ -287,7 +337,7 @@ AXIS/
 
 ---
 
-## 10. Guía de Instalación y Ejecución Local
+## 12. Guía de Instalación y Ejecución Local
 
 ### Prerrequisitos
 - Node.js 18.0 o superior
@@ -315,7 +365,7 @@ npm run preview
 
 ---
 
-## 11. Estándar de Commits y Mantenimiento
+## 13. Estándar de Commits y Mantenimiento
 
 Este proyecto sigue rigurosamente el estándar de **Conventional Commits** y la regla de **Commits Atómicos y Descriptivos**:
 - Cada commit representa una única modificación lógica e independiente.
