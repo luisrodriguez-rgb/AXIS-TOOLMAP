@@ -98,6 +98,36 @@ export interface Tool {
   githubRepo?: string;
   license?: string;
   fossAlternativeTo?: string[];
+  evidence?: ToolEvidence;
+}
+
+export interface ToolEvidence {
+  pricingVerifiedAt: string;
+  pricingModel: BillingModel;
+  pricingRegion: string;
+  platformsSupported: OperatingSystem[];
+  dataSovereigntyGrade: 'local_first' | 'cloud_encrypted' | 'cloud_proprietary';
+  evidenceSource: string;
+  lastReviewed: string;
+  confidence: 'high' | 'medium' | 'low';
+}
+
+export type DataFrictionState = 'automatic' | 'one_click' | 'manual' | 'unsupported';
+export type DataFidelityLoss = 'full' | 'partial' | 'lossy';
+
+export interface HardConstraints {
+  os?: OperatingSystem | 'any';
+  maxBudgetUSD?: number;
+  requiresLocalData?: boolean;
+  requiredDeliverable?: DeliverableType;
+}
+
+export interface SoftPreferences {
+  preferLowLearningCurve?: boolean;
+  preferCollaboration?: boolean;
+  preferAiAssisted?: boolean;
+  preferOpenSource?: boolean;
+  preferOffline?: boolean;
 }
 
 export interface PersonaProfile {
@@ -128,6 +158,7 @@ export interface UserConstraints {
   maxLearningCurve: TechnicalLevel;
   requiresSpanish: boolean;
   mustIntegrateWith?: string[];
+  softPreferences?: SoftPreferences;
 }
 
 export interface UserWorkflowQuery {
