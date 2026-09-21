@@ -14,6 +14,7 @@ import {
   generateWhatYouSacrifice,
   generateAlternatives,
 } from './tradeoffs';
+import { getLocalizedTool } from '../i18n/toolLocalization';
 
 import { TRANSLATIONS } from '../i18n/translations';
 
@@ -139,14 +140,15 @@ export function synthesizeWorkflowStack(
 
     const { tool: selectedTool, breakdown } = selectedCandidate;
 
-    // Calcular por qué y qué sacrifica
-    const whyThisTool = generateWhyThisTool(selectedTool, query, breakdown);
-    const tradeOffs = generateWhatYouSacrifice(selectedTool, query);
-    const alternatives = generateAlternatives(scoredCandidates, selectedTool, query.constraints);
+    // Calcular por qué y qué sacrifica con soporte multilingüe
+    const locSelectedTool = getLocalizedTool(selectedTool, lang);
+    const whyThisTool = generateWhyThisTool(selectedTool, query, breakdown, lang);
+    const tradeOffs = generateWhatYouSacrifice(selectedTool, query, lang);
+    const alternatives = generateAlternatives(scoredCandidates, selectedTool, query.constraints, lang);
 
     stageRecommendations.push({
       stage: stageDef,
-      selectedTool,
+      selectedTool: locSelectedTool,
       matchScore: breakdown.finalScore,
       scoreBreakdown: breakdown,
       whyThisTool,

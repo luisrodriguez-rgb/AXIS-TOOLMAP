@@ -2,6 +2,7 @@ import React from 'react';
 import type { StageRecommendation, WorkflowStageId } from '../types';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
+import { getLocalizedTool } from '../i18n/toolLocalization';
 
 interface TradeOffInspectorProps {
   recommendation: StageRecommendation | null;
@@ -19,6 +20,7 @@ export const TradeOffInspector: React.FC<TradeOffInspectorProps> = ({
   if (!recommendation) return null;
 
   const { stage, selectedTool, scoreBreakdown, alternatives } = recommendation;
+  const locSelectedTool = getLocalizedTool(selectedTool, lang);
   const t = TRANSLATIONS[lang].modal;
   const cardT = TRANSLATIONS[lang].card;
 
@@ -79,7 +81,7 @@ export const TradeOffInspector: React.FC<TradeOffInspectorProps> = ({
                 {t.strengths}
               </div>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem' }}>
-                {selectedTool.whatItDoesBest.map((best, idx) => (
+                {locSelectedTool.whatItDoesBest.map((best, idx) => (
                   <li key={idx} style={{ display: 'flex', gap: '8px' }}>
                     <span style={{ color: 'var(--ink)', fontWeight: 700 }}>✓</span>
                     <span>{best}</span>
@@ -93,7 +95,7 @@ export const TradeOffInspector: React.FC<TradeOffInspectorProps> = ({
                 {t.limitations}
               </div>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem' }}>
-                {selectedTool.whatItDoesNotDo.map((notDo, idx) => (
+                {locSelectedTool.whatItDoesNotDo.map((notDo, idx) => (
                   <li key={idx} style={{ display: 'flex', gap: '8px' }}>
                     <span style={{ color: 'var(--signal)', fontWeight: 700 }}>!</span>
                     <span style={{ color: 'var(--ink-secondary)' }}>{notDo}</span>

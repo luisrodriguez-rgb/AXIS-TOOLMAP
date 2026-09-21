@@ -2,6 +2,7 @@ import React from 'react';
 import type { StageRecommendation } from '../types';
 import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
+import { getLocalizedTool } from '../i18n/toolLocalization';
 
 interface ToolEditorialCardProps {
   recommendation: StageRecommendation;
@@ -17,6 +18,7 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
   lang,
 }) => {
   const { selectedTool, scoreBreakdown, whyThisTool, tradeOffs } = recommendation;
+  const locSelectedTool = getLocalizedTool(selectedTool, lang);
   const t = TRANSLATIONS[lang].card;
   const tCat = TRANSLATIONS[lang].categories;
 
@@ -80,7 +82,7 @@ export const ToolEditorialCard: React.FC<ToolEditorialCardProps> = ({
           </span>
         </div>
 
-        <p className="tool-tagline-editorial">{selectedTool.tagline}</p>
+        <p className="tool-tagline-editorial">{locSelectedTool.tagline}</p>
       </div>
 
       {/* ASCII Capacity Breakdown Bars */}

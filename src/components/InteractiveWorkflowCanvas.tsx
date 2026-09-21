@@ -5,6 +5,7 @@ import type { Language } from '../i18n/translations';
 import { TRANSLATIONS } from '../i18n/translations';
 import { getToolLogo } from '../assets/logos/ToolLogos';
 import { ArtifactPreview } from './ArtifactPreview';
+import { getLocalizedTool } from '../i18n/toolLocalization';
 
 interface InteractiveWorkflowCanvasProps {
   currentRouteId: RouteId;
@@ -115,7 +116,7 @@ export const InteractiveWorkflowCanvas: React.FC<InteractiveWorkflowCanvasProps>
         {activeStack.stages.map((stageRec, index) => {
           const isLast = index === activeStack.stages.length - 1;
           const dataGlue = currentRoute.dataGlue[index];
-          const tool = stageRec.selectedTool;
+          const tool = getLocalizedTool(stageRec.selectedTool, lang);
 
           return (
             <React.Fragment key={stageRec.stage.id}>
